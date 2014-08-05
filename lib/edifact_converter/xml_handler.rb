@@ -1,5 +1,5 @@
-require 'empty_handler'
-require_relative 'Position'
+require 'edifact_converter/empty_handler'
+require 'edifact_converter/position'
 require 'nokogiri'
 
 module EdifactConverter

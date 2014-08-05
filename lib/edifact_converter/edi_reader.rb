@@ -2,9 +2,9 @@ require 'PositionIO'
 require 'EdifactError'
 
 module EdifactConverter
-  class EDIReader
+  class EdiReader
     attr_accessor :handler
-    
+
     def initialize(handler)
       @handler = handler
     end
