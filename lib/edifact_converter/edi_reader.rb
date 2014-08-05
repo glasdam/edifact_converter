@@ -1,5 +1,5 @@
-require 'PositionIO'
-require 'EdifactError'
+require 'edifact_converter/position_io'
+require 'edifact_converter/edifact_error'
 
 module EdifactConverter
   class EdiReader

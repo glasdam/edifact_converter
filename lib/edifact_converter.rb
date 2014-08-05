@@ -9,7 +9,7 @@ module EdifactConverter
     edifact_pipeline = XmlHandler.new
     parser = EdiReader.new edifact_pipeline
     parser.parse file
-    p edifact_pipeline.xml
+    edifact_pipeline.xml
   end
 
 end

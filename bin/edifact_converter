@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'edifact_converter'
+puts EdifactConverter.convert_edifact(ARGV[0]).to_s
