@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'edifact_converter/position'
+require 'edifact_converter/from_edi/position'
 
 module EdifactConverter
 

@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'edifact_converter/xml_handler'
+require 'edifact_converter/from_edi/xml_handler'
 require 'equivalent-xml'
 
 

@@ -1,4 +1,4 @@
-require 'edifact_converter/position_io'
+require 'edifact_converter/from_edi/position_io'
 require 'edifact_converter/edifact_error'
 
 module EdifactConverter
@@ -12,7 +12,7 @@ module EdifactConverter
     def parse(edifile, close=false)
       if edifile.kind_of? String
         close = true
-        edifile = PositionIO.new (File.open edifile, 'rb:ISO-8859-1')
+        edifile = PositionIO.new (File.open edifile, 'rb', encoding: 'ISO-8859-1')
       else
         edifile = PositionIO.new edifile
       end
