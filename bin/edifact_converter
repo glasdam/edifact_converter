@@ -1,4 +1,27 @@
 #!/usr/bin/env ruby
 
 require 'edifact_converter'
-puts EdifactConverter.convert_edifact(ARGV[0]).to_s
+#require 'edifact_converter/from_xml/xml_reader'
+#puts EdifactConverter.convert_edifact(ARGV[0]).to_s
+
+EdifactConverter::Configuration.load_from_file('configuration.yaml')
+
+
+#xml = Nokogiri::XML(File.open('test/files/DIS91_XFTX.xml', encoding: 'ISO-8859-1')){ |config| config.default_xml.noblanks }
+#p xml.canonicalize
+#puts xml.to_xml
+#edifact = EdifactConverter::XML2EDI::XmlReader.new.parse_xml(xml) # ARGV[0] #=>  NameError
+#puts edifact
+#edifact_pipeline = EdifactConverter::EDI2XML::Pipeline.new #EdifactConverter::EDI2XML::BrevHandler.new(EdifactConverter::EDI2XML::SegmentGroupHandler.new (EdifactConverter::EDI2XML::XmlHandler.new))
+#parser = EdifactConverter::EDI2XML::EdiReader.new edifact_pipeline.handler
+#xml = parser.parse('test/files/PRE60_ok.edi', true)
+#p edifact_pipeline.xml.canonicalize
+#puts edifact_pipeline.xml
+
+
+#settings = EdifactConverter::Configuration.edifact
+
+result = EdifactConverter.convert_edifact(EdifactConverter.read_file('test/files/DIS91_ok.edi'))
+puts result.xml
+result = EdifactConverter.convert_xml(result.xml.to_s)
+puts result.edifact

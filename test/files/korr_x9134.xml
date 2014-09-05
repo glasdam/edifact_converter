@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Emessage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2006/07/01/ ../../../../Konverter/trunk/Konverter/xml/Schemas/2006/07/01/Emessage.xsd"
+ xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2006/07/01/">
+  <Envelope>
+    <Sent>
+      <Date>1998-12-13</Date>
+      <Time>12:10</Time>
+    </Sent>
+    <Identifier>KuvertNr012234</Identifier>
+    <AcknowledgementCode>minuspositivkvitt</AcknowledgementCode>
+  </Envelope>
+  <ClinicalEmail>
+    <Letter>
+      <Identifier>BrevNr00129</Identifier>
+      <VersionCode>XD9134L</VersionCode>
+      <StatisticalCode>XDIS91</StatisticalCode>
+      <Authorisation>
+        <Date>1998-12-13</Date>
+        <Time>12:02</Time>
+      </Authorisation>
+      <TypeCode>XDIS91</TypeCode>
+      <StatusCode>nytbrev</StatusCode>
+    </Letter>
+    <Sender>
+      <EANIdentifier>5790000120400</EANIdentifier>
+      <Identifier>2001060</Identifier>
+      <IdentifierCode>sygehusafdelingsnummer</IdentifierCode>
+      <OrganisationName>HILLERØD SYGEHUS</OrganisationName>
+      <DepartmentName>KIRURGISK AFD. A</DepartmentName>
+      <MedicalSpecialityCode>kirurgi_sygehus</MedicalSpecialityCode>
+    </Sender>
+    <Receiver>
+      <EANIdentifier>5790000128700</EANIdentifier>
+      <Identifier>291714</Identifier>
+      <IdentifierCode>ydernummer</IdentifierCode>
+      <OrganisationName>Lægehuset</OrganisationName>
+      <DepartmentName>Læge</DepartmentName>
+      <UnitName>Else Nielsen</UnitName>
+      <StreetName>Vandværksvej 99</StreetName>
+      <DistrictName>Hillerød</DistrictName>
+      <PostCodeIdentifier>3400</PostCodeIdentifier>
+    </Receiver>
+    <Patient>
+      <CivilRegistrationNumber>1522824933</CivilRegistrationNumber>
+      <PersonSurnameName>Mosebryggersen</PersonSurnameName>
+      <PersonGivenName>Knut Odvar</PersonGivenName>
+      <StreetName>Grusgraven 3, 3 tv</StreetName>
+      <DistrictName>Hillerød</DistrictName>
+      <PostCodeIdentifier>3400</PostCodeIdentifier>
+      <EpisodeOfCareStatusCode>inaktiv</EpisodeOfCareStatusCode>
+    </Patient>
+    <AdditionalInformation>
+      <Priority>høj_prioritet</Priority>
+      <Subject>Forundersøgelse</Subject>
+    </AdditionalInformation>
+    <ClinicalInformation>
+      <Text01>Hej <FixedFont><Break/><Break/><Break/><Break/><Break/><Break/>Hej, jeg er fast bredde</FixedFont><Break/>Afdeling A har modtaget en henvisning på ovenstående patient.<Break/>Forinden der foretages visitation, bedes følgende undersøgelser foretaget:<Break/>Røntgen af hofte i to planer.<Break/>Blodtryksresultat<Break/>Sænkningsresultat<Break/><Break/>Resultaterne <FixedFont>bedes<Break/></FixedFont><Break/> fremsendt som et &quot;korrespondancebrev&quot;.<Break/><Break/>Venlig hilsen<Break/>overlæge K. Petersen<Break/>15.01.1999<Break/></Text01>
+    </ClinicalInformation>
+  </ClinicalEmail>
+</Emessage>

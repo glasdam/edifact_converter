@@ -1,5 +1,6 @@
+require 'edifact_converter/edi2xml'
 
-module EdifactConverter
+module EdifactConverter::EDI2XML
 
   class Position
     attr_reader :line, :column

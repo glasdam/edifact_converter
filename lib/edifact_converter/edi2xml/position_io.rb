@@ -1,5 +1,6 @@
+require 'edifact_converter/edi2xml'
 
-module EdifactConverter
+module EdifactConverter::EDI2XML
 
   class PositionIO
     attr_accessor :file, :lines, :line, :column

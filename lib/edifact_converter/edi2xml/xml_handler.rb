@@ -1,10 +1,9 @@
-require 'edifact_converter/empty_handler'
-require 'edifact_converter/from_edi/position'
+require 'edifact_converter/edi2xml'
 require 'nokogiri'
 
-module EdifactConverter
+module EdifactConverter::EDI2XML
 
-  class XmlHandler < EmptyHandler
+  class XmlHandler < EdifactConverter::EmptyHandler
 
     class XmlElement
       attr_accessor :name, :children, :text, :position, :parent
@@ -35,7 +34,10 @@ module EdifactConverter
     end
 
     def endDocument
-      raise "BAD SYNTAX" unless @current == @document
+      unless @current == @document
+        p @current.name
+        raise "BAD SYNTAX" 
+      end
       super
     end
 
@@ -44,7 +46,7 @@ module EdifactConverter
       super
     end
 
-    def endSegmentGroup
+    def endSegmentGroup(name)
       @current = @current.parent
       super
     end
@@ -54,7 +56,7 @@ module EdifactConverter
       super
     end
 
-    def endSegment
+    def endSegment(name)
       @current = @current.parent
       super
     end

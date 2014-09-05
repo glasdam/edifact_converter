@@ -1,12 +1,15 @@
-require 'edifact_converter/from_edi/position_io'
-require 'edifact_converter/edifact_error'
+require 'edifact_converter/edi2xml'
 
-module EdifactConverter
+module EdifactConverter::EDI2XML
   class EdiReader
     attr_accessor :handler
 
     def initialize(handler)
       @handler = handler
+    end
+
+    def parse_string(edistring)
+      parse(StringIO.new(edistring))
     end
 
     def parse(edifile, close=false)
@@ -52,7 +55,7 @@ module EdifactConverter
       @handler.startSegment name, start
       while(parseElement edifile)
       end
-      @handler.endSegment
+      @handler.endSegment name
       true
     end
 

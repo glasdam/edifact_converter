@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Edifact linie="2" position="4">
+    <UNB linie="2" position="4">
+        <Elm linie="2" position="5">
+            <SubElm linie="2" position="9">UNOC</SubElm>
+            <SubElm linie="2" position="11">3</SubElm>
+        </Elm>
+        <Elm linie="2" position="12">
+            <SubElm linie="2" position="25">5790000121236</SubElm>
+            <SubElm linie="2" position="28">14</SubElm>
+        </Elm>
+        <Elm linie="2" position="29">
+            <SubElm linie="2" position="42">5790000143054</SubElm>
+            <SubElm linie="2" position="45">14</SubElm>
+        </Elm>
+        <Elm linie="2" position="46">
+            <SubElm linie="2" position="52">010426</SubElm>
+            <SubElm linie="2" position="57">0918</SubElm>
+        </Elm>
+        <Elm linie="2" position="58">
+            <SubElm linie="2" position="72">I3LPUBLS0194UL</SubElm>
+        </Elm>
+        <Elm linie="2" position="73">
+            <SubElm linie="2" position="73"/>
+        </Elm>
+        <Elm linie="2" position="74">
+            <SubElm linie="2" position="74"/>
+        </Elm>
+        <Elm linie="2" position="75">
+            <SubElm linie="2" position="75"/>
+        </Elm>
+        <Elm linie="2" position="76">
+            <SubElm linie="2" position="77">0</SubElm>
+        </Elm>
+    </UNB>
+    <Brev linie="3" position="4">
+        <UNH linie="3" position="4">
+            <Elm linie="3" position="5">
+                <SubElm linie="3" position="15">2468101249</SubElm>
+            </Elm>
+            <Elm linie="3" position="16">
+                <SubElm linie="3" position="22">MEDDIS</SubElm>
+                <SubElm linie="3" position="24">D</SubElm>
+                <SubElm linie="3" position="28">93A</SubElm>
+                <SubElm linie="3" position="31">UN</SubElm>
+                <SubElm linie="3" position="38">D1431C</SubElm>
+            </Elm>
+            <Elm linie="3" position="39">
+                <SubElm linie="3" position="44">DIS14</SubElm>
+            </Elm>
+        </UNH>
+        <BrevIndhold linie="3" position="4">
+            <BGM linie="4" position="4">
+                <Elm linie="4" position="5">
+                    <SubElm linie="4" position="8">EPI</SubElm>
+                </Elm>
+                <Elm linie="4" position="9">
+                    <SubElm linie="4" position="9"/>
+                </Elm>
+                <Elm linie="4" position="10">
+                    <SubElm linie="4" position="11">9</SubElm>
+                </Elm>
+                <Elm linie="4" position="12">
+                    <SubElm linie="4" position="14">NA</SubElm>
+                </Elm>
+            </BGM>
+            <DTM linie="5" position="4">
+                <Elm linie="5" position="5">
+                    <SubElm linie="5" position="8">137</SubElm>
+                    <SubElm linie="5" position="23">20010424153020</SubElm>
+                    <SubElm linie="5" position="27">204</SubElm>
+                </Elm>
+            </DTM>
+            <S01 linie="6" position="4">
+                <Elm linie="6" position="5">
+                    <SubElm linie="6" position="7">01</SubElm>
+                </Elm>
+                <NAD linie="7" position="4">
+                    <Elm linie="7" position="5">
+                        <SubElm linie="7" position="8">ROR</SubElm>
+                    </Elm>
+                    <Elm linie="7" position="9">
+                        <SubElm linie="7" position="16">4202090</SubElm>
+                        <SubElm linie="7" position="20">SKS</SubElm>
+                        <SubElm linie="7" position="24">SST</SubElm>
+                    </Elm>
+                    <Elm linie="7" position="25">
+                        <SubElm linie="7" position="25"/>
+                    </Elm>
+                    <Elm linie="7" position="26">
+                        <SubElm linie="7" position="53">Odense Universitetshospital</SubElm>
+                        <SubElm linie="7" position="72">Medicinsk Afdeling</SubElm>
+                        <SubElm linie="7" position="75">C4</SubElm>
+                        <SubElm linie="7" position="76"/>
+                        <SubElm linie="7" position="77"/>
+                        <SubElm linie="7" position="80">US</SubElm>
+                    </Elm>
+                </NAD>
+                <SEQ linie="8" position="4">
+                    <Elm linie="8" position="5">
+                        <SubElm linie="8" position="5"/>
+                    </Elm>
+                    <Elm linie="8" position="6">
+                        <SubElm linie="8" position="7">1</SubElm>
+                    </Elm>
+                </SEQ>
+            </S01>
+            <S01 linie="9" position="4">
+                <Elm linie="9" position="5">
+                    <SubElm linie="9" position="7">01</SubElm>
+                </Elm>
+                <NAD linie="10" position="4">
+                    <Elm linie="10" position="5">
+                        <SubElm linie="10" position="8">SOR</SubElm>
+                    </Elm>
+                    <Elm linie="10" position="9">
+                        <SubElm linie="10" position="12">173</SubElm>
+                        <SubElm linie="10" position="16">KOM</SubElm>
+                        <SubElm linie="10" position="19">IM</SubElm>
+                    </Elm>
+                    <Elm linie="10" position="20">
+                        <SubElm linie="10" position="20"/>
+                    </Elm>
+                    <Elm linie="10" position="21">
+                        <SubElm linie="10" position="43">Lyngby Taarbæk Kommune</SubElm>
+                        <SubElm linie="10" position="44"/>
+                        <SubElm linie="10" position="45"/>
+                        <SubElm linie="10" position="46"/>
+                        <SubElm linie="10" position="47"/>
+                        <SubElm linie="10" position="50">US</SubElm>
+                    </Elm>
+                </NAD>
+                <SEQ linie="11" position="4">
+                    <Elm linie="11" position="5">
+                        <SubElm linie="11" position="5"/>
+                    </Elm>
+                    <Elm linie="11" position="6">
+                        <SubElm linie="11" position="7">2</SubElm>
+                    </Elm>
+                </SEQ>
+                <SPR linie="12" position="4">
+                    <Elm linie="12" position="5">
+                        <SubElm linie="12" position="8">ORG</SubElm>
+                    </Elm>
+                    <Elm linie="12" position="9">
+                        <SubElm linie="12" position="9"/>
+                    </Elm>
+                    <Elm linie="12" position="10">
+                        <SubElm linie="12" position="15">DIS14</SubElm>
+                        <SubElm linie="12" position="19">SKS</SubElm>
+                        <SubElm linie="12" position="23">SST</SubElm>
+                    </Elm>
+                </SPR>
+            </S01>
+            <S01 linie="13" position="4">
+                <Elm linie="13" position="5">
+                    <SubElm linie="13" position="7">01</SubElm>
+                </Elm>
+                <NAD linie="14" position="4">
+                    <Elm linie="14" position="5">
+                        <SubElm linie="14" position="7">BV</SubElm>
+                    </Elm>
+                    <Elm linie="14" position="8">
+                        <SubElm linie="14" position="8"/>
+                    </Elm>
+                    <Elm linie="14" position="9">
+                        <SubElm linie="14" position="9"/>
+                    </Elm>
+                    <Elm linie="14" position="10">
+                        <SubElm linie="14" position="25">omsorgsgruppe 1</SubElm>
+                        <SubElm linie="14" position="43">Hjemmepleje aften</SubElm>
+                        <SubElm linie="14" position="44"/>
+                        <SubElm linie="14" position="45"/>
+                        <SubElm linie="14" position="46"/>
+                        <SubElm linie="14" position="49">US</SubElm>
+                    </Elm>
+                </NAD>
+                <CON linie="15" position="4">
+                    <Elm linie="15" position="5">
+                        <SubElm linie="15" position="5"/>
+                    </Elm>
+                    <Elm linie="15" position="6">
+                        <SubElm linie="15" position="19">44601000/1234</SubElm>
+                        <SubElm linie="15" position="22">TE</SubElm>
+                    </Elm>
+                </CON>
+                <RFF linie="16" position="4">
+                    <Elm linie="16" position="5">
+                        <SubElm linie="16" position="8">AHL</SubElm>
+                        <SubElm linie="16" position="10">2</SubElm>
+                    </Elm>
+                </RFF>
+                <RFF linie="17" position="4">
+                    <Elm linie="17" position="5">
+                        <SubElm linie="17" position="8">BUH</SubElm>
+                        <SubElm linie="17" position="27">ma-fre 15.00-22.30</SubElm>
+                    </Elm>
+                </RFF>
+                <SEQ linie="18" position="4">
+                    <Elm linie="18" position="5">
+                        <SubElm linie="18" position="5"/>
+                    </Elm>
+                    <Elm linie="18" position="6">
+                        <SubElm linie="18" position="7">3</SubElm>
+                    </Elm>
+                </SEQ>
+            </S01>
+            <S01 linie="19" position="4">
+                <Elm linie="19" position="5">
+                    <SubElm linie="19" position="7">01</SubElm>
+                </Elm>
+                <NAD linie="20" position="4">
+                    <Elm linie="20" position="5">
+                        <SubElm linie="20" position="7">BV</SubElm>
+                    </Elm>
+                    <Elm linie="20" position="8">
+                        <SubElm linie="20" position="8"/>
+                    </Elm>
+                    <Elm linie="20" position="9">
+                        <SubElm linie="20" position="9"/>
+                    </Elm>
+                    <Elm linie="20" position="10">
+                        <SubElm linie="20" position="25">omsorgsgruppe 1</SubElm>
+                        <SubElm linie="20" position="41">Hjemmepleje nat</SubElm>
+                        <SubElm linie="20" position="42"/>
+                        <SubElm linie="20" position="43"/>
+                        <SubElm linie="20" position="44"/>
+                        <SubElm linie="20" position="47">US</SubElm>
+                    </Elm>
+                </NAD>
+                <CON linie="21" position="4">
+                    <Elm linie="21" position="5">
+                        <SubElm linie="21" position="5"/>
+                    </Elm>
+                    <Elm linie="21" position="6">
+                        <SubElm linie="21" position="19">44601000/1234</SubElm>
+                        <SubElm linie="21" position="22">TE</SubElm>
+                    </Elm>
+                </CON>
+                <RFF linie="22" position="4">
+                    <Elm linie="22" position="5">
+                        <SubElm linie="22" position="8">AHL</SubElm>
+                        <SubElm linie="22" position="10">2</SubElm>
+                    </Elm>
+                </RFF>
+                <RFF linie="23" position="4">
+                    <Elm linie="23" position="5">
+                        <SubElm linie="23" position="8">BUH</SubElm>
+                        <SubElm linie="23" position="26">ma-fre 23.00-7.00</SubElm>
+                    </Elm>
+                </RFF>
+                <SEQ linie="24" position="4">
+                    <Elm linie="24" position="5">
+                        <SubElm linie="24" position="5"/>
+                    </Elm>
+                    <Elm linie="24" position="6">
+                        <SubElm linie="24" position="7">4</SubElm>
+                    </Elm>
+                </SEQ>
+            </S01>
+            <S01 linie="25" position="4">
+                <Elm linie="25" position="5">
+                    <SubElm linie="25" position="7">01</SubElm>
+                </Elm>
+                <NAD linie="26" position="4">
+                    <Elm linie="26" position="5">
+                        <SubElm linie="26" position="7">BV</SubElm>
+                    </Elm>
+                    <Elm linie="26" position="8">
+                        <SubElm linie="26" position="8"/>
+                    </Elm>
+                    <Elm linie="26" position="9">
+                        <SubElm linie="26" position="9"/>
+                    </Elm>
+                    <Elm linie="26" position="10">
+                        <SubElm linie="26" position="25">omsorgsgruppe 2</SubElm>
+                        <SubElm linie="26" position="48">042 Hjemmepleje dag lø</SubElm>
+                        <SubElm linie="26" position="49"/>
+                        <SubElm linie="26" position="50"/>
+                        <SubElm linie="26" position="51"/>
+                        <SubElm linie="26" position="54">US</SubElm>
+                    </Elm>
+                </NAD>
+                <CON linie="27" position="4">
+                    <Elm linie="27" position="5">
+                        <SubElm linie="27" position="5"/>
+                    </Elm>
+                    <Elm linie="27" position="6">
+                        <SubElm linie="27" position="19">44601000/2345</SubElm>
+                        <SubElm linie="27" position="22">TE</SubElm>
+                    </Elm>
+                </CON>
+                <RFF linie="28" position="4">
+                    <Elm linie="28" position="5">
+                        <SubElm linie="28" position="8">AHL</SubElm>
+                        <SubElm linie="28" position="10">2</SubElm>
+                    </Elm>
+                </RFF>
+                <RFF linie="29" position="4">
+                    <Elm linie="29" position="5">
+                        <SubElm linie="29" position="8">BUH</SubElm>
+                        <SubElm linie="29" position="22">lø 7.30-15.00</SubElm>
+                    </Elm>
+                </RFF>
+                <SEQ linie="30" position="4">
+                    <Elm linie="30" position="5">
+                        <SubElm linie="30" position="5"/>
+                    </Elm>
+                    <Elm linie="30" position="6">
+                        <SubElm linie="30" position="7">5</SubElm>
+                    </Elm>
+                </SEQ>
+            </S01>
+            <S01 linie="31" position="4">
+                <Elm linie="31" position="5">
+                    <SubElm linie="31" position="7">01</SubElm>
+                </Elm>
+                <NAD linie="32" position="4">
+                    <Elm linie="32" position="5">
+                        <SubElm linie="32" position="7">BV</SubElm>
+                    </Elm>
+                    <Elm linie="32" position="8">
+                        <SubElm linie="32" position="8"/>
+                    </Elm>
+                    <Elm linie="32" position="9">
+                        <SubElm linie="32" position="9"/>
+                    </Elm>
+                    <Elm linie="32" position="10">
+                        <SubElm linie="32" position="21">Anne Hansen</SubElm>
+                        <SubElm linie="32" position="38">006 Hjælpemidler</SubElm>
+                        <SubElm linie="32" position="39"/>
+                        <SubElm linie="32" position="40"/>
+                        <SubElm linie="32" position="41"/>
+                        <SubElm linie="32" position="44">US</SubElm>
+                    </Elm>
+                </NAD>
+                <CON linie="33" position="4">
+                    <Elm linie="33" position="5">
+                        <SubElm linie="33" position="5"/>
+                    </Elm>
+                    <Elm linie="33" position="6">
+                        <SubElm linie="33" position="19">47114711/1234</SubElm>
+                        <SubElm linie="33" position="22">TE</SubElm>
+                    </Elm>
+                </CON>
+                <RFF linie="34" position="4">
+                    <Elm linie="34" position="5">
+                        <SubElm linie="34" position="8">AHL</SubElm>
+                        <SubElm linie="34" position="10">2</SubElm>
+                    </Elm>
+                </RFF>
+                <RFF linie="35" position="4">
+                    <Elm linie="35" position="5">
+                        <SubElm linie="35" position="8">BUH</SubElm>
+                        <SubElm linie="35" position="26">ma-fre 8.30-14.30</SubElm>
+                    </Elm>
+                </RFF>
+                <SEQ linie="36" position="4">
+                    <Elm linie="36" position="5">
+                        <SubElm linie="36" position="5"/>
+                    </Elm>
+                    <Elm linie="36" position="6">
+                        <SubElm linie="36" position="7">6</SubElm>
+                    </Elm>
+                </SEQ>
+            </S01>
+            <S02 linie="37" position="4">
+                <Elm linie="37" position="5">
+                    <SubElm linie="37" position="7">02</SubElm>
+                </Elm>
+                <GIS linie="38" position="4">
+                    <Elm linie="38" position="5">
+                        <SubElm linie="38" position="6">N</SubElm>
+                    </Elm>
+                </GIS>
+                <RFF linie="39" position="4">
+                    <Elm linie="39" position="5">
+                        <SubElm linie="39" position="8">SRI</SubElm>
+                        <SubElm linie="39" position="19">2468101249</SubElm>
+                    </Elm>
+                </RFF>
+                <DTM linie="40" position="4">
+                    <Elm linie="40" position="5">
+                        <SubElm linie="40" position="8">182</SubElm>
+                        <SubElm linie="40" position="23">20010424153020</SubElm>
+                        <SubElm linie="40" position="27">204</SubElm>
+                    </Elm>
+                </DTM>
+            </S02>
+            <S07 linie="41" position="4">
+                <Elm linie="41" position="5">
+                    <SubElm linie="41" position="7">07</SubElm>
+                </Elm>
+                <PNA linie="42" position="4">
+                    <Elm linie="42" position="5">
+                        <SubElm linie="42" position="8">PAT</SubElm>
+                    </Elm>
+                    <Elm linie="42" position="9">
+                        <SubElm linie="42" position="19">2505544849</SubElm>
+                        <SubElm linie="42" position="20"/>
+                        <SubElm linie="42" position="21"/>
+                        <SubElm linie="42" position="25">CPR</SubElm>
+                        <SubElm linie="42" position="28">IM</SubElm>
+                    </Elm>
+                </PNA>
+            </S07>
+            <S11 linie="43" position="4">
+                <Elm linie="43" position="5">
+                    <SubElm linie="43" position="7">11</SubElm>
+                </Elm>
+                <GIS linie="44" position="4">
+                    <Elm linie="44" position="5">
+                        <SubElm linie="44" position="6">N</SubElm>
+                    </Elm>
+                </GIS>
+                <GIS linie="45" position="4">
+                    <Elm linie="45" position="5">
+                        <SubElm linie="45" position="6">P</SubElm>
+                    </Elm>
+                </GIS>
+                <RFF linie="46" position="4">
+                    <Elm linie="46" position="5">
+                        <SubElm linie="46" position="8">ADY</SubElm>
+                        <SubElm linie="46" position="10">0</SubElm>
+                    </Elm>
+                </RFF>
+                <RFF linie="47" position="4">
+                    <Elm linie="47" position="5">
+                        <SubElm linie="47" position="8">REI</SubElm>
+                        <SubElm linie="47" position="19">2468101249</SubElm>
+                    </Elm>
+                </RFF>
+                <SEQ linie="48" position="4">
+                    <Elm linie="48" position="5">
+                        <SubElm linie="48" position="5"/>
+                    </Elm>
+                    <Elm linie="48" position="6">
+                        <SubElm linie="48" position="7">1</SubElm>
+                    </Elm>
+                </SEQ>
+            </S11>
+        </BrevIndhold>
+        <UNT linie="49" position="4">
+            <Elm linie="49" position="5">
+                <SubElm linie="49" position="7">47</SubElm>
+            </Elm>
+            <Elm linie="49" position="8">
+                <SubElm linie="49" position="18">2468101249</SubElm>
+            </Elm>
+        </UNT>
+    </Brev>
+    <UNZ linie="50" position="4">
+        <Elm linie="50" position="5">
+            <SubElm linie="50" position="6">1</SubElm>
+        </Elm>
+        <Elm linie="50" position="7">
+            <SubElm linie="50" position="21">I3LPUBLS0194UL</SubElm>
+        </Elm>
+    </UNZ>
+</Edifact>
