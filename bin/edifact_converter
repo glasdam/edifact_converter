@@ -4,7 +4,7 @@ require 'edifact_converter'
 #require 'edifact_converter/from_xml/xml_reader'
 #puts EdifactConverter.convert_edifact(ARGV[0]).to_s
 
-EdifactConverter::Configuration.load_from_file('configuration.yaml')
+EdifactConverter::Configuration.load_from_file('data/configuration.yaml')
 
 
 #xml = Nokogiri::XML(File.open('test/files/DIS91_XFTX.xml', encoding: 'ISO-8859-1')){ |config| config.default_xml.noblanks }
