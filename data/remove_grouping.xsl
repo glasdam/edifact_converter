@@ -12,6 +12,9 @@
 
     <xsl:template match="*[my:is_segment(.)]">
         <xsl:variable name="elms" select="my:valid_elms(Elm)"/>
+        <xsl:if test="local-name() != 'XFTX'">
+            <xsl:variable name="dummy" select="my:escape_subelms(*/SubElm)"/>
+        </xsl:if>
         <xsl:element name="{local-name()}">
             <xsl:copy-of select="@*"/>
             <xsl:copy-of select="$elms"/>
@@ -19,11 +22,16 @@
     </xsl:template>
 
     <xsl:template match="*[my:is_segmentgroup(.)]">
-        <xsl:if test="not(@hidden)">
-            <xsl:element name="{local-name()}">
+         <xsl:choose>
+            <xsl:when test="not(@hidden)">
+                <xsl:element name="{local-name()}">
+                    <xsl:copy-of select="*[1]"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
                 <xsl:copy-of select="*[1]"/>
-            </xsl:element>
-        </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
         <xsl:apply-templates select="*[position() &gt; 1]"/>
     </xsl:template>
 

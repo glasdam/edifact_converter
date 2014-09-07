@@ -18,12 +18,23 @@ module EdifactConverter::XML2EDI
       pop_last_empty nodeset
     end
 
+    def escape_subelms(nodeset)
+      nodeset.each do |elm|
+        elm.content = escape_text elm.text
+      end
+    end
+
     private
+
     def pop_last_empty(nodeset)
       while nodeset.size > 0 && nodeset.last.children.size == 0
         nodeset.pop
       end
       nodeset
+    end
+
+    def escape_text(text)
+      text.gsub(/[\+\'\:\?']/) {|s| "?#{s}"} 
     end
 
   end

@@ -23,8 +23,8 @@ module EdifactConverter
     namespace = xml.root.namespace
     xslt = Configuration.xml2edi(namespace.href)
   	xml11 = xslt.transform(xml)
-  	edifact = EdifactConverter::XML2EDI::XmlReader.new.parse_xml(xml)
-  	Result.new xml11, xml, text
+  	edifact = EdifactConverter::XML2EDI::XmlReader.new.parse_xml(xml11)
+  	Result.new xml11, xml, edifact
   end
 
   def self.read_file(filename)

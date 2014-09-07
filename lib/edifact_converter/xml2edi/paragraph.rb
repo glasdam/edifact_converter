@@ -36,7 +36,7 @@ module EdifactConverter::XML2EDI
 		end
 
 		def start_breaks?
-			content.first.break?
+			content.first.break? if content.size > 0
 		end
 
 		def add_start_break(text_break)

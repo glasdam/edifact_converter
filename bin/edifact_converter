@@ -21,7 +21,8 @@ EdifactConverter::Configuration.load_from_file('data/configuration.yaml')
 
 #settings = EdifactConverter::Configuration.edifact
 
-result = EdifactConverter.convert_edifact(EdifactConverter.read_file('test/files/DIS91_ok.edi'))
-puts result.xml
-result = EdifactConverter.convert_xml(result.xml.to_s)
+#result = EdifactConverter.convert_edifact(EdifactConverter.read_file('test/files/DIS91_ok.edi'))
+#puts result.xml
+result = EdifactConverter.convert_xml(EdifactConverter.read_file('test/files/UNA.xml'))
+#puts result.xml11
 puts result.edifact
