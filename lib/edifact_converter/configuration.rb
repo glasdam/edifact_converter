@@ -67,7 +67,12 @@ module EdifactConverter
 			end
 
 			def load
-				load_from_file('data/configuration.yaml')
+				load_from_file(
+					File.join(
+						File.dirname(
+							File.expand_path(__FILE__)), 
+						'../../data/configuration.yaml')
+					)
 			end
 		end
 
