@@ -22,7 +22,16 @@ module EdifactConverter::XML2EDI
 
     def parse_xml(xml)
       Nokogiri::XSLT.register "http://edifact.medware.dk/converter", SegmentChecks
-      xsl = Nokogiri.XSLT(File.open("data/remove_grouping.xsl"))
+      xsl = Nokogiri.XSLT(
+        File.open(
+          File.join(
+            File.dirname(
+              File.expand_path(__FILE__)
+            ),
+            '../../../data/remove_grouping.xsl'
+          )
+        )
+      )
       result = xsl.transform(xml) do |config|
         config.default_xml.noblanks
       end
@@ -46,7 +55,7 @@ module EdifactConverter::XML2EDI
 
     def process_xftxs(xml)
       xml.xpath("//XFTX").each do |xftx|
-        XftxParser.parse xftx        
+        XftxParser.parse xftx
       end
     end
 
