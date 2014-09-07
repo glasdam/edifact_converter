@@ -66,6 +66,9 @@ module EdifactConverter
 				end
 			end
 
+			def load
+				load_from_file('data/configuration.yaml')
+			end
 		end
 
 		# attr_accessor :settings
