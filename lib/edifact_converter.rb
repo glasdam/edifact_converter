@@ -9,7 +9,6 @@ require "edifact_converter/result"
 module EdifactConverter
 
   def self.convert_edifact(text)
-    # StatusHandler.new UNTHandler.new UNZHandler.new BrevHandler.new SegmentGroupHandler.new
     edifact_pipeline = EdifactConverter::EDI2XML::Pipeline.new
     parser = EDI2XML::EdiReader.new edifact_pipeline.handler
     parser.parse_string(text)

@@ -44,11 +44,10 @@ module EdifactConverter
 			end
 
 			def namespace(type, version)
-				@namespaces[version]
+				@namespaces[version] || default_namespace
 			end
 
 			def xml2edi(namespace)
-				#p namespace.href
 				ns = @xml['namespaces'][namespace] || @xml['namespaces'][default_namespace]
 				if ns
 					url = ns['xml2edi']
