@@ -2,17 +2,18 @@ require 'edifact_converter/edi2xml'
 
 module EdifactConverter::EDI2XML
   class EdiReader
-    attr_accessor :handler
+    attr_accessor :handler, :messages
 
     def initialize(handler)
       @handler = handler
     end
 
-    def parse_string(edistring)
-      parse(StringIO.new(edistring))
+    def parse_string(edistring, messages)
+      parse(StringIO.new(edistring), messages)
     end
 
-    def parse(edifile, close=false)
+    def parse(edifile, messages, close=false)
+      self.messages = messages
       if edifile.kind_of? String
         close = true
         edifile = PositionIO.new (File.open edifile, 'rb', encoding: 'ISO-8859-1')
@@ -23,15 +24,14 @@ module EdifactConverter::EDI2XML
       begin
         parseUNA edifile
         eatCrap edifile
-        #printFile edifile
         while(parseSegment edifile)
           eatCrap edifile
-          #printFile edifile
         end
       rescue EOFError => e
         @handler.endDocument
       end
       edifile.close if close
+      @handler.xml
     end
 
     private
@@ -40,6 +40,11 @@ module EdifactConverter::EDI2XML
       segname = edifile.read 3
       if segname != "UNA"
         edifile.unread 3
+        messages << EdifactConverter::Message.new(
+          edifile.position,
+          "Missing UNA segment",
+          :warning
+        )
         return
       end
       @handler.una
@@ -98,7 +103,9 @@ module EdifactConverter::EDI2XML
     end
 
     def escape(escapable, position)
-      raise EdifactError.new "Wrong escape #{position}", position unless escapable =~ /[':?+]/
+      unless escapable =~ /[':?+]/
+        self.messages << EdifactConverter::Message.new(position, "Wrong use of escape for >#{escapable}<")
+      end
       return escapable
     end
 
@@ -109,13 +116,6 @@ module EdifactConverter::EDI2XML
       edifile.unread
     end
 
-    #      def printFile(edifile)
-    #        STDERR.puts ">>>>>"
-    #        pos = edifile.pos
-    #        STDERR.puts "\t#{edifile.readline}"
-    #        STDERR.puts "<<<<<"
-    #        edifile.pos = pos
-    #      end
   end
 
 end

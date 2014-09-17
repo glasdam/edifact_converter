@@ -19,7 +19,9 @@ module EdifactConverter::EDI2XML
         puts "Rendering #{@name}" unless @position
         args = []
         args << @text if @text
-        args << {linie: @position.line, position: @position.column}
+        unless EdifactConverter::Configuration.hide_position?
+          args << {linie: @position.line, position: @position.column} 
+        end
         xml.send(@name, *args) do |newxml|
           @children.each do |child|
             child.render xml
@@ -82,7 +84,11 @@ module EdifactConverter::EDI2XML
         xml.comment "Created from Edifact at #{Time.now.utc}, with software from MedWare"
         @document.render xml
       end
-      builder.doc
+      xml = builder.doc
+      xml.xpath("//Elm").each do |elm|
+        elm.children.last.remove if elm.children.last.content == ""
+      end
+      xml
     end
 
   end

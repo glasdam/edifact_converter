@@ -13,4 +13,17 @@ require "edifact_converter"
 
 module EdifactConverter::EDI2XML
 
+  def self.convert(edifact, messages = [])
+    xml11 = parser.parse_string(edifact, messages)
+  end
+
+
+  def self.parser
+    @parser ||= EdiReader.new pipeline.handler
+  end
+
+  def self.pipeline
+    @pipeline ||= Pipeline.new
+  end
+
 end

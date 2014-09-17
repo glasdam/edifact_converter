@@ -8,7 +8,9 @@ module EdifactConverter
 
 		class << self
 
-			attr_accessor :default_namespace
+			attr_accessor :default_namespace, :hide_position
+
+			alias :hide_position? :hide_position 
 
 			def edifact
 				@edifact ||= empty_properties

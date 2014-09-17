@@ -1,6 +1,6 @@
-require 'edifact_converter/xml2edi'
+require 'edifact_converter/xml11'
 
-module EdifactConverter::XML2EDI
+module EdifactConverter::XML11
 
 	class XftxParser
 

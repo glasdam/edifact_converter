@@ -12,32 +12,26 @@ module EdifactConverter::XML2EDI
       self.handler = ChecksumHandler.new edifact
     end
 
-    def parse_string(xmlstr)
-      parse_xml(Nokogiri::XML(xmlstr){ |config| config.default_xml.noblanks })
-    end
-
-    def parse_file(file)
-      parse_xml(Nokogiri::XML(File.open(file, encoding: 'ISO-8859-1')){ |config| config.default_xml.noblanks })
-    end
-
-    def parse_xml(xml)
-      Nokogiri::XSLT.register "http://edifact.medware.dk/converter", SegmentChecks
-      xsl = Nokogiri.XSLT(
-        File.open(
-          File.join(
-            File.dirname(
-              File.expand_path(__FILE__)
-            ),
-            '../../../data/remove_grouping.xsl'
-          )
-        )
+    def parse_string(xmlstr, messages)
+      parse_xml(
+        Nokogiri::XML(xmlstr){ |config| config.default_xml.noblanks },
+        messages
       )
-      result = xsl.transform(xml) do |config|
+    end
+
+    def parse_file(file, messages)
+      parse_xml(
+        Nokogiri::XML(File.open(file, encoding: 'ISO-8859-1')){ |config| config.default_xml.noblanks },
+        messages
+      )
+    end
+
+    def parse_xml(xml, messages)
+      xml = self.class.stylesheet.transform(xml) do |config|
         config.default_xml.noblanks
       end
-      process_xftxs result
       handler.startDocument
-      result.root.children.each do |segment|
+      xml.root.children.each do |segment|
         handler.startSegment(segment.name)
         segment.children.each do |element|
           handler.startElement()
@@ -53,9 +47,19 @@ module EdifactConverter::XML2EDI
       enc_converter.convert(edifact.edifact.string)
     end
 
-    def process_xftxs(xml)
-      xml.xpath("//XFTX").each do |xftx|
-        XftxParser.parse xftx
+    def self.stylesheet
+      @stylesheet ||= begin
+        Nokogiri::XSLT.register "http://edifact.medware.dk/converter", SegmentChecks
+        Nokogiri.XSLT(
+          File.open(
+            File.join(
+              File.dirname(
+                File.expand_path(__FILE__)
+              ),
+              '../../../data/remove_grouping.xsl'
+            )
+          )
+        )
       end
     end
 

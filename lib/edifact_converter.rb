@@ -3,27 +3,25 @@ require "edifact_converter/empty_handler"
 require "edifact_converter/edifact_error"
 require 'edifact_converter/edi2xml'
 require "edifact_converter/xml2edi"
+require "edifact_converter/xml11"
 require "edifact_converter/configuration"
 require "edifact_converter/result"
 
 module EdifactConverter
 
   def self.convert_edifact(text)
-    edifact_pipeline = EdifactConverter::EDI2XML::Pipeline.new
-    parser = EDI2XML::EdiReader.new edifact_pipeline.handler
-    parser.parse_string(text)
-    namespace = Configuration.namespace(edifact_pipeline.type, edifact_pipeline.version)
-   	xslt = Configuration.edi2xml(edifact_pipeline.type, edifact_pipeline.version)
-    Result.new edifact_pipeline.xml, xslt.transform(edifact_pipeline.xml), text
+    messages = []
+    xml11 = EdifactConverter::EDI2XML.convert(text, messages)
+    xml = EdifactConverter::XML11.to_xml(xml11, messages)
+    Result.new xml11, xml, text, messages
   end
 
   def self.convert_xml(text)
-    xml = Nokogiri::XML(text) 
-    namespace = xml.root.namespace
-    xslt = Configuration.xml2edi(namespace.href)
-  	xml11 = xslt.transform(xml)
-  	edifact = EdifactConverter::XML2EDI::XmlReader.new.parse_xml(xml11)
-  	Result.new xml11, xml, edifact
+    messages = []
+    xml = Nokogiri::XML(text)
+    xml11 = EdifactConverter::XML11.from_xml(xml, messages)
+  	edifact = EdifactConverter::XML2EDI.convert(xml11, messages)
+  	Result.new xml11, xml, edifact, messages
   end
 
   def self.read_file(filename)
