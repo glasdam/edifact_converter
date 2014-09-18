@@ -8,9 +8,9 @@ module EdifactConverter
 
 		class << self
 
-			attr_accessor :default_namespace, :hide_position
+			attr_accessor :default_namespace, :hide_position, :schemas, :xml2edis, :edi2xmls
 
-			alias :hide_position? :hide_position 
+			alias :hide_position? :hide_position
 
 			def edifact
 				@edifact ||= empty_properties
@@ -50,20 +50,35 @@ module EdifactConverter
 			end
 
 			def xml2edi(namespace)
-				ns = @xml['namespaces'][namespace] || @xml['namespaces'][default_namespace]
-				if ns
-					url = ns['xml2edi']
-					xmldoc = Nokogiri::XML(open(url), url)
-					Nokogiri::XSLT::Stylesheet.parse_stylesheet_doc(xmldoc)
+				xml2edis[namespace] ||= begin
+					ns = @xml['namespaces'][namespace] || @xml['namespaces'][default_namespace]
+					if ns
+						url = ns['xml2edi']
+						xmldoc = Nokogiri::XML(open(url), url)
+						Nokogiri::XSLT::Stylesheet.parse_stylesheet_doc(xmldoc)
+					end
 				end
 			end
 
 			def edi2xml(type, version)
-				ns = namespace(type, version)
-				if ns
-					url = @xml['namespaces'][ns]['edi2xml']
-					xmldoc = Nokogiri::XML(open(url), url)
-					Nokogiri::XSLT::Stylesheet.parse_stylesheet_doc(xmldoc)
+				edi2xmls["#{type}_#{version}"] ||= begin
+					ns = namespace(type, version)
+					if ns
+						url = @xml['namespaces'][ns]['edi2xml']
+						xmldoc = Nokogiri::XML(open(url), url)
+						Nokogiri::XSLT::Stylesheet.parse_stylesheet_doc(xmldoc)
+					end
+				end
+			end
+
+			def schema(namespace)
+				schemas[namespace] ||= begin
+					ns = @xml['namespaces'][namespace]
+					if ns
+						url = ns['schema']
+						xmldoc = Nokogiri::XML(open(url), url)
+						Nokogiri::XML::Schema.from_document xmldoc
+					end
 				end
 			end
 
@@ -71,10 +86,23 @@ module EdifactConverter
 				load_from_file(
 					File.join(
 						File.dirname(
-							File.expand_path(__FILE__)), 
-						'../../data/configuration.yaml')
-					)
+						File.expand_path(__FILE__)),
+					'../../data/configuration.yaml')
+				)
 			end
+
+			def edi2xmls
+				@edi2xmls ||= {}
+			end
+
+			def xml2edis
+				@xml2edis ||= {}
+			end
+
+			def schemas
+				@schemas ||= {}
+			end
+
 		end
 
 		# attr_accessor :settings

@@ -6,13 +6,13 @@ module EdifactConverter::XML11
 
   def self.from_xml(xml, messages = [])
     namespace = xml.root.namespace
+    schema_validate(xml, messages)
     xslt = EdifactConverter::Configuration.xml2edi(namespace.href)
     xml11 = xslt.transform(xml)
     xml11.encoding = "ISO-8859-1"
     extract_errors(xml11, messages)
-    xml = process_xftxs xml11, messages
-    p messages
-    xml
+    xml11 = process_xftxs xml11, messages
+    xml11
   end
 
   def self.to_xml(xml11, messages = [])
@@ -23,6 +23,7 @@ module EdifactConverter::XML11
     xslt = EdifactConverter::Configuration.edi2xml(type, version)
     xml = xslt.transform(xml11)
     extract_errors(xml, messages)
+    schema_validate(xml, messages)
     xml
   end
 
@@ -59,6 +60,14 @@ module EdifactConverter::XML11
     xml.xpath("//FEJL").each do |error|
       messages << EdifactConverter::Message.new(nil, error.content)
       error.remove
+    end
+  end
+
+  def self.schema_validate(xml, messages)
+    namespace = xml.root.namespace
+    xsd = EdifactConverter::Configuration.schema(namespace.href)
+    xsd.validate(xml).each do |error|
+      messages << EdifactConverter::Message.from_syntax_error(error)
     end
   end
 

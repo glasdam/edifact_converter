@@ -6,6 +6,7 @@ require "edifact_converter/xml2edi"
 require "edifact_converter/xml11"
 require "edifact_converter/configuration"
 require "edifact_converter/result"
+require "edifact_converter/message"
 
 module EdifactConverter
 
@@ -18,7 +19,8 @@ module EdifactConverter
 
   def self.convert_xml(text)
     messages = []
-    xml = Nokogiri::XML(text)
+    xml = Nokogiri::XML(text) { |config| config.nonet }
+    xml_parse_errors xml, messages
     xml11 = EdifactConverter::XML11.from_xml(xml, messages)
   	edifact = EdifactConverter::XML2EDI.convert(xml11, messages)
   	Result.new xml11, xml, edifact, messages
@@ -26,6 +28,12 @@ module EdifactConverter
 
   def self.read_file(filename)
   	File.open(filename, 'r', encoding: 'ISO-8859-1') { |f| f.read }
+  end
+
+  def self.xml_parse_errors(xml, messages)
+    xml.errors.each do |error|
+      messages << Message.from_syntax_error(error)
+    end
   end
 
 end

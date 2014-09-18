@@ -3,9 +3,20 @@
 require 'edifact_converter'
 EdifactConverter::Configuration.load
 
+time = Time.now
 EdifactConverter::Configuration.hide_position = true
 result = EdifactConverter.convert_edifact(EdifactConverter.read_file('test/files/sygehushenv_ver30.edi'))
-p result.messages
+#puts result.xml
+puts Time.now - time
 
-result = EdifactConverter.convert_xml(result.xml.to_s)
-p result.messages
+xmltext = EdifactConverter.read_file("/Users/jacob/Desktop/h0130.xml")
+result = EdifactConverter.convert_xml(xmltext)
+puts Time.now - time
+xmltext = EdifactConverter.read_file("/Users/jacob/Desktop/h0130.xml")
+result = EdifactConverter.convert_xml(xmltext)
+puts Time.now - time
+#puts result.xml
+#p result.messages
+#p EdifactConverter::Configuration.xml2edis
+#p EdifactConverter::Configuration.edi2xmls
+#p EdifactConverter::Configuration.schemas
