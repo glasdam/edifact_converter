@@ -8,7 +8,7 @@ module EdifactConverter
 
 		class << self
 
-			attr_accessor :default_namespace, :hide_position, :schemas, :xml2edis, :edi2xmls
+			attr_accessor :default_namespace, :hide_position, :schemas, :xml2edis, :edi2xmls, :format_edi
 
 			alias :hide_position? :hide_position
 

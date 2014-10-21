@@ -5,16 +5,20 @@ EdifactConverter::Configuration.load
 
 time = Time.now
 EdifactConverter::Configuration.hide_position = true
-result = EdifactConverter.convert_edifact(EdifactConverter.read_file('test/files/sygehushenv_ver30.edi'))
+#result = EdifactConverter.convert_edifact(EdifactConverter.read_file('test/files/XBIN_hello_World.edi'))
+#result = EdifactConverter.convert_edifact(EdifactConverter.read_file('tmp.edi'))
 #puts result.xml
+#puts Time.now - time
+
+xmltext = EdifactConverter.read_file("test/files/XBIN_hello_World.xml")
+result = EdifactConverter.convert_xml(xmltext)
+#puts result.xml11
+#puts result.edifact
+
+#File.open('tmp.edi', 'w') { |file| file.write(result.edifact) }
+
 puts Time.now - time
 
-xmltext = EdifactConverter.read_file("/Users/jacob/Desktop/h0130.xml")
-result = EdifactConverter.convert_xml(xmltext)
-puts Time.now - time
-xmltext = EdifactConverter.read_file("/Users/jacob/Desktop/h0130.xml")
-result = EdifactConverter.convert_xml(xmltext)
-puts Time.now - time
 #puts result.xml
 #p result.messages
 #p EdifactConverter::Configuration.xml2edis

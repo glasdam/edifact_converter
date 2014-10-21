@@ -1,4 +1,5 @@
 require 'edifact_converter/edi2xml'
+require "base64"
 
 module EdifactConverter::EDI2XML
   class EdiReader
@@ -56,11 +57,20 @@ module EdifactConverter::EDI2XML
       start = edifile.position
       name = edifile.read 3
       return false unless name
-      raise EdifactError.new "Bad Segment name #{start}", start unless name =~ /[A-Z][A-Z0-9]{2}/
+      raise EdifactConverter::EdifactError.new "Bad Segment name >#{name}< #{start}", start unless name =~ /[A-Z][A-Z0-9]{2}/
       @handler.startSegment name, start
-      while(parseElement edifile)
+      if name == 'UNO'
+        3.times { parseElement edifile }
+        size = parseElementWithSize(edifile)
+        while(parseElement edifile)
+        end
+        @handler.endSegment name
+        parseBinary(edifile, size.to_i)
+      else
+        while(parseElement edifile)
+        end
+        @handler.endSegment name
       end
-      @handler.endSegment name
       true
     end
 
@@ -114,6 +124,48 @@ module EdifactConverter::EDI2XML
         nextchar = edifile.read
       end while nextchar =~ /[\s]/
       edifile.unread
+    end
+
+    def parseElementWithSize(edifile)
+      start = edifile.position
+      nextchar = edifile.read
+      case nextchar
+      when '+'
+        @handler.startElement start
+      else
+        raise EdifactError.new "Bad Syntax #{start}", start
+      end
+      size = parseValueSize edifile
+      while(parseValue edifile)
+      end
+      @handler.endElement
+      return size
+    end
+
+    def parseValueSize(edifile)
+      start = edifile.position
+      text = ''
+      while not((nextchar = edifile.read) =~ /[+:']/)
+        case nextchar
+        when '\n'
+        else
+          text << nextchar
+        end
+      end
+      @handler.value text, start
+      case nextchar
+      when /[+']/
+        edifile.unread
+      end
+      return text
+    end    
+
+    def parseBinary(edifile, size)
+      @handler.startSegment "OBJ", edifile.position
+      @handler.startElement edifile.position
+      @handler.value Base64.encode64(edifile.read(size)), edifile.position
+      @handler.endElement
+      @handler.endSegment "OBJ"
     end
 
   end

@@ -20,7 +20,7 @@ module EdifactConverter::XML2EDI
 
     def escape_subelms(nodeset)
       nodeset.each do |elm|
-        elm.content = escape_text elm.text
+        elm.content = escape_text elm.text unless elm['base64']
       end
     end
 

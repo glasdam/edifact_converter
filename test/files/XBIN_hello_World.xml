@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Emessage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://rep.oio.dk/medcom.dk/xml/schemas/2012/03/28/ ../../../../../medcom/git/drafts/Konverter/trunk/Konverter/xml/Schemas/2012/03/28/EMessage.xsd"
+ xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2012/03/28/">
+  <Envelope>
+    <Sent>
+      <Date>2002-11-21</Date>
+      <Time>20:28</Time>
+    </Sent>
+    <Identifier>MEDBIN00173</Identifier>
+    <AcknowledgementCode>minuspositivkvitt</AcknowledgementCode>
+  </Envelope>
+  <BinaryLetter>
+    <Letter>
+      <Identifier>021121TAU00173</Identifier>
+      <VersionCode>XB0131X</VersionCode>
+      <StatisticalCode>XBIN01</StatisticalCode>
+      <Authorisation>
+        <Date>2002-11-21</Date>
+        <Time>20:28</Time>
+      </Authorisation>
+      <TypeCode>XBIN01</TypeCode>
+      <StatusCode>nytbrev</StatusCode>
+    </Letter>
+    <Sender>
+      <EANIdentifier>5790000120420</EANIdentifier>
+      <Identifier>004391</Identifier>
+      <IdentifierCode>ydernummer</IdentifierCode>
+      <OrganisationName>Læge Gunnild Vedel Nielsen</OrganisationName>
+      <UnitName>Sekr./ GVN</UnitName>
+      <StreetName>Borgbjergsvej 34</StreetName>
+      <DistrictName>København SV</DistrictName>
+      <PostCodeIdentifier>2450</PostCodeIdentifier>
+      <MedicalSpecialityCode>psykiatri_praksis</MedicalSpecialityCode>
+    </Sender>
+    <Receiver>
+      <EANIdentifier>5790000125067</EANIdentifier>
+      <Identifier>654321</Identifier>
+      <IdentifierCode>ydernummer</IdentifierCode>
+      <OrganisationName>Lægehuset i Taulov</OrganisationName>
+      <UnitName>Jørgen Damsgaard</UnitName>
+      <StreetName>Parupvej 3</StreetName>
+      <DistrictName>Fredericia</DistrictName>
+      <PostCodeIdentifier>7000</PostCodeIdentifier>
+    </Receiver>
+    <Patient>
+      <CivilRegistrationNumber>1111111118</CivilRegistrationNumber>
+      <PersonSurnameName>Testesen</PersonSurnameName>
+      <PersonGivenName>Test</PersonGivenName>
+    </Patient>
+    <BinaryObject>
+      <ObjectIdentifier>5051D851-5CAC-4F69-80E1-F4BC6B86BF62</ObjectIdentifier>
+      <ObjectCode>tekstfil</ObjectCode>
+      <ObjectExtensionCode>txt</ObjectExtensionCode>
+      <OriginalObjectSize>32</OriginalObjectSize>
+        <Object_Base64Encoded>H4sIAFJtLlQAA/NIzcnJVwjPL8pJ4QIA4+WVsAwAAAA=</Object_Base64Encoded>
+    </BinaryObject>
+  </BinaryLetter>
+</Emessage>
