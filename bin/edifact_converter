@@ -1,6 +1,26 @@
 #!/usr/bin/env ruby
 
 require 'edifact_converter'
+
+$COMMAND_NAME
+
+options = EdifactConverter::CommandLineParser.parse
+
+EdifactConverter::Configuration.load
+EdifactConverter::Configuration.hide_position = true
+p options
+
+if options[:source] == :xml
+  xmltext = EdifactConverter.read_file(options[:input])
+  result = EdifactConverter.convert_xml(xmltext)
+  puts result.edifact
+else
+  editxt = EdifactConverter.read_file(options[:input])
+  result = EdifactConverter.convert_edifact(editxt)
+  puts result.xml
+end
+exit
+
 EdifactConverter::Configuration.load
 
 time = Time.now

@@ -65,6 +65,7 @@ module EdifactConverter::XML11
 
   def self.schema_validate(xml, messages)
     namespace = xml.root.namespace
+    # TODO namespace may be nil, perhaps it is crap
     xsd = EdifactConverter::Configuration.schema(namespace.href)
     xsd.validate(xml).each do |error|
       messages << EdifactConverter::Message.from_syntax_error(error)

@@ -7,6 +7,7 @@ require "edifact_converter/xml11"
 require "edifact_converter/configuration"
 require "edifact_converter/result"
 require "edifact_converter/message"
+require "edifact_converter/command_line_parser"
 
 module EdifactConverter
 
