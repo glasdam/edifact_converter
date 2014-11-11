@@ -1,6 +1,7 @@
 # EdifactConverter
 
-TODO: Write a gem description
+Converts a MedCom Edifact message to a MedCom XML message.
+Details regarding MedCom definitions http://medcom.dk
 
 ## Installation
 
@@ -18,7 +19,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+edifact_converter [options] file
+    -x, --xml                        Convert from Edifact to XML
+    -e, --edi                        Convert from XML to Edifact
+    -l, --logfile FILE               Write log to FILE
+    -h, --help                       Display this screen
+```
 
 ## Contributing
 

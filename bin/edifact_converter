@@ -2,13 +2,12 @@
 
 require 'edifact_converter'
 
-$COMMAND_NAME
+$COMMAND_NAME = 'edifact_converter'
 
 options = EdifactConverter::CommandLineParser.parse
 
 EdifactConverter::Configuration.load
 EdifactConverter::Configuration.hide_position = true
-p options
 
 if options[:source] == :xml
   xmltext = EdifactConverter.read_file(options[:input])
