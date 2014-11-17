@@ -138,7 +138,7 @@ module EdifactConverter::XML11
 		def divide_text(value)
 			chars = value.chars
 			text = StringIO.new
-			chars.delete_if do |c|
+			chars = chars.reject do |c|
 				if c =~ /[\?:\\\'\+]/
 					case text.size
 					when 68
@@ -154,7 +154,7 @@ module EdifactConverter::XML11
 					end
 					text.write '?'
 				else
-					if text.size == 69 and chars.size > 1
+					if text.size == 69 and chars.count > 1
 						unless text.string[-1] =~ /[\?:\\\'\+\s\;\.\,]/
 							index = text.string.rindex(/[\?:\\\'\+\s\;\.\,]/, -1)
 							if index and index > 2
