@@ -1,4 +1,4 @@
-require 'edifact_converter/edi2xml'
+require 'edifact_converter/edi2xml/position'
 
 module EdifactConverter::EDI2XML
 

@@ -37,8 +37,7 @@ module EdifactConverter::EDI2XML
 
     def endDocument
       unless @current == @document
-        p @current.name
-        raise "BAD SYNTAX" 
+        raise "BAD SYNTAX"
       end
       super
     end

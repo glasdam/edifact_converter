@@ -1,9 +1,9 @@
 require 'test/unit'
-require 'edifact_converter/from_edi/xml_handler'
+require 'edifact_converter'
 require 'equivalent-xml'
 
 
-module EdifactConverter
+module EdifactConverter::EDI2XML
 
   class XmlHandlerTest < Test::Unit::TestCase
 
@@ -42,8 +42,8 @@ module EdifactConverter
       handler.value "5790000143054", Position.new(2, 12)
       handler.value "14", Position.new(2, 26)
       handler.endElement
-      handler.endSegment
-      handler.endSegmentGroup
+      handler.endSegment 'UNOC'
+      handler.endSegmentGroup 'S01'
       handler.endDocument
       #puts handler.xml.to_xml
 
@@ -62,7 +62,7 @@ module EdifactConverter
       handler.value "5790000143054", Position.new(2, 12)
       handler.value "14", Position.new(2, 26)
       handler.endElement
-      handler.endSegment
+      handler.endSegment 'UNB'
       assert_raise RuntimeError do
         handler.endDocument
       end

@@ -1,5 +1,3 @@
-require 'edifact_converter/edi2xml'
-
 module EdifactConverter::EDI2XML
 
   class Position

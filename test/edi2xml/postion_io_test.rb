@@ -1,7 +1,7 @@
 require 'test/unit'
-require 'edifact_converter/from_edi/position_io'
+require 'edifact_converter/edi2xml/position_io'
 
-module EdifactConverter
+module EdifactConverter::EDI2XML
 
   class PositionIOTest < Test::Unit::TestCase
     def test_zero_at_start

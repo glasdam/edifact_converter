@@ -23,6 +23,7 @@ module EdifactConverter::EDI2XML
       end
       @handler.startDocument
       begin
+        eatCrap edifile
         parseUNA edifile
         eatCrap edifile
         while(parseSegment edifile)
@@ -79,11 +80,11 @@ module EdifactConverter::EDI2XML
       nextchar = edifile.read
       case nextchar
       when '+'
-        @handler.startElement start
+        @handler.startElement edifile.position
       when '\''
         return false
       else
-        raise EdifactError.new "Bad Syntax #{start}", start
+        raise EdifactConverter::EdifactError.new "Bad Syntax at #{start}", start
       end
       while(parseValue edifile)
       end
@@ -92,18 +93,19 @@ module EdifactConverter::EDI2XML
     end
 
     def parseValue(edifile)
-      start = edifile.position
+      value_start = edifile.position
       text = ''
       while not((nextchar = edifile.read) =~ /[+:']/)
         case nextchar
         when '?'
-          text << escape(edifile.read, edifile.position)
+          position = edifile.position
+          text << escape(edifile.read, position)
         when '\n'
         else
           text << nextchar
         end
       end
-      @handler.value text, start
+      @handler.value text, value_start
       case nextchar
       when /[+']/
         edifile.unread
@@ -133,7 +135,7 @@ module EdifactConverter::EDI2XML
       when '+'
         @handler.startElement start
       else
-        raise EdifactError.new "Bad Syntax #{start}", start
+        raise EdifactConverter::EdifactError.new "Bad Syntax #{start}", start
       end
       size = parseValueSize edifile
       while(parseValue edifile)
