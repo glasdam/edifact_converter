@@ -7,6 +7,7 @@ module EdifactConverter::EDI2XML
 
     def initialize(file)
       @file = file
+      @file.set_encoding (Encoding::ASCII_8BIT)
       @column = @line = 0
       @lines = []
     end
@@ -16,12 +17,14 @@ module EdifactConverter::EDI2XML
       while(amount > 0)
         nextchar = @file.getc
         raise EOFError.new unless nextchar
+        nextchar.encode!(Encoding::UTF_8, Encoding::ISO_8859_1) #force_encoding Encoding::ISO_8859_1
         case nextchar
         when /\n/
           @lines[@line] = @column
           @line += 1
           @column = 0
         when /\r/
+          @column += 1
         else
           text << nextchar
           amount -= 1
@@ -52,6 +55,11 @@ module EdifactConverter::EDI2XML
           amount -= 1
         end
       end
+    end
+
+    def binread(amount)
+      @column += amount
+      @file.read amount
     end
 
     def position

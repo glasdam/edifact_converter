@@ -124,7 +124,7 @@ module EdifactConverter::EDI2XML
     def eatCrap(edifile)
       begin
         nextchar = edifile.read
-      end while nextchar =~ /[\s]/
+      end while nextchar =~ /[\s\r\t]/
       edifile.unread
     end
 
@@ -159,13 +159,23 @@ module EdifactConverter::EDI2XML
       when /[+']/
         edifile.unread
       end
-      return text
+      begin
+        size = Integer(text)
+      rescue ArgumentError => e
+        raise EdifactConverter::EdifactError.new "Wrong format for size (#{text})", start
+      end
+      return Integer(text)
     end    
 
     def parseBinary(edifile, size)
-      @handler.startSegment "OBJ", edifile.position
-      @handler.startElement edifile.position
-      @handler.value Base64.encode64(edifile.read(size)), edifile.position
+      start = edifile.position
+      @handler.startSegment "OBJ", start
+      @handler.startElement start
+      data = edifile.binread(size)
+      if data.size < size
+        raise EdifactConverter::EdifactError.new "Binary size is larger than edifact file", start
+      end
+      @handler.value Base64.encode64(data), start
       @handler.endElement
       @handler.endSegment "OBJ"
     end
