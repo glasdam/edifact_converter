@@ -31,7 +31,7 @@ class LogReaderHandler < EdifactConverter::EmptyHandler
     end
 
     def can_be_child?(node_type)
-      NODE_TYPES.index(type) < NODE_TYPES.index(node_type)
+      NODE_TYPES.index(type) < NODE_TYPES.index(node_type) || type == :segment_group
     end
 
   end
@@ -51,7 +51,10 @@ class LogReaderHandler < EdifactConverter::EmptyHandler
   end
 
   def push(node)
-    raise 'Hell' unless stack.last.can_be_child? node.type
+    unless stack.last.can_be_child? node.type
+      p stack.last  
+      raise 'Hell' 
+    end
     stack.last.children << node
     last[node.type] = node
     stack.push node unless node.type == :value
@@ -67,6 +70,16 @@ class LogReaderHandler < EdifactConverter::EmptyHandler
   def startDocument
     self.document = Node.root('Edifact')
     self.stack = [document]
+    super
+  end
+
+  def startSegmentGroup(name, position, hiddent)
+    push Node.segment_group(name, position)
+    super
+  end
+
+  def endSegmentGroup(name)
+    pop name, :segment_group
     super
   end
 

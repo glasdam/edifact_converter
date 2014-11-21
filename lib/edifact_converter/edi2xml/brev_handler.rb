@@ -14,6 +14,11 @@ module EdifactConverter::EDI2XML
 			@indhold ||= false
 		end
 
+		def startDocument
+			self.brev = self.indhold = false
+			super
+		end
+
 		def startSegment(name, position)
 			self.last_position = position.dup
 			case name
@@ -32,6 +37,7 @@ module EdifactConverter::EDI2XML
 				case name
 				when 'UNT'
 					endSegmentGroup('Brev')
+					self.brev = false
 				when 'UNH'
 					unless indhold?
 						startSegmentGroup 'BrevIndhold', last_position, false

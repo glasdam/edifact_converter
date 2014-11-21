@@ -1,51 +1,11 @@
 require 'test/unit'
-#require 'edifact_converter/empty_handler'
 require 'edifact_converter'
 require_relative 'log_reader_handler'
-#require 'edifact_converter/edi2xml/edi_reader'
+
 
 module EdifactConverter::EDI2XML
 
   class EdiReaderTest < Test::Unit::TestCase
-
-    # class TestReaderHandler < EdifactConverter::EmptyHandler
-    #   attr_accessor :number_of_startsegments,
-    #     :number_of_endsegments,
-    #     :number_of_startelements,
-    #     :number_of_endelements,
-    #     :number_of_values,
-    #     :last_segment_position,
-    #     :last_element_position,
-    #     :last_value_position,
-    #     :last_value
-    #   def startDocument
-    #     @number_of_values = @number_of_startsegments = @number_of_endsegments = @number_of_startelements = @number_of_endelements = 0
-    #   end
-    #   def startSegment(name, position)
-    #     self.number_of_startsegments += 1
-    #     self.last_segment_position = position
-    #     super name, position
-    #   end
-    #   def endSegment(name)
-    #     self.number_of_endsegments += 1
-    #     super
-    #   end
-    #   def startElement(position)
-    #     self.number_of_startelements += 1
-    #     self.last_element_position = position
-    #     super position
-    #   end
-    #   def endElement
-    #     self.number_of_endelements += 1
-    #     super
-    #   end
-    #   def value(value, position)
-    #     self.number_of_values += 1
-    #     self.last_value_position = position
-    #     self.last_value = value
-    #     super value, position
-    #   end
-    # end
 
     def handler
       @handler ||= LogReaderHandler.new
