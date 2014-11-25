@@ -31,7 +31,7 @@ module EdifactConverter
     end
 
     def null?
-      false
+      true
     end
 
   end
