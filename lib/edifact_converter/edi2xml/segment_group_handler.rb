@@ -36,7 +36,7 @@ module EdifactConverter::EDI2XML
 		def endSegmentGroup(name)
 			if name == 'BrevIndhold'
 				self.indhold = false
-				open_groups.delete_if do |name|
+				open_groups.reject! do |name|
 					endSegmentGroup name
 					true
 				end
