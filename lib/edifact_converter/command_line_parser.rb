@@ -24,6 +24,10 @@ module EdifactConverter
             opts.on( '-l', '--logfile FILE', 'Write log to FILE' ) do|file|
               options[:logfile] = file
             end
+            opts.on( '-v', '--version', "Prints version of #{$COMMAND_NAME}") do
+              puts "#{$COMMAND_NAME} version #{VERSION}"
+              exit
+            end
             opts.on( '-h', '--help', 'Display this screen' ) do
               puts opts
               exit
