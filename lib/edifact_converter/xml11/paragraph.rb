@@ -36,7 +36,7 @@ module EdifactConverter::XML11
 		end
 
 		def start_breaks?
-			content.first.break? if content.size > 0
+			content.first.break? if content.any?
 		end
 
 		def add_start_break(text_break)
@@ -52,7 +52,7 @@ module EdifactConverter::XML11
 		end
 
 		def end_breaks?
-			content.last.break? > 0
+			content.last.break? if content.any?
 		end
 
 		def add_text(text)
@@ -138,18 +138,19 @@ module EdifactConverter::XML11
 		def divide_text(value)
 			chars = value.chars
 			text = StringIO.new
+			text.set_encoding("iso-8859-1")
 			chars = chars.reject do |c|
 				if c =~ /[\?:\\\'\+]/
 					case text.size
 					when 68
 						if chars.size > 1
 							text.write '\\'
-							yield text.string
+							yield text.string.encode "UTF-8"
 							text.string = ""
 						end
 					when 69
 						text.write '\\'
-						yield text.string
+						yield text.string.encode "UTF-8"
 						text.string = ""
 					end
 					text.write '?'
@@ -158,12 +159,12 @@ module EdifactConverter::XML11
 						unless text.string[-1] =~ /[\?:\\\'\+\s\;\.\,]/
 							index = text.string.rindex(/[\?:\\\'\+\s\;\.\,]/, -1)
 							if index and index > 2
-								yield "#{text.string[0..(index)]}\\"
+								yield "#{text.string[0..(index)]}\\".encode "UTF-8"
 								text.string = text.string[(index+1)..-1]
 							end
 						else
 							text.write '\\'
-							yield text.string
+							yield text.string.encode "UTF-8"
 							text.string = ''
 						end
 					end
@@ -172,7 +173,7 @@ module EdifactConverter::XML11
 				text.write c
 				true
 			end
-			text.string
+			text.string.encode "UTF-8"
 		end
 
 		def to_s

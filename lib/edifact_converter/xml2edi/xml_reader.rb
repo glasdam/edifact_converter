@@ -45,9 +45,11 @@ module EdifactConverter::XML2EDI
       handler.endDocument
       enc_converter = Encoding::Converter.new("utf-8", "iso-8859-1")
       edi_text = enc_converter.convert(edifact.edifact.string)
-      edi_text.force_encoding 'ASCII-8BIT'
-      edifact.binary.each do |id, base64|
-        edi_text.gsub!(id, Base64.decode64(base64))
+      if edifact.binary.any?
+        edi_text.force_encoding 'ASCII-8BIT'
+        edifact.binary.each do |id, base64|
+          edi_text.gsub!(id, Base64.decode64(base64))
+        end
       end
       edi_text
     end

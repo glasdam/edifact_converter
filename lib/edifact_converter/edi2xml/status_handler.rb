@@ -35,7 +35,8 @@ module EdifactConverter::EDI2XML
 		end
 
 		def endSegmentGroup(name)
-			self.rules = settings[groups.pop]
+			groups.pop
+			self.rules = settings[groups.last]
 			super
 		end
 

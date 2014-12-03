@@ -1,0 +1,9 @@
+UNA:+.? '
+UNB+UNOC:3+5790000120420:14+5790000181872:14+991111:1850+KuvertNr1234'
+UNH+BrevNr5678+CONTRL:D:93A:ZZ:C0230Q+CTL02'
+UCI+MEDREF01095+5790000181872:14+5790000120420:14+4'
+UCM+1111MAN01095+MEDREF:D:93A:UN:H0130R+4'
+FTX+VER+P00++EDI-brev med nummeret 1111MAN01095, afsendt 11/11 1999 kl 18.46 har \:ikke kunnet modtages. Horsens Sygehus, laboratoriet kan ikke modtage \:sygehushenvisninger. :Med venlig hilsen: IT-Hotline. Horsens Sygehus.Telefon 86345678.'
+UNT+5+BrevNr5678'
+UNZ+1+KuvertNr1234'
+

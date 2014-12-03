@@ -21,7 +21,10 @@ module EdifactConverter
             opts.on( '-e', '--edi', 'Convert from XML to Edifact' ) do
               options[:source] = :xml
             end
-            opts.on( '-l', '--logfile FILE', 'Write log to FILE' ) do|file|
+            opts.on( '-1', '--xml11', 'Only convert to XML 1-1') do
+              options[:xml11] = true
+            end
+            opts.on( '-l', '--logfile FILE', 'Write log to FILE' ) do |file|
               options[:logfile] = file
             end
             opts.on( '-v', '--version', "Prints version of #{$COMMAND_NAME}") do

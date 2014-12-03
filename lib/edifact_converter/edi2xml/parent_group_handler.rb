@@ -13,6 +13,12 @@ module EdifactConverter::EDI2XML
 		def startSegmentGroup(name, position, hidden)
 			if ancestors
 				self.ancestors = ancestors.drop_while do |parent_group|
+					# puts "-----\n"
+					# p status.groups
+					# #puts position
+					# p status.rules
+					# puts "#{parent_group} #{status.rules['children']}.include?(#{name}) = #{ status.rules['children'] ? status.rules['children'].include?(name) : false}"
+					# puts "-----\n"
 					if (children = status.rules['children']) and children.include?(name)
 						false
 					else

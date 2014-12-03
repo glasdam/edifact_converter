@@ -41,7 +41,7 @@ module EdifactConverter::XML11
     end
     xml.xpath("//GFTX").each do |gftx|
       max = gftx['maxOccurs']
-      max = (max && max.to_i / 2) || Float::INFINITY
+      max = (max && max.to_i) || Float::INFINITY
       if gftx.children.size > max
         messages << EdifactConverter::Message.new(
           nil,

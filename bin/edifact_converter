@@ -11,12 +11,20 @@ EdifactConverter::Configuration.hide_position = true
 
 if options[:source] == :xml
   xmltext = EdifactConverter.read_file(options[:input])
-  result = EdifactConverter.convert_xml(xmltext)
-  puts result.edifact
+  result = EdifactConverter.convert_xml(xmltext, options[:xml11])
+  if options[:xml11]
+    puts result.xml11
+  else
+    puts result.edifact
+  end
 else
   editxt = EdifactConverter.read_file(options[:input])
-  result = EdifactConverter.convert_edifact(editxt)
-  puts result.xml
+  result = EdifactConverter.convert_edifact(editxt, options[:xml11])
+  if options[:xml11]
+    puts result.xml11
+  else
+    puts result.xml
+  end
 end
 exit
 

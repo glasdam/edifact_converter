@@ -21,7 +21,7 @@ module EdifactConverter
 			end
 
 			def empty_properties
-				Hash.new { |hash, key| hash['default'] }
+				Hash.new { |hash, key| hash['default'] if hash.has_key? 'default' }
 			end
 
 			def load_from_file(filename)

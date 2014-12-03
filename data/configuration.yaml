@@ -111,6 +111,19 @@ edifact:
       S09:
         hidden:
           LIN: S08
+  MEDRPT:
+    default:
+      S16:
+        hidden:
+          GIS: S18
+      S18:
+        hidden:
+          GIS: S18
+        children:
+          - S20
+      S20:
+        hidden:
+          GIS: S18
 xml:
   namespaces:
     default:
