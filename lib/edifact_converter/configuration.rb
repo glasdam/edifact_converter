@@ -8,7 +8,7 @@ module EdifactConverter
 
 		class << self
 
-			attr_accessor :default_namespace, :hide_position, :schemas, :xml2edis, :edi2xmls, :format_edi
+			attr_accessor  :settings, :hide_position, :format_edi
 
 			alias :hide_position? :hide_position
 
@@ -20,65 +20,85 @@ module EdifactConverter
 				@xml ||= empty_properties
 			end
 
+			def settings
+				@settings ||= Hash.new { |hash, key| NullObject.new }
+			end
+
 			def empty_properties
 				Hash.new { |hash, key| hash['default'] if hash.has_key? 'default' }
 			end
 
 			def load_from_file(filename)
-				settings = YAML.load_file(filename)
-				@edifact = settings['edifact'] || {}
-				@xml = settings['xml'] || {}
-				@namespaces = if nss = @xml['namespaces']
-					self.default_namespace = nss['default']
-					nss.inject ({}) do |h, (key, value)|
-						(value['messages'] || []).each do |msg|
-							h[msg] = key
-						end
-						h
-					end
-				else
-					{}
+				self.settings = YAML.load_file(filename)
+				set_default settings
+			end
+
+			def set_default(hash)
+				return hash unless hash.respond_to? :default_proc
+				hash.default_proc = proc do |hash, key|
+					hash.fetch 'default', NullObject.instance
+				end
+				hash.each do |key, value|
+					set_default value
 				end
 			end
 
-			def rules(type, version, segmentgroup)
+			def rules_edi(type, version)
+				versions = settings['edifact'][type]
+				namespace = settings['xml']['namespaces'].detect do |key, value|
+					if value.kind_of? Hash
+						value['messages'].include? version
+					end
+				end
+				namespace ||= [ settings['xml']['namespaces']['default'] ]
+				rules = versions[version]
+				{
+					edifact: rules,
+					namespace: namespace.first,
+					xml: settings['xml']['namespaces'][namespace.first]
+				}
+			end
 
+			def rules_xml(namespace)
+				{
+					namespace: namespace,
+					xml: settings['xml']['namespaces'][namespace]
+				}
 			end
 
 			def namespace(type, version)
-				@namespaces[version] || default_namespace
+				namespace = settings['xml']['namespaces'].detect do |key, value|
+					if value.kind_of? Hash
+						value['messages'].include? version
+					end
+				end
+				namespace || [ settings['xml']['namespaces']['default'] ]
 			end
 
 			def xml2edi(namespace)
 				xml2edis[namespace] ||= begin
-					ns = @xml['namespaces'][namespace] || @xml['namespaces'][default_namespace]
-					if ns
-						url = ns['xml2edi']
-						xmldoc = Nokogiri::XML(open(url), url)
-						Nokogiri::XSLT::Stylesheet.parse_stylesheet_doc(xmldoc)
-					end
+					rules = rules_xml namespace
+					url = rules[:xml]['xml2edi']
+					xmldoc = Nokogiri::XML(open(url), url)
+					Nokogiri::XSLT::Stylesheet.parse_stylesheet_doc(xmldoc)
 				end
 			end
 
 			def edi2xml(type, version)
 				edi2xmls["#{type}_#{version}"] ||= begin
-					ns = namespace(type, version)
-					if ns
-						url = @xml['namespaces'][ns]['edi2xml']
-						xmldoc = Nokogiri::XML(open(url), url)
-						Nokogiri::XSLT::Stylesheet.parse_stylesheet_doc(xmldoc)
-					end
+					rules = rules_edi(type, version)
+					url = rules[:xml]['edi2xml']
+					xmldoc = Nokogiri::XML(open(url), url)
+					Nokogiri::XSLT::Stylesheet.parse_stylesheet_doc(xmldoc)
 				end
 			end
 
 			def schema(namespace)
 				schemas[namespace] ||= begin
-					ns = @xml['namespaces'][namespace]
-					if ns
-						url = ns['schema']
-						xmldoc = Nokogiri::XML(open(url), url)
-						Nokogiri::XML::Schema.from_document xmldoc
-					end
+					ns = settings['xml']['namespaces'][namespace]
+					url = ns['schema']
+					xmldoc = Nokogiri::XML(open(url), url)
+					Nokogiri::XML::Schema.from_document xmldoc
 				end
 			end
 
@@ -92,33 +112,18 @@ module EdifactConverter
 			end
 
 			def edi2xmls
-				@edi2xmls ||= {}
+			 	@edi2xmls ||= {}
 			end
 
 			def xml2edis
-				@xml2edis ||= {}
+			 	@xml2edis ||= {}
 			end
 
 			def schemas
-				@schemas ||= {}
+			 	@schemas ||= {}
 			end
 
 		end
-
-		# attr_accessor :settings
-
-		# def initialize(settings)
-		# 	self.settings = settings
-		# end
-
-		# def get(name)
-		# 	value = (settings[name] || settings['default'])
-		# 	if value.respond_to?(:has_key?)
-		# 		self.class.new(value)
-		# 	else
-		# 		value
-		# 	end
-		# end
 
 	end
 

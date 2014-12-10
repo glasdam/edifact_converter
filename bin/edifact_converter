@@ -3,7 +3,6 @@
 require 'edifact_converter'
 
 $COMMAND_NAME = 'edifact_converter'
-
 options = EdifactConverter::CommandLineParser.parse
 
 EdifactConverter::Configuration.load

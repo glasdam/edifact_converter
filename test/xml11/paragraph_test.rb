@@ -5,16 +5,28 @@ module EdifactConverter::XML11
 
   class ParagraphTest < Test::Unit::TestCase
 
-    def text
+    def text1
       txt = %{Vagttab på 10 kg/ 2mdr, trathed, hudkloe og icterus. UL-scanning har afgivet mistanke om malign galdevejssygdom. Komplikationsfrit operations- og efterforlOb i afd.}
       #txt.encode("iso-8859-1")
     end
 
-    def texts
+    def text1s
       [
         %{Vagttab på 10 kg/ 2mdr, trathed, hudkloe og icterus. UL-scanning har \\},
         %{afgivet mistanke om malign galdevejssygdom. Komplikationsfrit \\},
         %{operations- og efterforlOb i afd.}
+      ]
+    end
+
+    def text2
+      %{paravertebralmuskulatur primært på højre side. Smerterne stråler fra lænden ned i højre lår. Smerterne centraliseres ved gentagne øvelser (centraliseringsfænomenet er ifølge Mc.Kenziekonceptet tegn på}
+    end
+
+    def text2s
+      [
+        %{paravertebralmuskulatur primært på højre side. Smerterne stråler fra \\},
+        %{lænden ned i højre lår. Smerterne centraliseres ved gentagne øvelser \\},
+        %{(centraliseringsfænomenet er ifølge Mc.Kenziekonceptet tegn på }
       ]
     end
 
@@ -114,10 +126,16 @@ module EdifactConverter::XML11
 
     def test_divide_text
       result = []
-      result << @p.divide_text(text) { |txt| result << txt }      
+      result << @p.divide_text(text1) { |txt| result << txt }      
       assert_equal 3, result.size
       3.times do |index|
-        assert_equal texts[index], result[index], "Mismatch at #{index}"
+        assert_equal text1s[index], result[index], "Mismatch at #{index}"
+      end
+      result = []
+      result << @p.divide_text(text2) { |txt| result << txt }      
+      assert_equal 3, result.size, "Result = #{result}"
+      3.times do |index|
+        assert_equal text2s[index], result[index], "Mismatch at #{index}"
       end
     end
 

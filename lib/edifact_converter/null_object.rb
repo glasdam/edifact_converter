@@ -1,11 +1,20 @@
 module EdifactConverter
 
   class NullObject
-    def method_missing(*args, &block)
-      self
+
+    def self.instance
+      @instance ||= self.new
     end
 
-    def self.Maybe(value)
+    def method_missing(method, *args, &block)
+      if method.to_s =~ /\?$/
+        false
+      else
+        self
+      end
+    end
+
+    def self.maybe(value)
       case value
       when nil
         self.new

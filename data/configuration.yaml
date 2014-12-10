@@ -132,7 +132,6 @@ xml:
       schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2005/08/07/EMessage.xsd
       xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2005/08/07/XML2EDI/Emessage_2_XML11.xslt
       edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2005/08/07/EDI2XML/XML11_2_Emessage.xslt
-      messages:
     "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2006/07/01/":
       schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2006/07/01/EMessage.xsd 
       xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2006/07/01/XML2EDI/Emessage_2_XML11.xslt
