@@ -19,7 +19,8 @@ module EdifactConverter::EDI2XML
 			self.segment = 'Edifact'
 			self.element_in_segment = 0
 			self.value_in_element = 0
-			self.settings = EdifactConverter::Configuration.edifact
+			self.version = self.type = 'default'
+			self.settings = EdifactConverter::Configuration.rules_edi('default', 'default')
 			super
 		end
 
@@ -28,15 +29,14 @@ module EdifactConverter::EDI2XML
 		end
 
 		def startSegmentGroup(name, position, hidden)
-			self.settings = EdifactConverter::Configuration.edifact if name == 'Brev'
 			groups << name
-			self.rules = settings[name]
+			self.rules = settings[:edifact][name]
 			super
 		end
 
 		def endSegmentGroup(name)
 			groups.pop
-			self.rules = settings[groups.last]
+			self.rules = settings[:edifact][groups.last]
 			super
 		end
 
@@ -66,10 +66,10 @@ module EdifactConverter::EDI2XML
 				case value_in_element
 				when 0
 					self.type = value
-					self.settings = settings.fetch(value) { |val| settings['default']} || {}
+					self.settings = EdifactConverter::Configuration.rules_edi(type, version)
 				when 4
 					self.version = value
-					self.settings = settings.fetch(value) { |val| settings['default']} || {}
+					self.settings = EdifactConverter::Configuration.rules_edi(type, version)
 				end
 			end
 			self.value_in_element += 1
