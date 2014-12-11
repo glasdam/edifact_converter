@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gepj="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:dkcpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="DischargeLetter.xsd"/>
+	<xs:include schemaLocation="OutPatientDischargeLetter.xsd"/>
+	<xs:include schemaLocation="CasualtyWardLetter.xsd"/>
+	<xs:include schemaLocation="RadiologyReport.xsd"/>
+	<xs:include schemaLocation="BookingConfirmation.xsd"/>
+	<xs:include schemaLocation="ClinicalEmail.xsd"/>
+	<xs:include schemaLocation="AnswerOfAdmission.xsd"/>
+	<xs:include schemaLocation="NotificationOfDischarge.xsd"/>
+	<xs:include schemaLocation="NotificationOfAdmission.xsd"/>
+	<xs:include schemaLocation="WarningOfDischarge.xsd"/>
+	<xs:include schemaLocation="HospitalReferral.xsd"/>
+	<xs:include schemaLocation="XRayRequest.xsd"/>
+	<xs:include schemaLocation="LaboratoryReport.xsd"/>
+	<xs:include schemaLocation="MicrobiologyReport.xsd"/>
+	<xs:include schemaLocation="CervixcytologyReport.xsd"/>
+	<xs:include schemaLocation="HistopathologyReport.xsd"/>
+	<xs:include schemaLocation="Prescription.xsd"/>
+	<xs:include schemaLocation="PrescriptionRequest.xsd"/>
+	<xs:include schemaLocation="NegativeVansReceipt.xsd"/>
+	<xs:include schemaLocation="NegativeReceipt.xsd"/>
+	<xs:include schemaLocation="PositiveReceipt.xsd"/>
+	<xs:include schemaLocation="LaboratoryRequest.xsd"/>
+	<xs:include schemaLocation="MicrobiologyRequest.xsd"/>
+	<xs:include schemaLocation="PathologyRequest.xsd"/>
+	<xs:include schemaLocation="MultiSampleMicrobiologyRequest.xsd"/>
+	<xs:include schemaLocation="LaboratoryAnalysisFile.xsd"/>
+	<xs:include schemaLocation="BinaryLetter.xsd"/>
+	<xs:include schemaLocation="DiabetesReport.xsd"/>
+	<xs:include schemaLocation="LA121.xsd"/>
+	<xs:include schemaLocation="LA125.xsd"/>
+	<xs:include schemaLocation="LA141.xsd"/>
+	<xs:include schemaLocation="LA145.xsd"/>
+	<xs:include schemaLocation="LA165.xsd"/>
+	<xs:include schemaLocation="LA201.xsd"/>
+	<xs:include schemaLocation="LA205.xsd"/>
+	<xs:include schemaLocation="LA211.xsd"/>
+	<xs:include schemaLocation="LA215.xsd"/>
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="GeneralTypes.xsd"/>
+	<xs:group name="Letters">
+		<xs:choice>
+			<xs:element ref="HospitalReferral"/>
+			<xs:element ref="DischargeLetter"/>
+			<xs:element ref="OutPatientDischargeLetter"/>
+			<xs:element ref="CasualtyWardLetter"/>
+			<xs:element ref="RadiologyReport"/>
+			<xs:element ref="BookingConfirmation"/>
+			<xs:element ref="ClinicalEmail"/>
+			<xs:element ref="NotificationOfDischarge"/>
+			<xs:element ref="NotificationOfAdmission"/>
+			<xs:element ref="WarningOfDischarge"/>
+			<xs:element ref="AnswerOfAdmission"/>
+			<!-- 		<xs:element ref="HospitalReferral"/>  -->
+			<xs:element ref="XrayRequest"/>
+			<xs:element ref="LaboratoryAnalysisFile"/>
+			<xs:element ref="LaboratoryRequest"/>
+			<xs:element ref="MicrobiologyRequest"/>
+			<xs:element ref="MultiSampleMicrobiologyRequest"/>
+			<xs:element ref="PathologyRequest"/>
+			<xs:element ref="LaboratoryReport"/>
+			<xs:element ref="MicrobiologyReport"/>
+			<xs:element ref="CervixcytologyReport"/>
+			<xs:element ref="HistopathologyReport"/>
+			<xs:element ref="Prescription"/>
+			<xs:element ref="PrescriptionRequest"/>
+			<xs:element ref="NegativeVansReceipt"/>
+			<xs:element ref="NegativeReceipt"/>
+			<xs:element ref="PositiveReceipt"/>
+			<xs:element ref="BinaryLetter"/>
+			<xs:element ref="StatusRequest"/>
+			<xs:element ref="StatusAnswer"/>
+			<xs:element ref="GeneralHealthRequest"/>
+			<xs:element ref="GeneralHealthAnswer"/>
+			<xs:element ref="SocialMedicalProposal"/>
+			<xs:element ref="WorkingDisabilityRequest"/>
+			<xs:element ref="WorkingDisabilityAnswer"/>
+			<xs:element ref="SocialMedicalFollowUpRequest"/>
+			<xs:element ref="SocialMedicalFollowUpAnswer"/>
+			<xs:element ref="DiabetesReport"/>
+		</xs:choice>
+	</xs:group>
+</xs:schema>

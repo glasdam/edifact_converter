@@ -129,20 +129,38 @@ xml:
     default:
       "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/"
     "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/":
-      schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2005/08/07/EMessage.xsd
-      xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2005/08/07/XML2EDI/Emessage_2_XML11.xslt
-      edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2005/08/07/EDI2XML/XML11_2_Emessage.xslt
+      schema: 
+        - '%{gem_data}/xml/Schemas/2005/08/07/EMessage.xsd'
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2005/08/07/EMessage.xsd"
+      xml2edi:
+        -  '%{gem_data}/xml/XSLTs/2005/08/07/XML2EDI/Emessage_2_XML11.xslt'
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2005/08/07/XML2EDI/Emessage_2_XML11.xslt"
+      edi2xml: 
+        - '%{gem_data}/xml/XSLTs/2005/08/07/EDI2XML/XML11_2_Emessage.xslt'
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2005/08/07/EDI2XML/XML11_2_Emessage.xslt"
     "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2006/07/01/":
-      schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2006/07/01/EMessage.xsd 
-      xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2006/07/01/XML2EDI/Emessage_2_XML11.xslt
-      edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2006/07/01/EDI2XML/XML11_2_Emessage.xslt
+      schema: 
+        - "%{gem_data}/xml/Schemas/2006/07/01/EMessage.xsd"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2006/07/01/EMessage.xsd"
+      xml2edi: 
+        - "%{gem_data}/xml/XSLTs/2006/07/01/XML2EDI/Emessage_2_XML11.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2006/07/01/XML2EDI/Emessage_2_XML11.xslt"
+      edi2xml: 
+        - "%{gem_data}/xml/XSLTs/2006/07/01/EDI2XML/XML11_2_Emessage.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2006/07/01/EDI2XML/XML11_2_Emessage.xslt"
       messages:
         - D9134L
         - Q0131K
     "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2007/02/01/":
-      schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2007/02/01/EMessage.xsd
-      xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2007/02/01/XML2EDI/Emessage_2_XML11.xslt
-      edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2007/02/01/EDI2XML/XML11_2_Emessage.xslt
+      schema: 
+        - "%{gem_data}/xml/Schemas/2007/02/01/EMessage.xsd"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2007/02/01/EMessage.xsd"
+      xml2edi: 
+        - "%{gem_data}/xml/XSLTs/2007/02/01/XML2EDI/Emessage_2_XML11.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2007/02/01/XML2EDI/Emessage_2_XML11.xslt"
+      edi2xml: 
+        - "%{gem_data}/xml/XSLTs/2007/02/01/EDI2XML/XML11_2_Emessage.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2007/02/01/EDI2XML/XML11_2_Emessage.xslt"
       messages:
         - D0633L
         - D0733L
@@ -158,22 +176,40 @@ xml:
         - R0230M
         - A0137Z
     "http://rep.oio.dk/medcom.dk/xml/schemas/2008/09/17/":
-      schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2008/09/17/EMessage.xsd
-      xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2008/09/17/XML2EDI/Emessage_2_XML11.xslt
-      edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2008/09/17/EDI2XML/XML11_2_Emessage.xslt
+      schema: 
+        - "%{gem_data}/xml/Schemas/2008/09/17/EMessage.xsd"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2008/09/17/EMessage.xsd"
+      xml2edi: 
+        - "%{gem_data}/xml/XSLTs/2008/09/17/XML2EDI/Emessage_2_XML11.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2008/09/17/XML2EDI/Emessage_2_XML11.xslt"
+      edi2xml: 
+        - "%{gem_data}/xml/XSLTs/2008/09/17/EDI2XML/XML11_2_Emessage.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2008/09/17/EDI2XML/XML11_2_Emessage.xslt"
       messages:
         - A0138Z
         - D1034L
     "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2009/08/01/":
-      schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2009/08/01/EMessage.xsd
-      xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2009/08/01/XML2EDI/Emessage_2_XML11.xslt
-      edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2009/08/01/EDI2XML/XML11_2_Emessage.xslt
+      schema: 
+        - "%{gem_data}/xml/Schemas/2009/08/01/EMessage.xsd"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2009/08/01/EMessage.xsd"
+      xml2edi: 
+        - "%{gem_data}/xml/XSLTs/2009/08/01/XML2EDI/Emessage_2_XML11.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2009/08/01/XML2EDI/Emessage_2_XML11.xslt"
+      edi2xml: 
+        - "%{gem_data}/xml/XSLTs/2009/08/01/EDI2XML/XML11_2_Emessage.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2009/08/01/EDI2XML/XML11_2_Emessage.xslt"
       messages:
         - D9034L
     "http://rep.oio.dk/medcom.dk/xml/schemas/2010/07/01/":
-      schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2010/07/01/EMessage.xsd
-      xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2010/07/01/XML2EDI/Emessage_2_XML11.xslt
-      edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2010/07/01/EDI2XML/XML11_2_Emessage.xslt
+      schema: 
+        - "%{gem_data}/xml/Schemas/2010/07/01/EMessage.xsd"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2010/07/01/EMessage.xsd"
+      xml2edi: 
+        - "%{gem_data}/xml/XSLTs/2010/07/01/XML2EDI/Emessage_2_XML11.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2010/07/01/XML2EDI/Emessage_2_XML11.xslt"
+      edi2xml: 
+        - "%{gem_data}/xml/XSLTs/2010/07/01/EDI2XML/XML11_2_Emessage.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2010/07/01/EDI2XML/XML11_2_Emessage.xslt"
       messages:
         - A0139Z
         - U0131U
@@ -186,22 +222,40 @@ xml:
         - U1031U
         - U1131U
     "http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/":
-      schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2011/02/17/EMessage.xsd
-      xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2011/02/17/XML2EDI/Emessage_2_XML11.xslt
-      edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2011/02/17/EDI2XML/XML11_2_Emessage.xslt
+      schema: 
+        - "%{gem_data}/xml/Schemas/2011/02/17/EMessage.xsd"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2011/02/17/EMessage.xsd"
+      xml2edi:
+        - "%{gem_data}/xml/XSLTs/2011/02/17/XML2EDI/Emessage_2_XML11.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2011/02/17/XML2EDI/Emessage_2_XML11.xslt"
+      edi2xml: 
+        - "%{gem_data}/xml/XSLTs/2011/02/17/EDI2XML/XML11_2_Emessage.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2011/02/17/EDI2XML/XML11_2_Emessage.xslt"
       messages:
         - D3234L
     "http://rep.oio.dk/medcom.dk/xml/schemas/2012/03/28/":
-      schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2012/03/28/EMessage.xsd
-      xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2012/03/28/XML2EDI/Emessage_2_XML11.xslt
-      edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2012/03/28/EDI2XML/XML11_2_Emessage.xslt
+      schema: 
+        - "%{gem_data}/xml/Schemas/2012/03/28/EMessage.xsd"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2012/03/28/EMessage.xsd"
+      xml2edi: 
+        - "%{gem_data}/xml/XSLTs/2012/03/28/XML2EDI/Emessage_2_XML11.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2012/03/28/XML2EDI/Emessage_2_XML11.xslt"
+      edi2xml: 
+        - "%{gem_data}/xml/XSLTs/2012/03/28/EDI2XML/XML11_2_Emessage.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2012/03/28/EDI2XML/XML11_2_Emessage.xslt"
       messages:
         - R0431P
         - B0131X
     "http://rep.oio.dk/medcom.dk/xml/schemas/2013/09/02/":
-      schema: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2013/09/02/EMessage.xsd
-      xml2edi: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2013/09/02/XML2EDI/Emessage_2_XML11.xslt
-      edi2xml: http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2013/09/02/EDI2XML/XML11_2_Emessage.xslt
+      schema: 
+        - "%{gem_data}/xml/Schemas/2013/09/02/EMessage.xsd"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2013/09/02/EMessage.xsd"
+      xml2edi: 
+        - "%{gem_data}/xml/XSLTs/2013/09/02/XML2EDI/Emessage_2_XML11.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2013/09/02/XML2EDI/Emessage_2_XML11.xslt"
+      edi2xml: 
+        - "%{gem_data}/xml/XSLTs/2013/09/02/EDI2XML/XML11_2_Emessage.xslt"
+        - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2013/09/02/EDI2XML/XML11_2_Emessage.xslt"
       messages:
         - H0731R
 

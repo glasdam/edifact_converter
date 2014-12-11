@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Jesper Nielsen (Sundhedsstyrelsen) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by - (National Board of Health) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GEPJ.xsd"/>
+	<xs:complexType name="SpontantOpstaaetOplysning">
+		<xs:complexContent>
+			<xs:extension base="GEpj">
+				<xs:sequence>
+					<xs:element name="art" type="SksId"/>
+					<xs:element name="filReference" type="KvalificeretId" minOccurs="0"/>
+					<xs:element name="oplysningstekst" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="500"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="patient_id" type="ObjektId"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

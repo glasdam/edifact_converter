@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2008/09/17/"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2008/09/17/"
+  elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:include schemaLocation="GeneralTypes.xsd"/>
+  <xs:simpleType name="AcknowledgementCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="minuspositivkvitt"/>
+      <xs:enumeration value="pluspositivkvitt"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VersionCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="XD1034L"/>
+      <xs:enumeration value="XA0138Z"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IdentifierCodeType">
+    <xs:annotation>
+      <xs:documentation>Kode for aktør</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="sygehusafdelingsnummer"/>
+      <xs:enumeration value="ydernummer"/>
+      <xs:enumeration value="lokationsnummer"/>
+      <xs:enumeration value="kommunenummer"/>
+      <xs:enumeration value="amt"/>
+      <xs:enumeration value="sorkode"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DiagnoseTypeCodeType">
+    <xs:annotation>
+      <xs:documentation>Kode for diagnose typen</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SKSdiagnosekode"/>
+      <xs:enumeration value="uspecificeretkode"/>
+      <xs:enumeration value="ICPCkode"/>
+      <xs:enumeration value="speciallaegehenvisning"/>
+      <xs:enumeration value="fysioterapihenvisning"/>
+      <xs:enumeration value="psykologhenvisning"/>
+      <xs:enumeration value="Fysioterapihenvisningsdiagnose"/>
+      <xs:enumeration value="Psykologhenvisningsdiagnose"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MedicalSpecialityCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ikkeklassificeret"/>
+      <xs:enumeration value="intern_medicin_sygehus"/>
+      <xs:enumeration value="geriatri"/>
+      <xs:enumeration value="hepatologi"/>
+      <xs:enumeration value="haematologi"/>
+      <xs:enumeration value="infektionsmedicin"/>
+      <xs:enumeration value="kardiologi"/>
+      <xs:enumeration value="med_allergologi"/>
+      <xs:enumeration value="med_endokrinologi"/>
+      <xs:enumeration value="med_gastroenterologi"/>
+      <xs:enumeration value="med_lungesygdomme"/>
+      <xs:enumeration value="nefrologi"/>
+      <xs:enumeration value="reumatologi"/>
+      <xs:enumeration value="dermato_venerologi_sygehus"/>
+      <xs:enumeration value="neurologi"/>
+      <xs:enumeration value="onkologi"/>
+      <xs:enumeration value="kirurgi_sygehus"/>
+      <xs:enumeration value="karkirurgi"/>
+      <xs:enumeration value="kir_gastroenterologi"/>
+      <xs:enumeration value="plastikkirurgi"/>
+      <xs:enumeration value="thoraxkirurgi"/>
+      <xs:enumeration value="urologi"/>
+      <xs:enumeration value="gynaekologi_obstetrik_sygehus"/>
+      <xs:enumeration value="neurokirurgi"/>
+      <xs:enumeration value="ortopaedisk_kirurgi_sygehus"/>
+      <xs:enumeration value="oftalmologi"/>
+      <xs:enumeration value="oto_rhino_laryngologi"/>
+      <xs:enumeration value="hospitalsodontologi"/>
+      <xs:enumeration value="psykiatri_sygehus"/>
+      <xs:enumeration value="boerne_ungdomspsykiatri"/>
+      <xs:enumeration value="klin_biokemi"/>
+      <xs:enumeration value="klin_fys_nuklearmedicin"/>
+      <xs:enumeration value="klin_immunologi"/>
+      <xs:enumeration value="klin_mikrobiologi"/>
+      <xs:enumeration value="klin_neurofysiologi"/>
+      <xs:enumeration value="patologisk_anatomi"/>
+      <xs:enumeration value="diagnostisk_radiologi"/>
+      <xs:enumeration value="klin_farmakologi"/>
+      <xs:enumeration value="klin_genetik"/>
+      <xs:enumeration value="anaestesiologi_sygehus"/>
+      <xs:enumeration value="arbejdsmedicin"/>
+      <xs:enumeration value="almen_medicin"/>
+      <xs:enumeration value="samfundsmedicin"/>
+      <xs:enumeration value="almenlaege_laegevagt"/>
+      <xs:enumeration value="oejenlaege"/>
+      <xs:enumeration value="oere_naese_halslaege"/>
+      <xs:enumeration value="anaestesiologi_praksis"/>
+      <xs:enumeration value="roentgen_kbh"/>
+      <xs:enumeration value="dermato_venerologi_praksis"/>
+      <xs:enumeration value="roentgen"/>
+      <xs:enumeration value="reumatologi_fysiurgi"/>
+      <xs:enumeration value="gynaekologi_obstetrik_praksis"/>
+      <xs:enumeration value="intern_medicin_praksis"/>
+      <xs:enumeration value="kirurgi_praksis"/>
+      <xs:enumeration value="klinisk_kemi"/>
+      <xs:enumeration value="neuromedicin"/>
+      <xs:enumeration value="ortopaedisk_kirurgi_praksis"/>
+      <xs:enumeration value="patologi "/>
+      <xs:enumeration value="plastkirurgi"/>
+      <xs:enumeration value="psykiatri_praksis"/>
+      <xs:enumeration value="paediatri"/>
+      <xs:enumeration value="boernepsykiatri"/>
+      <xs:enumeration value="tropemedicin"/>
+      <xs:enumeration value="tandlaege"/>
+      <xs:enumeration value="fysioterapi"/>
+      <xs:enumeration value="kiropraktor"/>
+      <xs:enumeration value="briller"/>
+      <xs:enumeration value="fodterapi"/>
+      <xs:enumeration value="fodbehandlking"/>
+      <xs:enumeration value="med_laboratorier"/>
+      <xs:enumeration value="omegnslaboratorier"/>
+      <xs:enumeration value="psykolog"/>
+      <xs:enumeration value="paediatri_sygehus"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="TypeCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="XDIS10"/>
+      <xs:enumeration value="XDAO01"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DiagnoseDescriptionCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="uspec_diagnose"/>
+      <xs:enumeration value="henv_diagnose"/>
+      <xs:enumeration value="bidiagnose"/>
+      <xs:enumeration value="tillaegsdiagnose"/>
+      <xs:enumeration value="aktionsdiagnose"/>
+      <xs:enumeration value="midlertidig_diagnose"/>
+      <xs:enumeration value="forloebsdiagnose"/>
+      <xs:enumeration value="operation"/>
+      <xs:enumeration value="roentgenundersoegelse"/>
+      <xs:enumeration value="speciallaegehenvisning"/>
+      <xs:enumeration value="fysioterapihenvisning"/>
+      <xs:enumeration value="psykologhenvisning"/>
+      <xs:enumeration value="fysioterapihenvisningspgruppe"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EpisodeOfCareStatusCodeType">
+    <xs:annotation>
+      <xs:documentation>Patient status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="inaktiv"/>
+      <xs:enumeration value="indlagt"/>
+      <xs:enumeration value="ambulant"/>
+      <xs:enumeration value="doed"/>
+      <xs:enumeration value="ambulant_roentgen"/>
+      <xs:enumeration value="udskrevet_til_hjemmet"/>
+      <xs:enumeration value="udskrevet_til_andet"/>
+      <xs:enumeration value="flyttet_til_sygehusafd"/>
+      <xs:enumeration value="uoplyst"/>
+      <xs:enumeration value="flyttet_til_sygehus"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EpisodeOfCareStatusCode01Type">
+    <xs:annotation>
+      <xs:documentation>Patient status</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="EpisodeOfCareStatusCodeType">
+      <xs:enumeration value="inaktiv"/>
+      <xs:enumeration value="indlagt"/>
+      <xs:enumeration value="ambulant"/>
+      <xs:enumeration value="doed"/>
+      <xs:enumeration value="ambulant_roentgen"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EpisodeOfCareStatusCode02Type">
+    <xs:annotation>
+      <xs:documentation>Patient status 2</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="EpisodeOfCareStatusCodeType">
+      <xs:enumeration value="indlagt"/>
+      <xs:enumeration value="doed"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EpisodeOfCareStatusCode03Type">
+    <xs:restriction base="EpisodeOfCareStatusCodeType">
+      <xs:enumeration value="doed"/>
+      <xs:enumeration value="udskrevet_til_hjemmet"/>
+      <xs:enumeration value="udskrevet_til_andet"/>
+      <xs:enumeration value="flyttet_til_sygehusafd"/>
+      <xs:enumeration value="uoplyst"/>
+      <xs:enumeration value="flyttet_til_sygehus"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RelationCodeType">
+    <xs:annotation>
+      <xs:documentation>Pårørendes relation til patienten</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="uspec_paaroerende"/>
+      <xs:enumeration value="mor"/>
+      <xs:enumeration value="far"/>
+      <xs:enumeration value="barn"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TelephoneCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="privat"/>
+      <xs:enumeration value="arbejde"/>
+      <xs:enumeration value="mobil"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PriorityCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="elektiv"/>
+      <xs:enumeration value="akut"/>
+      <xs:enumeration value="saerlige_forhold"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ReferralStatusType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ambulant"/>
+      <xs:enumeration value="indlaeggelse"/>
+      <xs:enumeration value="hjemmet"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TransportType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ingen"/>
+      <xs:enumeration value="liggende"/>
+      <xs:enumeration value="siddende"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="InformationCodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ustruktureret"/>
+      <xs:enumeration value="egen_laege"/>
+      <xs:enumeration value="henvisning_modtaget"/>
+      <xs:enumeration value="visitering"/>
+      <xs:enumeration value="indkaldt"/>
+      <xs:enumeration value="indlagt_paa"/>
+      <xs:enumeration value="udenamts_kaution"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OriginalVersionCodeType">
+    <xs:annotation>
+      <xs:documentation>ORGVERSION</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="String_1_7"/>
+  </xs:simpleType>
+  <xs:simpleType name="PathologyAnalysisCodeTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PA1"/>
+      <xs:enumeration value="PA2"/>
+      <xs:enumeration value="PA3"/>
+      <xs:enumeration value="PA4"/>
+      <xs:enumeration value="PA5"/>
+      <xs:enumeration value="PA6"/>
+      <xs:enumeration value="PA7"/>
+      <xs:enumeration value="PA8"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

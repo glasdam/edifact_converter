@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="Borger" type="BorgerType"/>
+	
+	<xs:complexType name="BorgerType">
+		<xs:annotation>
+			<xs:documentation>Definition af Borger</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CPR" type="xs:string"/>
+			<xs:element ref="Fornavn" minOccurs="0"/>
+			<xs:element ref="Efternavn" minOccurs="0"/>
+			<xs:element ref="FoedselsDato" minOccurs="0"/>
+			<xs:element ref="Koen" minOccurs="0"/>
+			<xs:element ref="Vej" minOccurs="0"/>
+			<xs:element ref="Postnummer" minOccurs="0"/>
+			<xs:element ref="By" minOccurs="0"/>
+			<xs:element ref="Kontakttelefon" minOccurs="0"/>
+			<xs:element ref="eMail" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

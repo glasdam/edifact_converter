@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:element name="DiabetesReport" type="DiabetesReportType"/>
+	<xs:complexType name="DiabetesReportType">
+		<xs:annotation>
+			<xs:documentation>Definition af en udskrivningsepikrise</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="DiabetesReportLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XI0001D  og TypeCode=XI0001</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Sender"/>
+			<xs:element ref="Receiver"/>
+			<xs:element name="Patient" type="DiabetesReportPatientType"/>
+			<xs:element name="Report">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ReportType" type="ReportTypeType"/>
+						<xs:element name="StatusDate" type="DateWithPrecision"/>
+						<xs:element name="CareStatus">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Active" type="YesNoUnknownType"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Diagnose">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DiagnoseDate" type="DateWithPrecision" minOccurs="0"/>
+									<xs:element name="DiabetesType" type="DiabetesTypeType"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="History">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SmokingStatus" type="SmokingStatusType"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Examinations">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Height" type="HeightType"/>
+									<xs:element name="Weight" type="WeightType"/>
+									<xs:element name="BMI" type="BMIInfoType"/>
+									<xs:element name="Hypertension" type="HypertensionInfoType"/>
+									<xs:element name="HbA1c" type="HbA1cInfoType"/>
+									<xs:element name="Albuminuri" type="AlbuminuriInfoType"/>
+									<xs:element name="Lipids" type="LipidsInfoType"/>
+									<xs:element name="EyeExamination" type="EyeExaminationInfoType"/>
+									<xs:element name="FootExamination" type="FootExaminationInfoType"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="CurrentTreatment">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="PeroralAntidiabetics" type="TreatmentInfoYNType"/>
+									<xs:element name="Insulin" type="InsulinInfoType"/>
+									<xs:element name="AntiHypertensive" type="TreatmentInfoYNUType"/>
+									<xs:element name="ACEInhibitor" type="TreatmentInfoYNUType"/>
+									<xs:element name="Dyslipidemia" type="TreatmentInfoYNUType"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DiabetesReportLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XD0133L  og TypeCode=XDIS01</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="LetterType">
+				<xs:sequence>
+					<xs:element name="Identifier" type="String_1_14"/>
+					<xs:element name="VersionCode">
+						<xs:simpleType>
+							<xs:restriction base="VersionCodeType">
+								<xs:pattern value="XI0001D"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="StatisticalCode" type="String_1_8"/>
+					<xs:element name="Authorisation" type="DateTimeType"/>
+					<xs:element name="TypeCode">
+						<xs:simpleType>
+							<xs:restriction base="TypeCodeType">
+								<xs:pattern value="XI0001"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="StatusCode" type="StatusCodeType"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DiabetesReportPatientType">
+		<xs:sequence>
+			<xs:element ref="CivilRegistrationNumber"/>
+			<xs:element ref="PersonSurnameName" minOccurs="0"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ReportTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="debut"/>
+			<xs:enumeration value="aarsrapport"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- SMOKING -->
+	<xs:simpleType name="SmokingStatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ryger_dagligt"/>
+			<xs:enumeration value="ryger_leglighedsvist"/>
+			<xs:enumeration value="eksryger"/>
+			<xs:enumeration value="aldrig_ryger"/>
+			<xs:enumeration value="uoplyst"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DiabetesTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="type1"/>
+			<xs:enumeration value="type2"/>
+			<xs:enumeration value="anden_diabetes_form"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- EXAMINATION -->
+	<xs:complexType name="WeightType">
+		<xs:complexContent>
+			<xs:extension base="ExaminationInfoYNType">
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Skal med hvis og kun hvis Examinated = ja</xs:documentation>
+					</xs:annotation>
+					<xs:element name="Value">
+						<xs:simpleType>
+							<xs:restriction base="xs:int">
+								<xs:minInclusive value="30"/>
+								<xs:maxInclusive value="300"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="HeightType">
+		<xs:complexContent>
+			<xs:extension base="ExaminationInfoYNType">
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Skal med hvis og kun hvis Examinated = ja</xs:documentation>
+					</xs:annotation>
+					<xs:element name="Value">
+						<xs:simpleType>
+							<xs:restriction base="xs:int">
+								<xs:minInclusive value="100"/>
+								<xs:maxInclusive value="240"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BMIInfoType">
+		<xs:annotation>
+			<xs:documentation>Kan kun være ja hvis både Height og Weight er angivet</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ExaminationInfoYNIType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="HypertensionInfoType">
+		<xs:complexContent>
+			<xs:extension base="ExaminationInfoYNUType">
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Skal med hvis og kun hvis Examinated = ja</xs:documentation>
+					</xs:annotation>
+					<xs:element ref="ExaminationDate"/>
+					<xs:element name="Systolic">
+						<xs:simpleType>
+							<xs:restriction base="xs:int">
+								<xs:minInclusive value="50"/>
+								<xs:maxInclusive value="250"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Diastolic">
+						<xs:simpleType>
+							<xs:restriction base="xs:int">
+								<xs:minInclusive value="30"/>
+								<xs:maxInclusive value="140"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="HbA1cInfoType">
+		<xs:complexContent>
+			<xs:extension base="ExaminationInfoYNUType">
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Skal med hvis og kun hvis Examinated = ja</xs:documentation>
+					</xs:annotation>
+					<xs:element ref="ExaminationDate"/>
+					<xs:element name="Value">
+						<xs:simpleType>
+							<xs:restriction base="Float_x_3">
+								<xs:minInclusive value="0.035"/>
+								<xs:maxInclusive value="0.2"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AlbuminuriInfoType">
+		<xs:complexContent>
+			<xs:extension base="ExaminationInfoYNUIType">
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Skal med hvis og kun hvis Examinated = ja</xs:documentation>
+					</xs:annotation>
+					<xs:element ref="ExaminationDate"/>
+					<xs:choice>
+						<xs:element name="AlbuminSpeed">
+							<xs:complexType>
+								<xs:choice>
+									<xs:element name="GramPer24h">
+										<xs:simpleType>
+											<xs:restriction base="Float_x_3">
+												<xs:minInclusive value="0"/>
+												<xs:maxInclusive value="6"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="MilligramPer24h">
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="0"/>
+												<xs:maxInclusive value="6000"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="MicromolPer24h" type="Float_x_2"/>
+									<xs:element name="MicrogramPerMin" type="xs:int"/>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="AlbuminCreatinRatio">
+							<xs:complexType>
+								<xs:choice>
+									<xs:element name="MilligramPerGram">
+										<xs:annotation>
+											<xs:documentation>NPU19661</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="0"/>
+												<xs:maxInclusive value="6000"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="MilligramPerMillimol" type="Float_x_1"/>
+									<xs:element name="MicromolPerMillimol">
+										<xs:annotation>
+											<xs:documentation>NPU03918</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:int">
+												<xs:minInclusive value="0"/>
+												<xs:maxInclusive value="6000"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LipidsInfoType">
+		<xs:complexContent>
+			<xs:extension base="ExaminationInfoYNUType">
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Skal med hvis og kun hvis Examinated = ja</xs:documentation>
+					</xs:annotation>
+					<xs:element ref="ExaminationDate"/>
+					<xs:element name="Fasting" type="YesNoType"/>
+					<xs:element name="TotalCholesterol">
+						<xs:simpleType>
+							<xs:restriction base="Float_2_1">
+								<xs:minInclusive value="0"/>
+								<xs:maxInclusive value="20"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="HDLCholesterol">
+						<xs:simpleType>
+							<xs:restriction base="Float_2_1">
+								<xs:minInclusive value="0"/>
+								<xs:maxInclusive value="5"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="LDLCholesterol">
+						<xs:simpleType>
+							<xs:restriction base="Float_2_1">
+								<xs:minInclusive value="0"/>
+								<xs:maxInclusive value="12"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Triglycerid">
+						<xs:simpleType>
+							<xs:restriction base="Float_2_1">
+								<xs:minInclusive value="0"/>
+								<xs:maxInclusive value="15"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="EyeExaminationInfoType">
+		<xs:complexContent>
+			<xs:extension base="ExaminationInfoYNUIType">
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Skal med hvis og kun hvis Examinated = ja</xs:documentation>
+					</xs:annotation>
+					<xs:element ref="ExaminationDate"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FootExaminationInfoType">
+		<xs:complexContent>
+			<xs:extension base="ExaminationInfoYNUIType">
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Skal med hvis og kun hvis Examinated = ja</xs:documentation>
+					</xs:annotation>
+					<xs:element ref="ExaminationDate"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ExaminationDate" type="DateWithPrecision"/>
+	<xs:complexType name="ExaminationInfoYNUIType">
+		<xs:sequence>
+			<xs:element name="Examinated" type="YesNoUnknownIrrelevantType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExaminationInfoYNUType">
+		<xs:sequence>
+			<xs:element name="Examinated" type="YesNoUnknownType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExaminationInfoYNIType">
+		<xs:sequence>
+			<xs:element name="Examinated" type="YesNoIrrelevantType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExaminationInfoYNType">
+		<xs:sequence>
+			<xs:element name="Examinated" type="YesNoType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- TREATMENT -->
+	<xs:complexType name="InsulinInfoType">
+		<xs:complexContent>
+			<xs:extension base="TreatmentInfoYNType">
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Skal med hvis og kun hvis Treatment = ja, undtaget er dog hvis oplysningen ikke kan findes.</xs:documentation>
+					</xs:annotation>
+					<xs:element name="StartYear" type="DateWithPrecision"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Treatment" type="YesNoUnknownType"/>
+	<xs:complexType name="TreatmentInfoYNUType">
+		<xs:sequence>
+			<xs:element ref="Treatment"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TreatmentInfoYNType">
+		<xs:sequence>
+			<xs:element name="Treatment" type="YesNoType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- GENERALTYPES -->
+	<xs:simpleType name="YesNoUnknownIrrelevantType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ja"/>
+			<xs:enumeration value="nej"/>
+			<xs:enumeration value="uoplyst"/>
+			<xs:enumeration value="ikke_relevant"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YesNoUnknownType">
+		<xs:restriction base="YesNoUnknownIrrelevantType">
+			<xs:enumeration value="ja"/>
+			<xs:enumeration value="nej"/>
+			<xs:enumeration value="uoplyst"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YesNoIrrelevantType">
+		<xs:restriction base="YesNoUnknownIrrelevantType">
+			<xs:enumeration value="ja"/>
+			<xs:enumeration value="nej"/>
+			<xs:enumeration value="ikke_relevant"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YesNoType">
+		<xs:restriction base="YesNoUnknownIrrelevantType">
+			<xs:enumeration value="ja"/>
+			<xs:enumeration value="nej"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Float_x_3">
+		<xs:restriction base="xs:float">
+			<xs:pattern value="\d+(\.\d{1,3})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Float_x_2">
+		<xs:restriction base="xs:float">
+			<xs:pattern value="\d+(\.\d{1,2})?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Float_x_1">
+		<xs:restriction base="xs:float">
+			<xs:pattern value="\d+(\.\d)?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Float_2_1">
+		<xs:restriction base="xs:float">
+			<xs:pattern value="\d{1,2}(\.\d)?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DateWithPrecision">
+		<xs:sequence>
+			<xs:element name="Date" type="xs:date"/>
+			<xs:element name="Precision" type="DatePrecisionType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DatePrecisionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="aar"/>
+			<xs:enumeration value="aar_maaned"/>
+			<xs:enumeration value="aar_maaned_dag"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DatePrecisionMinYMType">
+		<xs:restriction base="DatePrecisionType">
+			<xs:enumeration value="aar_maaned"/>
+			<xs:enumeration value="aar_maaned_dag"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

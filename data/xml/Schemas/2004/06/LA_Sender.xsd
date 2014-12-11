@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2003/05/02/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2003/05/02/" xmlns:dkkl="http://rep.oio.dk/kl.dk/xml/schemas/sygedagpenge/2003/09/05/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://rep.oio.dk/kl.dk/xml/schemas/sygedagpenge/2003/09/05/" schemaLocation="KL/KL_SENumberType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:element name="LA_Sender" type="LA_SenderType">
+		<xs:annotation>
+			<xs:documentation>Afsender til at identificere en læge eller sygehus i et svar til kommunen</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LA_SenderType">
+		<xs:annotation>
+			<xs:documentation>Afsender til at identificere en læge eller sygehus i et svar til kommunen - nedarvet fra SenderType</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+<!-- 			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode" minOccurs="0"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="StreetName"/>
+			<xs:element ref="SubUrbName" minOccurs="0"/>
+			<xs:element ref="DistrictName"/>
+			<xs:element ref="PostCodeIdentifier"/>
+			<xs:element ref="TelephoneSubscriberIdentifier"/>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName"/>
+			<xs:choice>
+				<xs:element ref="CivilRegistrationNumber"/>
+				<xs:element name="SENumber" type="dkkl:SENumberType"/>
+			</xs:choice>
+			 -->
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

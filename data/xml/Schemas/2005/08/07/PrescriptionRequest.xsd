@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:include schemaLocation="Prescription.xsd"/>
+	<xs:element name="PrescriptionRequest" type="PrescriptionRequestType">
+		<xs:annotation>
+			<xs:documentation>Medicin genbestilling</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PrescriptionRequestType">
+		<xs:sequence>
+			<xs:element name="Letter" type="PrescriptionRequestLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XR6031W og TypeCode=XPRE60</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="PrescriptionRequestSenderType"/>
+			<xs:element name="Receiver" type="PrescriptionRequestReceiverType"/>
+			<xs:element name="PreferredPharmacy" type="PreferredPharmacyType"/>
+			<xs:element name="PatientOrRelative" type="PatientOrRelativeType2"/>
+			<xs:element name="PrescriptionInformation" type="PrescriptionInformationType"/>
+			<xs:element name="Drug" type="DrugType" maxOccurs="99"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionRequestLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XR6031W og TypeCode=XPRE60</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XR6031W"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeWithSecType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XPRE60"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionRequestSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element name="OrganisationName" type="String_1_70"/>
+			<xs:element name="StreetName" minOccurs="0" type="String_1_70"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element ref="TelephoneSubscriberIdentifier" minOccurs="1"/>
+			<xs:element name="PersonInOrganisation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="TitleAndName"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		               <xs:element ref="AnswerTo" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionRequestReceiverType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element name="OrganisationName" type="String_1_70" minOccurs="0"/>
+			<xs:element name="Issuer" minOccurs="0">
+			  <xs:complexType>
+			    <xs:sequence>
+			      <xs:element name="AuthorisationIdentifier" type="String_1_8" minOccurs="0"/>
+			      <xs:element ref="TitleAndName" minOccurs="0"/>
+			      <xs:element name="SpecialityCode" type="String_1_3" minOccurs="0"/>
+			      <xs:element name="Occupation" minOccurs="0">
+			        <xs:simpleType>
+			          <xs:restriction base="xs:string">
+			            <xs:enumeration value="laege"/>
+			            <xs:enumeration value="tandlaege"/>
+			          </xs:restriction>
+			        </xs:simpleType>
+			      </xs:element>
+			    </xs:sequence>
+			  </xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PreferredPharmacyType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element name="OrganisationName" type="String_1_70" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatientOrRelativeType2">
+		<xs:complexContent>
+			<xs:extension base="PatientOrRelativeType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="EmailStatus">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="permanent"/>
+								<xs:enumeration value="midlertidig"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element ref="EmailIdentifier"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

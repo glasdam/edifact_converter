@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="LA_Patient.xsd"/>
+	<xs:include schemaLocation="LA_Contact.xsd"/>
+	<xs:include schemaLocation="LA_Sender.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="PaymentInformation.xsd"/>
+	<xs:element name="SocialMedicalProposal" type="SocialMedicalProposalType">
+		<xs:annotation>
+			<xs:documentation>Blanket til Forslag om socialmedicinsk sagsbehandling (LÆ165)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SocialMedicalProposalType">
+		<xs:annotation>
+			<xs:documentation>Definition af LÆ165</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="SocialMedicalProposalLetterType"/>
+			<xs:element name="Sender" type="LA_SenderType"/>
+			<xs:element ref="Receiver"/>
+			<xs:element name="Patient" type="LA_PatientType"/>
+			<xs:element ref="PaymentInformation"/>
+			<xs:element name="CreationDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Oprettelsesdato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConsiderationProposalText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>For denne patient anmoder jeg om, at kommunen behandler nedenstående problemstilling. (Det er kommunen, der afgør, hvilken evt. social ydelse klienten skal tilbydes)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExtraInformationProposal">
+				<xs:annotation>
+					<xs:documentation>Yderlig oplysninger forslås indhentet</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="StatusRequest" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>Statusattest</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="SpecificHealthStatusRequest" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>Specifik helbredsattest</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="GeneralHealthStatusRequest" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>Generel helbredsattest</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="SpecialDoctorRequest" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>Speciallægeattest</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="OtherRequests" type="String_1_Unbounded" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Andet</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="WishInformationCode" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>Jeg vil gerne have underretning om, hvad der videre bliver foretaget</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SocialMedicalProposalLetterType">
+		<xs:annotation>
+			<xs:documentation>Brevtype for LÆ165 - en LetterType, som blot begrænses til VersionCode=XLA1651001A og TypeCode=XLA165</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XLA1651001A"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XLA165"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

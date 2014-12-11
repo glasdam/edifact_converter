@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns:xs="http://www.w3.org/2001/XMLSchema"  elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="Practitioner" type="PractitionerType">
+		<xs:annotation>
+			<xs:documentation>Egen læge</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PractitionerType">
+		<xs:sequence>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="PersonName"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element ref="TelephoneSubscriberIdentifier" minOccurs="0"/>
+			<xs:element ref="EmailIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	</xs:schema>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" xmlns:dkcpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:gepj="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="X1.xsd"/>
+	<xs:include schemaLocation="X2.xsd"/>
+	<xs:include schemaLocation="X3.xsd"/>
+	<xs:include schemaLocation="X5.xsd"/>
+	<xs:include schemaLocation="X13.xsd"/>
+	<xs:include schemaLocation="X91.xsd"/>
+	<xs:include schemaLocation="X14.xsd"/>
+	<xs:include schemaLocation="X17.xsd"/>
+	<xs:include schemaLocation="X20.xsd"/>
+	<xs:include schemaLocation="X19.xsd"/>
+	<xs:include schemaLocation="R1.xsd"/>
+	<xs:include schemaLocation="R2.xsd"/>
+	<xs:include schemaLocation="P1.xsd"/>
+	<xs:include schemaLocation="P2.xsd"/>
+	<xs:include schemaLocation="P3.xsd"/>
+	<xs:include schemaLocation="P4.xsd"/>
+	<xs:include schemaLocation="M.xsd"/>
+	<xs:include schemaLocation="C1.xsd"/>
+	<xs:include schemaLocation="C2.xsd"/>
+	<xs:include schemaLocation="C3.xsd"/>
+	<xs:include schemaLocation="Q1.xsd"/>
+	<xs:include schemaLocation="Q2.xsd"/>
+	<xs:include schemaLocation="Q3.xsd"/>
+	<xs:include schemaLocation="Q4.xsd"/>
+	<xs:include schemaLocation="O.xsd"/>
+	<xs:include schemaLocation="B.xsd"/>
+	<xs:include schemaLocation="LA121.xsd"/>
+	<xs:include schemaLocation="LA125.xsd"/>
+	<xs:include schemaLocation="LA141.xsd"/>
+	<xs:include schemaLocation="LA145.xsd"/>
+	<xs:include schemaLocation="LA165.xsd"/>
+	<xs:include schemaLocation="LA201.xsd"/>
+	<xs:include schemaLocation="LA205.xsd"/>
+	<xs:include schemaLocation="LA211.xsd"/>
+	<xs:include schemaLocation="LA215.xsd"/>
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="GeneralTypes.xsd"/>
+	<xs:element name="Emessage">
+		<xs:annotation>
+			<xs:documentation>Indpakningen for en forsendelse</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Envelope" type="EnvelopeType">
+					<xs:annotation>
+						<xs:documentation>Generelle forsendelses oplysninger</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:sequence maxOccurs="unbounded">
+					<xs:choice>
+						<xs:element ref="DischargeLetter"/>
+						<xs:element ref="OutPatientDischargeLetter"/>
+						<xs:element ref="CasualtyWardLetter"/>
+						<xs:element ref="RadiologyReport"/>
+						<xs:element ref="BookingConfirmation"/>
+						<xs:element ref="ClinicalEmail"/>
+						<xs:element ref="NotificationOfDischarge"/>
+						<xs:element ref="NotificationOfAdmission"/>
+						<xs:element ref="WarningOfDischarge"/>
+						<xs:element ref="AnswerOfAdmission"/>
+						<xs:element ref="HospitalReferral"/>
+						<xs:element ref="XrayRequest"/>
+						<xs:element ref="LaboratoryAnalysisFile"/>
+						<xs:element ref="LaboratoryRequest"/>
+						<xs:element ref="MicrobiologyRequest"/>
+						<xs:element ref="MultiSampleMicrobiologyRequest"/>
+						<xs:element ref="PathologyRequest"/>
+						<xs:element ref="LaboratoryReport"/>
+						<xs:element ref="MicrobiologyReport"/>
+						<xs:element ref="CervixcytologyReport"/>
+						<xs:element ref="HistopathologyReport"/>
+						<xs:element ref="Prescription"/>
+						<xs:element ref="NegativeVansReceipt"/>
+						<xs:element ref="NegativeReceipt"/>
+						<xs:element ref="PositiveReceipt"/>
+						<xs:element ref="BinaryLetter"/>
+						<xs:element ref="StatusRequest"/>
+						<xs:element ref="StatusAnswer"/>
+						<xs:element ref="GeneralHealthRequest"/>
+						<xs:element ref="GeneralHealthAnswer"/>
+						<xs:element ref="SocialMedicalProposal"/>
+						<xs:element ref="WorkingDisabilityRequest"/>
+						<xs:element ref="WorkingDisabilityAnswer"/>
+						<xs:element ref="SocialMedicalFollowUpRequest"/>
+						<xs:element ref="SocialMedicalFollowUpAnswer"/>
+					</xs:choice>
+					<xs:element ref="GEPJ_Elements" minOccurs="0"/>
+					<xs:element name="Local_Elements" type="xs:anyType" minOccurs="0"/>
+				</xs:sequence>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="EnvelopeType">
+		<xs:annotation>
+			<xs:documentation>Gennerel information om forsendelsen</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Sent" type="DateTimeType"/>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="AcknowledgementCode" type="AcknowledgementCodeType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

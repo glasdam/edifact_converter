@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:element name="MinDagbog" type="MinDagbogType"/>
+
+	<xs:complexType name="MinDagbogType">
+		<xs:annotation>
+			<xs:documentation>Definition af Min Dagbog</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Notat" type="NotatType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NotatType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="Tekst"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

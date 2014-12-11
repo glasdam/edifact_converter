@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="DoctorsElucidation" type="DoctorsElucidationType"/>
+	<xs:complexType name="DoctorsElucidationType">
+		<xs:sequence>
+			<xs:element name="ID" type="String_1_15"/>
+			<xs:element name="TimeStamp" type="DateTimeType"/>
+			<xs:element name="ReferralDiagnose" type="SimpelDiagnoseType" maxOccurs="1"/>
+			<xs:element name="DesiredTreatmentsAndInvestigations" type="FormattedTextType"/>
+			<xs:element name="Anamnese" type="FormattedTextType" minOccurs="0"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName"/>
+			<xs:element name="PersonName" type="String_1_70"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

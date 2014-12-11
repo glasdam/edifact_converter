@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/"
+    xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="TelephoneSubscriber" type="TelephoneSubscriberType"/>
+    <xs:complexType name="TelephoneSubscriberType">
+        <xs:sequence>
+            <xs:element name="PrivateSubscriberIdentifier"
+                type="TelephoneSubscriberIdentifierType" minOccurs="0"/>
+            <xs:element name="FaxSubscriberIdentifier" 
+                type="TelephoneSubscriberIdentifierType" minOccurs="0"/>
+            <xs:element name="MobileSubscriberIdentifier" 
+                type="TelephoneSubscriberIdentifierType" minOccurs="0"/>
+            <xs:element name="OtherSubscriberIdentifier" 
+                type="TelephoneSubscriberIdentifierType" minOccurs="0"/>
+            <xs:element name="WorkSubscriberIdentifier" 
+                type="TelephoneSubscriberIdentifierType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="TelephoneSubscriberIdentifierType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{1,15}"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

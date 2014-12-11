@@ -1,0 +1,1289 @@
+<?xml version="1.0"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:m="http://rep.oio.dk/medcom.dk/xml/schemas/2003/05/02/" version="1.0">
+	<xsl:output method="xml" indent="yes"/>
+	<!-- DISCHARGELETTER -->
+	<xsl:template match="m:Ref01??">
+		<xsl:variable name="Letter" select="m:Letter"/>
+		<xsl:variable name="Sender" select="m:Sender"/>
+	<!--	<xsl:variable name="Contact" select="$Sender/m:Contact"/> skal nok laves til Referer (Henviser) -->
+		<xsl:variable name="Receiver" select="m:Receiver"/>
+	<!--	<xsl:variable name="CCReceiver" select="m:CCReceiver"/>  skal nok laves til AnswerCCReciever (SvarModtager) -->
+		<xsl:variable name="Patient" select="m:Patient"/>
+		<xsl:variable name="Parents" select="m:Relative"/>
+	<!--	<xsl:variable name="Referral" select="m:Referral"/>
+		<xsl:variable name="RefDiag" select="$Referral/m:Refer"/>
+		<xsl:variable name="RefAddDiags" select="$Referral/m:ReferalAdditional"/>
+		<xsl:variable name="ExaminationStart" select="m:ExaminationStart"/>
+		<xsl:variable name="ExaminationEnd" select="m:ExaminationEnd"/>
+		<xsl:variable name="Diags" select="m:Diagnose"/>
+		<xsl:variable name="MainDiag" select="$Diags/m:Main"/>
+		<xsl:variable name="MainAddDiags" select="$Diags/m:MainAdditional"/>
+		<xsl:variable name="OtherDiags" select="$Diags/m:Other"/>
+		<xsl:variable name="ClinInfos" select="m:ClinicalInformation"/> ???-->
+		<Brev>
+			<UNH>
+				<Elm>
+						<SubElm><xsl:value-of select="$Letter/m:Identifier"/></SubElm>
+				</Elm>
+				<Elm>
+					<SubElm>MEDREF</SubElm>
+					<SubElm>D</SubElm>
+					<SubElm>93A</SubElm>
+					<SubElm>UN</SubElm>
+					<SubElm>H0130R</SubElm>
+				</Elm>
+				<Elm>
+					<SubElm>REF01</SubElm>
+				</Elm>
+			</UNH>
+			<BrevIndhold>
+				<BGM>
+					<Elm>
+						<SubElm>HNV</SubElm>
+					</Elm>
+					<Elm>
+						<SubElm/>
+					</Elm>
+					<Elm>
+						<SubElm>9</SubElm>
+					</Elm>
+					<Elm>
+						<SubElm>NA</SubElm>
+					</Elm>
+				</BGM>
+				<DTM>
+					<Elm>
+						<SubElm>137</SubElm>
+						<SubElm>
+							<xsl:variable name="DT" select="$Letter/m:Authorisation"/>
+							<xsl:variable name="DT203" select="concat(substring($DT/m:Date,1,4),substring($DT/m:Date,6,2),substring($DT/m:Date,9,2),substring($DT/m:Time,1,2),substring($DT/m:Time,4,2))"/>
+							<xsl:value-of select="$DT203"/>
+						</SubElm>
+						<SubElm>203</SubElm>
+					</Elm>
+				</DTM>
+				<!-- SENDER -->
+				<S01>
+					<xsl:variable name="Participant" select="$Sender"/>
+					<Elm>
+						<SubElm>01</SubElm>
+					</Elm>
+					<NAD>
+						<Elm>
+							<SubElm>PO</SubElm>
+						</Elm>
+						<Elm>
+							<SubElm>
+								<xsl:value-of select="$Participant/m:Identifier"/>
+							</SubElm>
+							<SubElm>
+								<xsl:variable name="IC" select="$Participant/m:IdentifierCode"/>
+								<xsl:choose>
+									<xsl:when test="$IC='sygehusafdelingsnummer' ">SKS</xsl:when>
+									<xsl:when test="$IC='ydernummer' ">YNR</xsl:when>
+									<xsl:when test="$IC='lokationsnummer' ">EAN</xsl:when>
+									<xsl:when test="count($IC)=0 "/>
+									<xsl:when test="$IC='kommunenummer' ">KOM</xsl:when>
+									<xsl:otherwise>
+										<FEJL>Kan ikke oversætte IdentifierCodeType: <xsl:value-of select="$IC"/>
+										</FEJL>
+									</xsl:otherwise>
+								</xsl:choose>
+							</SubElm>
+							<SubElm>
+								<xsl:variable name="IC" select="$Participant/m:IdentifierCode"/>
+								<xsl:choose>
+									<xsl:when test="$IC='sygehusafdelingsnummer' ">SST</xsl:when>
+									<xsl:when test="$IC='ydernummer' ">SFU</xsl:when>
+									<xsl:when test="$IC='lokationsnummer' ">9</xsl:when>
+									<xsl:when test="count($IC)=0 ">9</xsl:when>
+									<xsl:when test="$IC='kommunenummer' ">IM</xsl:when>
+									<xsl:otherwise>
+										<FEJL>Kan ikke oversætte IdentifierCodeType: <xsl:value-of select="$IC"/>
+										</FEJL>
+									</xsl:otherwise>
+								</xsl:choose>
+							</SubElm>
+						</Elm>
+						<Elm/>
+						<Elm>
+							<SubElm>
+								<xsl:value-of select="$Participant/m:OrganisationName"/>
+							</SubElm>
+							<SubElm>
+								<xsl:value-of select="$Participant/m:DepartmentName"/>
+							</SubElm>
+							<SubElm>
+								<xsl:value-of select="$Participant/m:UnitName"/>
+							</SubElm>
+							<SubElm/>
+							<SubElm/>
+							<SubElm>US</SubElm>
+						</Elm>
+					</NAD>
+					<!-- Standard for ADR segments -->
+					<xsl:variable name="Adr" select="$Participant"/>
+					<xsl:if test="count($Adr/m:StreetName)+count($Adr/m:SubUrbName)+count($Adr/m:DistrictName)+count($Adr/m:PostCodeIdentifier)>0">
+						<ADR>
+							<Elm/>
+							<Elm>
+								<SubElm>US</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Adr//m:StreetName"/>
+								</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Adr/m:SubUrbName"/>
+								</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:value-of select="$Adr/m:DistrictName"/>
+								</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:value-of select="$Adr/m:PostCodeIdentifier"/>
+								</SubElm>
+							</Elm>
+						</ADR>
+					</xsl:if>
+					<SEQ>
+						<Elm>
+							</Elm>
+						<Elm>
+							<SubElm>1</SubElm>
+						</Elm>
+					</SEQ>
+					<SPR>
+						<Elm>
+							<SubElm>ORG</SubElm>
+						</Elm>
+						<Elm>
+							<SubElm>
+								<xsl:if test="count($Participant/m:MedicalSpecialityCode)=1">
+								<xsl:variable name="MSC" select="$Participant/m:MedicalSpecialityCode"/>
+								<xsl:choose>
+									<xsl:when test=" $MSC='ikkeklassificeret'">99</xsl:when>
+									<xsl:when test=" $MSC='intern_medicin_sygehus'">1</xsl:when>
+									<xsl:when test=" $MSC='geriatri'">2</xsl:when>
+									<xsl:when test=" $MSC='hepatologi'">3</xsl:when>
+									<xsl:when test=" $MSC='haematologi'">4</xsl:when>
+									<xsl:when test=" $MSC='infektionsmedicin'">5</xsl:when>
+									<xsl:when test=" $MSC='kardiologi'">6</xsl:when>
+									<xsl:when test=" $MSC='med_allergologi'">7</xsl:when>
+									<xsl:when test=" $MSC='med_endokrinologi'">8</xsl:when>
+									<xsl:when test=" $MSC='med_gastroenterologi'">9</xsl:when>
+									<xsl:when test=" $MSC='med_lungesygdomme'">10</xsl:when>
+									<xsl:when test=" $MSC='nefrologi'">11</xsl:when>
+									<xsl:when test=" $MSC='reumatologi'">12</xsl:when>
+									<xsl:when test=" $MSC='dermato_venerologi_sygehus'">18</xsl:when>
+									<xsl:when test=" $MSC='neurologi'">20</xsl:when>
+									<xsl:when test=" $MSC='onkologi'">22</xsl:when>
+									<xsl:when test=" $MSC='kirurgi_sygehus'">30</xsl:when>
+									<xsl:when test=" $MSC='karkirurgi'">31</xsl:when>
+									<xsl:when test=" $MSC='kir_gastroenterologi'">32</xsl:when>
+									<xsl:when test=" $MSC='plastikkirurgi'">33</xsl:when>
+									<xsl:when test=" $MSC='thoraxkirurgi'">34</xsl:when>
+									<xsl:when test=" $MSC='urologi'">35</xsl:when>
+									<xsl:when test=" $MSC='gynaekologi_obstetrik_sygehus'">38</xsl:when>
+									<xsl:when test=" $MSC='neurokirurgi'">40</xsl:when>
+									<xsl:when test=" $MSC='ortopaedisk_kirurgi_sygehus'">42</xsl:when>
+									<xsl:when test=" $MSC='oftalmologi'">44</xsl:when>
+									<xsl:when test=" $MSC='oto_rhino_laryngologi'">46</xsl:when>
+									<xsl:when test=" $MSC='hospitalsodontologi'">48</xsl:when>
+									<xsl:when test=" $MSC='psykiatri_sygehus'">50</xsl:when>
+									<xsl:when test=" $MSC='boerne_ungdomspsykiatri'">52</xsl:when>
+									<xsl:when test=" $MSC='klin_biokemi'">60</xsl:when>
+									<xsl:when test=" $MSC='klin_fys_nuklearmedicin'">61</xsl:when>
+									<xsl:when test=" $MSC='klin_immunologi'">62</xsl:when>
+									<xsl:when test=" $MSC='klin_mikrobiologi'">63</xsl:when>
+									<xsl:when test=" $MSC='klin_neurofysiologi'">64</xsl:when>
+									<xsl:when test=" $MSC='patologisk_anatomi'">65</xsl:when>
+									<xsl:when test=" $MSC='diagnostisk_radiologi'">66</xsl:when>
+									<xsl:when test=" $MSC='klin_farmakologi'">67</xsl:when>
+									<xsl:when test=" $MSC='klin_genetik'">68</xsl:when>
+									<xsl:when test=" $MSC='anaestesiologi_sygehus'">84</xsl:when>
+									<xsl:when test=" $MSC='arbejdsmedicin'">86</xsl:when>
+									<xsl:when test=" $MSC='almen_medicin'">90</xsl:when>
+									<xsl:when test=" $MSC='samfundsmedicin'">91</xsl:when>
+									<xsl:when test=" $MSC='almenlaege_laegevagt'">580</xsl:when>
+									<xsl:when test=" $MSC='oejenlaege'">1519</xsl:when>
+									<xsl:when test=" $MSC='oere_naese_halslaege'">2021</xsl:when>
+									<xsl:when test=" $MSC='anaestesiologi_praksis'">2501</xsl:when>
+									<xsl:when test=" $MSC='roentgen_kbh'">2503</xsl:when>
+									<xsl:when test=" $MSC='dermato_venerologi_praksis'">2511</xsl:when>
+									<xsl:when test=" $MSC='roentgen'">2505</xsl:when>
+									<xsl:when test=" $MSC='reumatologi_fysiurgi'">2506</xsl:when>
+									<xsl:when test=" $MSC='gynaekologi_obstetrik_praksis'">2507</xsl:when>
+									<xsl:when test=" $MSC='intern_medicin_praksis'">2508</xsl:when>
+									<xsl:when test=" $MSC='kirurgi_praksis'">2509</xsl:when>
+									<xsl:when test=" $MSC='klinisk_kemi'">2511</xsl:when>
+									<xsl:when test=" $MSC='neuromedicin'">2518</xsl:when>
+									<xsl:when test=" $MSC='ortopaedisk_kirurgi_praksis'">2520</xsl:when>
+									<xsl:when test=" $MSC='patologi '">2522</xsl:when>
+									<xsl:when test=" $MSC='plastkirurgi'">2523</xsl:when>
+									<xsl:when test=" $MSC='psykiatri_praksis'">2524</xsl:when>
+									<xsl:when test=" $MSC='paediatri'">2525</xsl:when>
+									<xsl:when test=" $MSC='boernepsykiatri'">2526</xsl:when>
+									<xsl:when test=" $MSC='tropemedicin'">2528</xsl:when>
+									<xsl:when test=" $MSC='tandlaege'">4050</xsl:when>
+									<xsl:when test=" $MSC='fysioterapi'">4551</xsl:when>
+									<xsl:when test=" $MSC='kiropraktor'">5053</xsl:when>
+									<xsl:when test=" $MSC='briller'">5552</xsl:when>
+									<xsl:when test=" $MSC='fodterapi'">6054</xsl:when>
+									<xsl:when test=" $MSC='fodbehandlking'">6055</xsl:when>
+									<xsl:when test=" $MSC='med_laboratorier'">7045</xsl:when>
+									<xsl:when test=" $MSC='omegnslaboratorier'">7046</xsl:when>
+									<xsl:when test=" $MSC='psykolog'">9463</xsl:when>
+									<xsl:otherwise>
+										<FEJL>Kan ikke overs�tte MedicalSpecialityCode: <xsl:value-of select="$MSC"/>
+										</FEJL>
+									</xsl:otherwise>
+								</xsl:choose>
+								</xsl:if>
+							</SubElm>
+							<SubElm>SKS</SubElm>
+							<SubElm>SST</SubElm>
+						</Elm>
+						<Elm>
+							<SubElm>DIS05</SubElm>
+							<SubElm>SKS</SubElm>
+							<SubElm>SST</SubElm>
+						</Elm>
+					</SPR>
+				</S01>
+				<!-- Receiver -->
+				<S01>
+					<xsl:variable name="Participant" select="$Receiver"/>
+					<Elm>
+						<SubElm>01</SubElm>
+					</Elm>
+					<NAD>
+						<Elm>
+							<SubElm>SSP</SubElm>
+						</Elm>
+						<Elm>
+							<SubElm>
+								<xsl:value-of select="$Participant/m:Identifier"/>
+							</SubElm>
+							<SubElm>
+								<xsl:variable name="IC" select="$Participant/m:IdentifierCode"/>
+								<xsl:choose>
+									<xsl:when test="$IC='sygehusafdelingsnummer' ">SKS</xsl:when>
+									<xsl:when test="$IC='ydernummer' ">YNR</xsl:when>
+									<xsl:when test="$IC='lokationsnummer' ">EAN</xsl:when>
+									<xsl:when test="count($IC)=0"/>
+									<xsl:when test="$IC='kommunenummer' ">KOM</xsl:when>
+									<xsl:otherwise>
+										<FEJL>Kan ikke overs�tte IdentifierCodeType: <xsl:value-of select="$IC"/>
+										</FEJL>
+									</xsl:otherwise>
+								</xsl:choose>
+							</SubElm>
+							<SubElm>
+								<xsl:variable name="IC" select="$Participant/m:IdentifierCode"/>
+								<xsl:choose>
+									<xsl:when test="$IC='sygehusafdelingsnummer' ">SST</xsl:when>
+									<xsl:when test="$IC='ydernummer' ">SFU</xsl:when>
+									<xsl:when test="$IC='lokationsnummer' ">9</xsl:when>
+									<xsl:when test="count($IC)=0">9</xsl:when>
+									<xsl:when test="$IC='kommunenummer' ">IM</xsl:when>
+									<xsl:otherwise>
+										<FEJL>Kan ikke overs�tte IdentifierCodeType: <xsl:value-of select="$IC"/>
+										</FEJL>
+									</xsl:otherwise>
+								</xsl:choose>
+							</SubElm>
+						</Elm>
+						<Elm/>
+						<Elm>
+							<SubElm>
+								<xsl:if test="count($Participant/m:OrganisationName)=1"><xsl:value-of select="$Participant/m:OrganisationName"/></xsl:if>
+								<xsl:if test="count($Participant/m:OrganisationName)=0">_</xsl:if>
+							</SubElm>
+							<SubElm>
+								<xsl:value-of select="$Participant/m:DepartmentName"/>
+							</SubElm>
+							<SubElm>
+								<xsl:value-of select="$Participant/m:UnitName"/>
+							</SubElm>
+							<SubElm/>
+							<SubElm/>
+							<SubElm>US</SubElm>
+						</Elm>
+					</NAD>
+					<!-- Standard for ADR segments -->
+					<xsl:variable name="Adr" select="$Participant"/>
+					<xsl:if test="count($Adr/m:StreetName)+count($Adr/m:SubUrbName)+count($Adr/m:DistrictName)+count($Adr/m:PostCodeIdentifier)>0">
+						<ADR>
+							<Elm/>
+							<Elm>
+								<SubElm>US</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Adr//m:StreetName"/>
+								</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Adr/m:SubUrbName"/>
+								</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:value-of select="$Adr/m:DistrictName"/>
+								</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:value-of select="$Adr/m:PostCodeIdentifier"/>
+								</SubElm>
+							</Elm>
+						</ADR>
+					</xsl:if>
+					<SEQ>
+						<Elm/>
+						<Elm>
+							<SubElm>2</SubElm>
+						</Elm>
+					</SEQ>
+				</S01>
+			<S01 linie="16" position="4">
+				<Elm linie="16" position="4">
+					<SubElm linie="16" position="7">01</SubElm>
+				</Elm>
+				<NAD linie="17" position="4">
+					<Elm linie="17" position="4">
+						<SubElm linie="17" position="7">BV</SubElm>
+					</Elm>
+					<Elm linie="17" position="7">
+						<SubElm linie="17" position="8"/>
+					</Elm>
+					<Elm linie="17" position="8">
+						<SubElm linie="17" position="9"/>
+					</Elm>
+					<Elm linie="17" position="9">
+						<SubElm linie="17" position="24">HenvisersTitel</SubElm>
+						<SubElm linie="17" position="38">HenvisersNavn</SubElm>
+						<SubElm linie="17" position="39"/>
+						<SubElm linie="17" position="40"/>
+						<SubElm linie="17" position="41"/>
+						<SubElm linie="17" position="44">US</SubElm>
+					</Elm>
+				</NAD>
+				<RFF linie="18" position="4">
+					<Elm linie="18" position="4">
+						<SubElm linie="18" position="8">AHL</SubElm>
+						<SubElm linie="18" position="10">1</SubElm>
+					</Elm>
+				</RFF>
+				<SEQ linie="19" position="4">
+					<Elm linie="19" position="4">
+						<SubElm linie="19" position="5"/>
+					</Elm>
+					<Elm linie="19" position="5">
+						<SubElm linie="19" position="7">3</SubElm>
+					</Elm>
+				</SEQ>
+			</S01>
+			<S01 linie="20" position="4">
+				<Elm linie="20" position="4">
+					<SubElm linie="20" position="7">01</SubElm>
+				</Elm>
+				<NAD linie="21" position="4">
+					<Elm linie="21" position="4">
+						<SubElm linie="21" position="8">PRH</SubElm>
+					</Elm>
+					<Elm linie="21" position="8">
+						<SubElm linie="21" position="19">SvarModtID</SubElm>
+						<SubElm linie="21" position="24">KODE</SubElm>
+						<SubElm linie="21" position="32">KODEORG</SubElm>
+					</Elm>
+					<Elm linie="21" position="32">
+						<SubElm linie="21" position="33"/>
+					</Elm>
+					<Elm linie="21" position="33">
+						<SubElm linie="21" position="45">SvarModtOrg</SubElm>
+						<SubElm linie="21" position="62">SvarModtAfdTitel</SubElm>
+						<SubElm linie="21" position="78">SvarModtAfsNavn</SubElm>
+						<SubElm linie="21" position="79"/>
+						<SubElm linie="21" position="80"/>
+						<SubElm linie="21" position="83">US</SubElm>
+					</Elm>
+				</NAD>
+				<ADR linie="22" position="4">
+					<Elm linie="22" position="4">
+						<SubElm linie="22" position="5"/>
+					</Elm>
+					<Elm linie="22" position="5">
+						<SubElm linie="22" position="8">US</SubElm>
+						<SubElm linie="22" position="20">SvarModtAdr</SubElm>
+						<SubElm linie="22" position="37">SvarModtStedNavn</SubElm>
+					</Elm>
+					<Elm linie="22" position="37">
+						<SubElm linie="22" position="48">SvarModtBy</SubElm>
+					</Elm>
+					<Elm linie="22" position="48">
+						<SubElm linie="22" position="61">SvarModtPost</SubElm>
+					</Elm>
+				</ADR>
+				<CON linie="23" position="4">
+					<Elm linie="23" position="4">
+						<SubElm linie="23" position="5"/>
+					</Elm>
+					<Elm linie="23" position="5">
+						<SubElm linie="23" position="17">SvarModtTlf</SubElm>
+						<SubElm linie="23" position="20">TE</SubElm>
+					</Elm>
+				</CON>
+				<SEQ linie="24" position="4">
+					<Elm linie="24" position="4">
+						<SubElm linie="24" position="5"/>
+					</Elm>
+					<Elm linie="24" position="5">
+						<SubElm linie="24" position="7">4</SubElm>
+					</Elm>
+				</SEQ>
+			</S01>
+			<S02 linie="25" position="4">
+				<Elm linie="25" position="4">
+					<SubElm linie="25" position="7">02</SubElm>
+				</Elm>
+				<GIS linie="26" position="4">
+					<Elm linie="26" position="4">
+						<SubElm linie="26" position="6">N</SubElm>
+					</Elm>
+				</GIS>
+				<RFF linie="27" position="4">
+					<Elm linie="27" position="4">
+						<SubElm linie="27" position="8">ROI</SubElm>
+						<SubElm linie="27" position="19">ForloebsNr</SubElm>
+					</Elm>
+				</RFF>
+				<DTM linie="28" position="4">
+					<Elm linie="28" position="4">
+						<SubElm linie="28" position="6">4</SubElm>
+						<SubElm linie="28" position="20">BrevDannetTid</SubElm>
+						<SubElm linie="28" position="24">203</SubElm>
+					</Elm>
+				</DTM>
+				<CIN linie="29" position="4">
+					<Elm linie="29" position="4">
+						<SubElm linie="29" position="11">DIABEH</SubElm>
+					</Elm>
+					<Elm linie="29" position="11">
+						<SubElm linie="29" position="22">HenvKodeNr</SubElm>
+						<SubElm linie="29" position="27">KODE</SubElm>
+						<SubElm linie="29" position="28"/>
+						<SubElm linie="29" position="50">KodebetydnEllerFriTxt</SubElm>
+					</Elm>
+				</CIN>
+				<CIN linie="30" position="4">
+					<Elm linie="30" position="4">
+						<SubElm linie="30" position="11">DIABEH</SubElm>
+					</Elm>
+					<Elm linie="30" position="11">
+						<SubElm linie="30" position="21">DiaKodeNr</SubElm>
+						<SubElm linie="30" position="26">KODE</SubElm>
+						<SubElm linie="30" position="27"/>
+						<SubElm linie="30" position="52">DiaKodebetydnEllerFriTxt</SubElm>
+					</Elm>
+				</CIN>
+				<CIN linie="31" position="4">
+					<Elm linie="31" position="4">
+						<SubElm linie="31" position="11">DIABEH</SubElm>
+					</Elm>
+					<Elm linie="31" position="11">
+						<SubElm linie="31" position="21">DiaKodeNr</SubElm>
+						<SubElm linie="31" position="26">KODE</SubElm>
+						<SubElm linie="31" position="27"/>
+						<SubElm linie="31" position="52">DiaKodebetydnEllerFriTxt</SubElm>
+					</Elm>
+				</CIN>
+				<CIN linie="32" position="4">
+					<Elm linie="32" position="4">
+						<SubElm linie="32" position="11">DIABEH</SubElm>
+					</Elm>
+					<Elm linie="32" position="11">
+						<SubElm linie="32" position="21">DiaKodeNr</SubElm>
+						<SubElm linie="32" position="26">KODE</SubElm>
+						<SubElm linie="32" position="27"/>
+						<SubElm linie="32" position="52">DiaKodebetydnEllerFriTxt</SubElm>
+					</Elm>
+				</CIN>
+				<CIN linie="33" position="4">
+					<Elm linie="33" position="4">
+						<SubElm linie="33" position="11">DIABEH</SubElm>
+					</Elm>
+					<Elm linie="33" position="11">
+						<SubElm linie="33" position="21">DiaKodeNr</SubElm>
+						<SubElm linie="33" position="26">KODE</SubElm>
+						<SubElm linie="33" position="27"/>
+						<SubElm linie="33" position="52">DiaKodebetydnEllerFriTxt</SubElm>
+					</Elm>
+				</CIN>
+				<CIN linie="34" position="4">
+					<Elm linie="34" position="4">
+						<SubElm linie="34" position="11">DIABEH</SubElm>
+					</Elm>
+					<Elm linie="34" position="11">
+						<SubElm linie="34" position="21">DiaKodeNr</SubElm>
+						<SubElm linie="34" position="26">KODE</SubElm>
+						<SubElm linie="34" position="27"/>
+						<SubElm linie="34" position="52">DiaKodebetydnEllerFriTxt</SubElm>
+					</Elm>
+				</CIN>
+				<FTX linie="35" position="4">
+					<Elm linie="35" position="4">
+						<SubElm linie="35" position="7">DI</SubElm>
+					</Elm>
+					<Elm linie="35" position="7">
+						<SubElm linie="35" position="14">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="35" position="14">
+						<SubElm linie="35" position="15"/>
+					</Elm>
+					<Elm linie="35" position="15">
+						<SubElm linie="35" position="33">HenvAarsagOenskUS</SubElm>
+						<SubElm linie="35" position="51">HenvAarsagOenskUS</SubElm>
+						<SubElm linie="35" position="69">HenvAarsagOenskUS</SubElm>
+						<SubElm linie="35" position="87">HenvAarsagOenskUS</SubElm>
+						<SubElm linie="35" position="105">HenvAarsagOenskUS</SubElm>
+					</Elm>
+				</FTX>
+			</S02>
+			<S06 linie="36" position="4">
+				<Elm linie="36" position="4">
+					<SubElm linie="36" position="7">06</SubElm>
+				</Elm>
+				<STS linie="37" position="4">
+					<Elm linie="37" position="4">
+						<SubElm linie="37" position="5"/>
+					</Elm>
+					<Elm linie="37" position="5">
+						<SubElm linie="37" position="8">NR</SubElm>
+					</Elm>
+				</STS>
+			</S06>
+				<!-- Patient -->
+				<S07>
+					<xsl:if test="count($Patient//m:CivilRegistrationNumber)=1 and count($Patient/m:AlternativeIdentifier)=1">
+						<FEJL>Patient kan ikke b�de have et CivilRegistrationNumber og et AlternativeIdentifier</FEJL>
+					</xsl:if>
+					<xsl:if test="count($Patient//m:CivilRegistrationNumber)=0 and count($Patient/m:AlternativeIdentifier)=0">
+						<FEJL>Patient skal have et CivilRegistrationNumber eller et AlternativeIdentifier</FEJL>
+					</xsl:if>
+					<xsl:variable name="Person" select="$Patient"/>
+					<Elm>
+						<SubElm>07</SubElm>
+					</Elm>
+					<PNA>
+						<Elm>
+							<SubElm>PAT</SubElm>
+						</Elm>
+						<Elm>
+							<SubElm>
+								<xsl:value-of select="$Patient/m:CivilRegistrationNumber"/>
+							</SubElm>
+							<SubElm/>
+							<SubElm/>
+							<SubElm>CPR</SubElm>
+							<SubElm>IM</SubElm>
+						</Elm>
+						<Elm/>
+						<Elm/>
+						<Elm>
+							<SubElm>SU</SubElm>
+							<SubElm>
+								<xsl:value-of select="$Person/m:PersonSurnameName"/>
+							</SubElm>
+						</Elm>
+						<Elm>
+							<SubElm><xsl:if test="count($Person/m:PersonGivenName)=1">FO</xsl:if></SubElm>
+							<SubElm>
+								<xsl:value-of select="$Person/m:PersonGivenName"/>
+							</SubElm>
+						</Elm>
+					</PNA>
+					<xsl:if test="count($Patient/m:AlternativeIdentifier)=1">
+						<RFF>
+							<Elm>
+								<SubElm>XPI</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Patient/m:AlternativeIdentifier"/>
+								</SubElm>
+							</Elm>
+						</RFF>
+					</xsl:if>
+					<!-- Standard for ADR segments -->
+					<xsl:variable name="Adr" select="$Person"/>
+					<xsl:if test="count($Adr/m:StreetName)+count($Adr/m:SubUrbName)+count($Adr/m:DistrictName)+count($Adr/m:PostCodeIdentifier)>0">
+						<ADR>
+							<Elm/>
+							<Elm>
+								<SubElm>US</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Adr//m:StreetName"/>
+								</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Adr/m:SubUrbName"/>
+								</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:value-of select="$Adr/m:DistrictName"/>
+								</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:value-of select="$Adr/m:PostCodeIdentifier"/>
+								</SubElm>
+							</Elm>
+						</ADR>
+					</xsl:if>
+				<CON linie="42" position="4">
+					<Elm linie="42" position="4">
+						<SubElm linie="42" position="5"/>
+					</Elm>
+					<Elm linie="42" position="5">
+						<SubElm linie="42" position="12">PatTlf</SubElm>
+						<SubElm linie="42" position="15">TE</SubElm>
+					</Elm>
+				</CON>
+				<CON linie="43" position="4">
+					<Elm linie="43" position="4">
+						<SubElm linie="43" position="5"/>
+					</Elm>
+					<Elm linie="43" position="5">
+						<SubElm linie="43" position="17">PatAndetTlf</SubElm>
+						<SubElm linie="43" position="20">TE</SubElm>
+					</Elm>
+				</CON>
+			</S07>
+				<xsl:for-each select="$Parents">
+					<S10>
+						<xsl:variable name="Person" select="."/>
+						<Elm>
+							<SubElm>10</SubElm>
+						</Elm>
+						<REL>
+							<Elm>
+								<SubElm>PER</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:variable name="RC" select="m:RelationCode"/>
+									<xsl:choose>
+										<xsl:when test="$RC='uspec_paaroerende'">GU</xsl:when>
+										<xsl:when test="$RC='mor'">MO</xsl:when>
+										<xsl:when test="$RC='far'">FA</xsl:when>
+										<xsl:when test="$RC='barn'">SD</xsl:when>
+										<xsl:otherwise>
+											<FEJL>Kan ikke overs�tte kode for p�r�rende: <xsl:value-of select="$RC"/>
+											</FEJL>
+										</xsl:otherwise>
+									</xsl:choose>
+								</SubElm>
+							</Elm>
+						</REL>
+						<PNA>
+							<Elm>
+								<SubElm>PAS</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:value-of select="m:PersonIdentifier"/>
+								</SubElm>
+							</Elm>
+							<Elm/>
+							<Elm/>
+							<Elm>
+								<SubElm>SU</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Person/m:PersonSurnameName"/>
+								</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm><xsl:if test="count($Person/m:PersonGivenName)=1">FO</xsl:if></SubElm>
+								<SubElm>
+									<xsl:value-of select="$Person/m:PersonGivenName"/>
+								</SubElm>
+							</Elm>
+						</PNA>
+					</S10>
+				</xsl:for-each>
+			<S12 linie="47" position="4">
+				<Elm linie="47" position="4">
+					<SubElm linie="47" position="7">12</SubElm>
+				</Elm>
+				<FTX linie="48" position="4">
+					<Elm linie="48" position="4">
+						<SubElm linie="48" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="48" position="11">
+						<SubElm linie="48" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="48" position="18">
+						<SubElm linie="48" position="19"/>
+					</Elm>
+					<Elm linie="48" position="19">
+						<SubElm linie="48" position="28">Anamnese</SubElm>
+						<SubElm linie="48" position="37">Anamnese</SubElm>
+						<SubElm linie="48" position="46">Anamnese</SubElm>
+						<SubElm linie="48" position="55">Anamnese</SubElm>
+						<SubElm linie="48" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="49" position="4">
+					<Elm linie="49" position="4">
+						<SubElm linie="49" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="49" position="11">
+						<SubElm linie="49" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="49" position="18">
+						<SubElm linie="49" position="19"/>
+					</Elm>
+					<Elm linie="49" position="19">
+						<SubElm linie="49" position="28">Anamnese</SubElm>
+						<SubElm linie="49" position="37">Anamnese</SubElm>
+						<SubElm linie="49" position="46">Anamnese</SubElm>
+						<SubElm linie="49" position="55">Anamnese</SubElm>
+						<SubElm linie="49" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="50" position="4">
+					<Elm linie="50" position="4">
+						<SubElm linie="50" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="50" position="11">
+						<SubElm linie="50" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="50" position="18">
+						<SubElm linie="50" position="19"/>
+					</Elm>
+					<Elm linie="50" position="19">
+						<SubElm linie="50" position="28">Anamnese</SubElm>
+						<SubElm linie="50" position="37">Anamnese</SubElm>
+						<SubElm linie="50" position="46">Anamnese</SubElm>
+						<SubElm linie="50" position="55">Anamnese</SubElm>
+						<SubElm linie="50" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="51" position="4">
+					<Elm linie="51" position="4">
+						<SubElm linie="51" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="51" position="11">
+						<SubElm linie="51" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="51" position="18">
+						<SubElm linie="51" position="19"/>
+					</Elm>
+					<Elm linie="51" position="19">
+						<SubElm linie="51" position="28">Anamnese</SubElm>
+						<SubElm linie="51" position="37">Anamnese</SubElm>
+						<SubElm linie="51" position="46">Anamnese</SubElm>
+						<SubElm linie="51" position="55">Anamnese</SubElm>
+						<SubElm linie="51" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="52" position="4">
+					<Elm linie="52" position="4">
+						<SubElm linie="52" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="52" position="11">
+						<SubElm linie="52" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="52" position="18">
+						<SubElm linie="52" position="19"/>
+					</Elm>
+					<Elm linie="52" position="19">
+						<SubElm linie="52" position="28">Anamnese</SubElm>
+						<SubElm linie="52" position="37">Anamnese</SubElm>
+						<SubElm linie="52" position="46">Anamnese</SubElm>
+						<SubElm linie="52" position="55">Anamnese</SubElm>
+						<SubElm linie="52" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="53" position="4">
+					<Elm linie="53" position="4">
+						<SubElm linie="53" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="53" position="11">
+						<SubElm linie="53" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="53" position="18">
+						<SubElm linie="53" position="19"/>
+					</Elm>
+					<Elm linie="53" position="19">
+						<SubElm linie="53" position="28">Anamnese</SubElm>
+						<SubElm linie="53" position="37">Anamnese</SubElm>
+						<SubElm linie="53" position="46">Anamnese</SubElm>
+						<SubElm linie="53" position="55">Anamnese</SubElm>
+						<SubElm linie="53" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="54" position="4">
+					<Elm linie="54" position="4">
+						<SubElm linie="54" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="54" position="11">
+						<SubElm linie="54" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="54" position="18">
+						<SubElm linie="54" position="19"/>
+					</Elm>
+					<Elm linie="54" position="19">
+						<SubElm linie="54" position="28">Anamnese</SubElm>
+						<SubElm linie="54" position="37">Anamnese</SubElm>
+						<SubElm linie="54" position="46">Anamnese</SubElm>
+						<SubElm linie="54" position="55">Anamnese</SubElm>
+						<SubElm linie="54" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="55" position="4">
+					<Elm linie="55" position="4">
+						<SubElm linie="55" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="55" position="11">
+						<SubElm linie="55" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="55" position="18">
+						<SubElm linie="55" position="19"/>
+					</Elm>
+					<Elm linie="55" position="19">
+						<SubElm linie="55" position="28">Anamnese</SubElm>
+						<SubElm linie="55" position="37">Anamnese</SubElm>
+						<SubElm linie="55" position="46">Anamnese</SubElm>
+						<SubElm linie="55" position="55">Anamnese</SubElm>
+						<SubElm linie="55" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="56" position="4">
+					<Elm linie="56" position="4">
+						<SubElm linie="56" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="56" position="11">
+						<SubElm linie="56" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="56" position="18">
+						<SubElm linie="56" position="19"/>
+					</Elm>
+					<Elm linie="56" position="19">
+						<SubElm linie="56" position="28">Anamnese</SubElm>
+						<SubElm linie="56" position="37">Anamnese</SubElm>
+						<SubElm linie="56" position="46">Anamnese</SubElm>
+						<SubElm linie="56" position="55">Anamnese</SubElm>
+						<SubElm linie="56" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+			</S12>
+			<S12 linie="57" position="4">
+				<Elm linie="57" position="4">
+					<SubElm linie="57" position="7">12</SubElm>
+				</Elm>
+				<FTX linie="58" position="4">
+					<Elm linie="58" position="4">
+						<SubElm linie="58" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="58" position="11">
+						<SubElm linie="58" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="58" position="18">
+						<SubElm linie="58" position="19"/>
+					</Elm>
+					<Elm linie="58" position="19">
+						<SubElm linie="58" position="28">Anamnese</SubElm>
+						<SubElm linie="58" position="37">Anamnese</SubElm>
+						<SubElm linie="58" position="46">Anamnese</SubElm>
+						<SubElm linie="58" position="55">Anamnese</SubElm>
+						<SubElm linie="58" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="59" position="4">
+					<Elm linie="59" position="4">
+						<SubElm linie="59" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="59" position="11">
+						<SubElm linie="59" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="59" position="18">
+						<SubElm linie="59" position="19"/>
+					</Elm>
+					<Elm linie="59" position="19">
+						<SubElm linie="59" position="28">Anamnese</SubElm>
+						<SubElm linie="59" position="37">Anamnese</SubElm>
+						<SubElm linie="59" position="46">Anamnese</SubElm>
+						<SubElm linie="59" position="55">Anamnese</SubElm>
+						<SubElm linie="59" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="60" position="4">
+					<Elm linie="60" position="4">
+						<SubElm linie="60" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="60" position="11">
+						<SubElm linie="60" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="60" position="18">
+						<SubElm linie="60" position="19"/>
+					</Elm>
+					<Elm linie="60" position="19">
+						<SubElm linie="60" position="28">Anamnese</SubElm>
+						<SubElm linie="60" position="37">Anamnese</SubElm>
+						<SubElm linie="60" position="46">Anamnese</SubElm>
+						<SubElm linie="60" position="55">Anamnese</SubElm>
+						<SubElm linie="60" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="61" position="4">
+					<Elm linie="61" position="4">
+						<SubElm linie="61" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="61" position="11">
+						<SubElm linie="61" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="61" position="18">
+						<SubElm linie="61" position="19"/>
+					</Elm>
+					<Elm linie="61" position="19">
+						<SubElm linie="61" position="28">Anamnese</SubElm>
+						<SubElm linie="61" position="37">Anamnese</SubElm>
+						<SubElm linie="61" position="46">Anamnese</SubElm>
+						<SubElm linie="61" position="55">Anamnese</SubElm>
+						<SubElm linie="61" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="62" position="4">
+					<Elm linie="62" position="4">
+						<SubElm linie="62" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="62" position="11">
+						<SubElm linie="62" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="62" position="18">
+						<SubElm linie="62" position="19"/>
+					</Elm>
+					<Elm linie="62" position="19">
+						<SubElm linie="62" position="28">Anamnese</SubElm>
+						<SubElm linie="62" position="37">Anamnese</SubElm>
+						<SubElm linie="62" position="46">Anamnese</SubElm>
+						<SubElm linie="62" position="55">Anamnese</SubElm>
+						<SubElm linie="62" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="63" position="4">
+					<Elm linie="63" position="4">
+						<SubElm linie="63" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="63" position="11">
+						<SubElm linie="63" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="63" position="18">
+						<SubElm linie="63" position="19"/>
+					</Elm>
+					<Elm linie="63" position="19">
+						<SubElm linie="63" position="28">Anamnese</SubElm>
+						<SubElm linie="63" position="37">Anamnese</SubElm>
+						<SubElm linie="63" position="46">Anamnese</SubElm>
+						<SubElm linie="63" position="55">Anamnese</SubElm>
+						<SubElm linie="63" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="64" position="4">
+					<Elm linie="64" position="4">
+						<SubElm linie="64" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="64" position="11">
+						<SubElm linie="64" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="64" position="18">
+						<SubElm linie="64" position="19"/>
+					</Elm>
+					<Elm linie="64" position="19">
+						<SubElm linie="64" position="28">Anamnese</SubElm>
+						<SubElm linie="64" position="37">Anamnese</SubElm>
+						<SubElm linie="64" position="46">Anamnese</SubElm>
+						<SubElm linie="64" position="55">Anamnese</SubElm>
+						<SubElm linie="64" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="65" position="4">
+					<Elm linie="65" position="4">
+						<SubElm linie="65" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="65" position="11">
+						<SubElm linie="65" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="65" position="18">
+						<SubElm linie="65" position="19"/>
+					</Elm>
+					<Elm linie="65" position="19">
+						<SubElm linie="65" position="28">Anamnese</SubElm>
+						<SubElm linie="65" position="37">Anamnese</SubElm>
+						<SubElm linie="65" position="46">Anamnese</SubElm>
+						<SubElm linie="65" position="55">Anamnese</SubElm>
+						<SubElm linie="65" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="66" position="4">
+					<Elm linie="66" position="4">
+						<SubElm linie="66" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="66" position="11">
+						<SubElm linie="66" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="66" position="18">
+						<SubElm linie="66" position="19"/>
+					</Elm>
+					<Elm linie="66" position="19">
+						<SubElm linie="66" position="28">Anamnese</SubElm>
+						<SubElm linie="66" position="37">Anamnese</SubElm>
+						<SubElm linie="66" position="46">Anamnese</SubElm>
+						<SubElm linie="66" position="55">Anamnese</SubElm>
+						<SubElm linie="66" position="64">Anamnese</SubElm>
+					</Elm>
+				</FTX>
+			</S12>
+			<S18 linie="67" position="4">
+				<Elm linie="67" position="4">
+					<SubElm linie="67" position="7">18</SubElm>
+				</Elm>
+				<GIS linie="68" position="4">
+					<Elm linie="68" position="4">
+						<SubElm linie="68" position="6">N</SubElm>
+					</Elm>
+				</GIS>
+				<PTY linie="69" position="4">
+					<Elm linie="69" position="4">
+						<SubElm linie="69" position="8">PRI</SubElm>
+					</Elm>
+					<Elm linie="69" position="8">
+						<SubElm linie="69" position="18">PRIORITET</SubElm>
+					</Elm>
+				</PTY>
+				<FTX linie="70" position="4">
+					<Elm linie="70" position="4">
+						<SubElm linie="70" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="70" position="11">
+						<SubElm linie="70" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="70" position="18">
+						<SubElm linie="70" position="19"/>
+					</Elm>
+					<Elm linie="70" position="19">
+						<SubElm linie="70" position="39">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="70" position="59">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="70" position="79">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="70" position="99">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="70" position="119">ForbeholdtSygehuset</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="71" position="4">
+					<Elm linie="71" position="4">
+						<SubElm linie="71" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="71" position="11">
+						<SubElm linie="71" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="71" position="18">
+						<SubElm linie="71" position="19"/>
+					</Elm>
+					<Elm linie="71" position="19">
+						<SubElm linie="71" position="39">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="71" position="59">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="71" position="79">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="71" position="99">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="71" position="119">ForbeholdtSygehuset</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="72" position="4">
+					<Elm linie="72" position="4">
+						<SubElm linie="72" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="72" position="11">
+						<SubElm linie="72" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="72" position="18">
+						<SubElm linie="72" position="19"/>
+					</Elm>
+					<Elm linie="72" position="19">
+						<SubElm linie="72" position="39">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="72" position="59">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="72" position="79">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="72" position="99">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="72" position="119">ForbeholdtSygehuset</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="73" position="4">
+					<Elm linie="73" position="4">
+						<SubElm linie="73" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="73" position="11">
+						<SubElm linie="73" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="73" position="18">
+						<SubElm linie="73" position="19"/>
+					</Elm>
+					<Elm linie="73" position="19">
+						<SubElm linie="73" position="39">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="73" position="59">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="73" position="79">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="73" position="99">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="73" position="119">ForbeholdtSygehuset</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="74" position="4">
+					<Elm linie="74" position="4">
+						<SubElm linie="74" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="74" position="11">
+						<SubElm linie="74" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="74" position="18">
+						<SubElm linie="74" position="19"/>
+					</Elm>
+					<Elm linie="74" position="19">
+						<SubElm linie="74" position="39">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="74" position="59">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="74" position="79">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="74" position="99">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="74" position="119">ForbeholdtSygehuset</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="75" position="4">
+					<Elm linie="75" position="4">
+						<SubElm linie="75" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="75" position="11">
+						<SubElm linie="75" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="75" position="18">
+						<SubElm linie="75" position="19"/>
+					</Elm>
+					<Elm linie="75" position="19">
+						<SubElm linie="75" position="39">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="75" position="59">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="75" position="79">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="75" position="99">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="75" position="119">ForbeholdtSygehuset</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="76" position="4">
+					<Elm linie="76" position="4">
+						<SubElm linie="76" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="76" position="11">
+						<SubElm linie="76" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="76" position="18">
+						<SubElm linie="76" position="19"/>
+					</Elm>
+					<Elm linie="76" position="19">
+						<SubElm linie="76" position="39">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="76" position="59">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="76" position="79">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="76" position="99">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="76" position="119">ForbeholdtSygehuset</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="77" position="4">
+					<Elm linie="77" position="4">
+						<SubElm linie="77" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="77" position="11">
+						<SubElm linie="77" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="77" position="18">
+						<SubElm linie="77" position="19"/>
+					</Elm>
+					<Elm linie="77" position="19">
+						<SubElm linie="77" position="39">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="77" position="59">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="77" position="79">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="77" position="99">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="77" position="119">ForbeholdtSygehuset</SubElm>
+					</Elm>
+				</FTX>
+				<FTX linie="78" position="4">
+					<Elm linie="78" position="4">
+						<SubElm linie="78" position="11">TEXTNR</SubElm>
+					</Elm>
+					<Elm linie="78" position="11">
+						<SubElm linie="78" position="18">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="78" position="18">
+						<SubElm linie="78" position="19"/>
+					</Elm>
+					<Elm linie="78" position="19">
+						<SubElm linie="78" position="39">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="78" position="59">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="78" position="79">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="78" position="99">ForbeholdtSygehuset</SubElm>
+						<SubElm linie="78" position="119">ForbeholdtSygehuset</SubElm>
+					</Elm>
+				</FTX>
+				<PAS linie="79" position="4">
+					<Elm linie="79" position="4">
+						<SubElm linie="79" position="13">AMBULANT</SubElm>
+					</Elm>
+				</PAS>
+			</S18>
+			<S19 linie="80" position="4">
+				<Elm linie="80" position="4">
+					<SubElm linie="80" position="7">19</SubElm>
+				</Elm>
+				<STS linie="81" position="4">
+					<Elm linie="81" position="4">
+						<SubElm linie="81" position="5"/>
+					</Elm>
+					<Elm linie="81" position="5">
+						<SubElm linie="81" position="8">NR</SubElm>
+					</Elm>
+				</STS>
+				<TDT linie="82" position="4">
+					<Elm linie="82" position="4">
+						<SubElm linie="82" position="8">PHL</SubElm>
+					</Elm>
+					<Elm linie="82" position="8">
+						<SubElm linie="82" position="19">BEFORDRING</SubElm>
+					</Elm>
+				</TDT>
+				<FTX linie="83" position="4">
+					<Elm linie="83" position="4">
+						<SubElm linie="83" position="8">COT</SubElm>
+					</Elm>
+					<Elm linie="83" position="8">
+						<SubElm linie="83" position="15">FORMAT</SubElm>
+					</Elm>
+					<Elm linie="83" position="15">
+						<SubElm linie="83" position="16"/>
+					</Elm>
+					<Elm linie="83" position="16">
+						<SubElm linie="83" position="34">YderligerePatInfo</SubElm>
+						<SubElm linie="83" position="52">YderligerePatInfo</SubElm>
+						<SubElm linie="83" position="70">YderligerePatInfo</SubElm>
+						<SubElm linie="83" position="88">YderligerePatInfo</SubElm>
+						<SubElm linie="83" position="106">YderligerePatInfo</SubElm>
+					</Elm>
+				</FTX>
+			</S19>
+		</BrevIndhold>
+		<UNT linie="84" position="4">
+			<Elm linie="84" position="4">
+				<SubElm linie="84" position="7">82</SubElm>
+			</Elm>
+			<Elm linie="84" position="7">
+				<SubElm linie="84" position="14">BrevNr</SubElm>
+			</Elm>
+		</UNT>
+	</Brev>
+	</xsl:template>
+	<xsl:template match="m:Space"><Space/></xsl:template>
+	<xsl:template match="m:Break"><Break/></xsl:template>
+	<xsl:template match="m:Bold"><Bold><xsl:value-of select="."/></Bold></xsl:template>
+	<xsl:template match="m:Italic"><Italic><xsl:value-of select="."/></Italic></xsl:template>
+	<xsl:template match="m:Underscore"><Underscore><xsl:value-of select="."/></Underscore></xsl:template>
+	<xsl:template match="m:Right"><Right><xsl:value-of select="."/></Right></xsl:template>
+	<xsl:template match="m:Center"><Center><xsl:value-of select="."/></Center></xsl:template>
+	<xsl:template match="m:FixedFont"><FixedFont><xsl:for-each select="text() | *"><xsl:apply-templates select="."/></xsl:for-each></FixedFont></xsl:template>
+</xsl:stylesheet>

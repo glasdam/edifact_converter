@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Emessage xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2006/07/01/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2006/07/01/ ../workspace/XmlEdiKonverter/WebContent/Schemas/2006/07/01/EMessage.xsd">
+   <Envelope>
+      <Sent>
+         <Date>2000-12-30</Date>
+         <Time>15:00</Time>
+      </Sent>
+      <Identifier>REQ000000199</Identifier>
+      <AcknowledgementCode>pluspositivkvitt</AcknowledgementCode>
+   </Envelope>
+   <LaboratoryRequest>
+      <Letter>
+         <Identifier>00099</Identifier>
+         <VersionCode>XQ0131K</VersionCode>
+         <StatisticalCode>XREQ01</StatisticalCode>
+         <Authorisation>
+            <Date>2000-12-30</Date>
+            <Time>15:00</Time>
+         </Authorisation>
+         <TypeCode>XREQ01</TypeCode>
+      </Letter>
+      <Sender>
+         <EANIdentifier>5790000183838</EANIdentifier>
+         <Identifier>4202120</Identifier>
+         <IdentifierCode>sygehusafdelingsnummer</IdentifierCode>
+         <OrganisationName>OUH</OrganisationName>
+         <DepartmentName>Klinisk kemisk afdeling</DepartmentName>
+         <MedicalSpecialityCode>klinisk_kemi</MedicalSpecialityCode>
+         <ReplyToOriginalRequester>true</ReplyToOriginalRequester>
+      </Sender>
+      <OriginalRequester>
+         <Identifier>125012</Identifier>
+         <IdentifierCode>ydernummer</IdentifierCode>
+         <OrganisationName>Finn Klamer</OrganisationName>
+      </OriginalRequester>
+      <Receiver>
+         <EANIdentifier>5790000121212</EANIdentifier>
+         <Identifier>5790000121212</Identifier>
+         <IdentifierCode>lokationsnummer</IdentifierCode>
+         <DepartmentName>NovaMedical Medilab</DepartmentName>
+      </Receiver>
+      <Payer>
+         <PayersTypeCode>rekvirent</PayersTypeCode>
+         <Identifier>5790000123456</Identifier>
+         <IdentifierCode>lokationsnummer</IdentifierCode>
+         <OrganisationName>Afd. Z</OrganisationName>
+         <OrderIdentifier>209</OrderIdentifier>
+         <AccountIdentifier>20071010</AccountIdentifier>
+      </Payer>
+      <Patient>
+         <CivilRegistrationNumber>0312221186</CivilRegistrationNumber>
+         <PersonSurnameName>Berggren</PersonSurnameName>
+         <PersonGivenName>Anna</PersonGivenName>
+         <Consent>
+            <Given>true</Given>
+         </Consent>
+      </Patient>
+      <RequisitionInformation>
+         <RequisitionDateTime>
+            <Date>2000-12-30</Date>
+            <Time>08:00</Time>
+         </RequisitionDateTime>
+         <SamplingLocationCode>rekvirenten</SamplingLocationCode>
+         <SamplingDateTimeType>faktisk</SamplingDateTimeType>
+         <SamplingDateTime>
+            <Date>2000-12-30</Date>
+            <Time>08:00</Time>
+         </SamplingDateTime>
+         <Sample>
+            <RequesterSampleIdentifier>12123455</RequesterSampleIdentifier>
+            <OriginalRequesterSampleIdentifier>12141618</OriginalRequesterSampleIdentifier>
+         </Sample>
+         <NumberOfTestTubes>1</NumberOfTestTubes>
+      </RequisitionInformation>
+      <Requests>
+         <RequestedAnalysis>
+            <ResultPriority>rutine</ResultPriority>
+            <Analysis>
+               <AnalysisCode>NPU03946</AnalysisCode>
+               <AnalysisCodeType>iupac</AnalysisCodeType>
+               <AnalysisCodeResponsible>SST</AnalysisCodeResponsible>
+            </Analysis>
+         </RequestedAnalysis>
+         <Prompt>
+            <Question>
+               <Code>52800</Code>
+               <CodeType>lokal</CodeType>
+               <CodeResponsible>MC</CodeResponsible>
+               <CodeText>Sidste menstruation</CodeText>
+            </Question>
+            <Answer>
+               <DateTime>
+                  <Date>1998-12-01</Date>
+                  <Time>00:00</Time>
+               </DateTime>
+            </Answer>
+         </Prompt>
+      </Requests>
+   </LaboratoryRequest>
+</Emessage>

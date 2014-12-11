@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Henrik Gørup Rasmussen (Acure) -->
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:element name="PositiveReceipt" type="PositiveReceiptType">
+		<xs:annotation>
+			<xs:documentation>Positiv kvittering</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PositiveReceiptType">
+		<xs:annotation>
+			<xs:documentation>Definition af en positiv kvittering</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="PositiveReceiptLetterType">
+				<xs:annotation>
+					<xs:documentation>Er en speciel lettertype der er en delmængde af den generelle LetterType, som begrænses til VersionCode=XC0330Q</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="CTRLSenderType"/>
+			<xs:element name="Receiver" type="CTRLReceiverType"/>
+			<xs:element name="OriginalEmessage">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OriginalEnvelopeIdentifier" type="String_1_14">
+							<xs:annotation>
+								<xs:documentation>OriginalKuvertNr</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="OriginalSender" type="CTRLSenderType"/>
+						<xs:element name="OriginalReceiver" type="CTRLReceiverType"/>
+						<xs:element name="OriginalLetter" minOccurs="0" maxOccurs="99">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="OriginalLetterIdentifier" type="String_1_14">
+										<xs:annotation>
+											<xs:documentation>OriginalBrevNr</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="OriginalVersionCode" type="OriginalVersionCodeType"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PositiveReceiptLetterType">
+		<xs:annotation>
+			<xs:documentation>Er en speciel lettertype der er en delmængde af den generelle LetterType, som begrænses til VersionCode=XC0330Q</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14">
+				<xs:annotation>
+					<xs:documentation>BrevNr</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="VersionCode">
+				<xs:annotation>
+					<xs:documentation>VERSION</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XC0330Q"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8">
+				<xs:annotation>
+					<xs:documentation>BrvStat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

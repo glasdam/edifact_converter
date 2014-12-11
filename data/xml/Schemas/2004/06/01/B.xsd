@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Henrik Gørup Rasmussen (Acure) -->
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:element name="BinaryLetter" type="BinaryLetterType">
+		<xs:annotation>
+			<xs:documentation>MEDBIN</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BinaryLetterType">
+		<xs:annotation>
+			<xs:documentation>Definition af en MEDBIN</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="BinaryLetterLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XB0130X  og TypeCode=XBIN01</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="BinaryLetterSenderType"/>
+			<xs:element ref="Receiver"/>
+			<xs:choice>
+				<xs:element name="Patient" type="BinaryLetterPatientType"/>
+				<xs:sequence>
+					<xs:element name="SystemInformation">
+						<xs:simpleType>
+							<xs:restriction base="xs:boolean">
+								<xs:pattern value="true"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="Contents" type="String_1_70" minOccurs="0"/>
+				</xs:sequence>
+			</xs:choice>
+			<xs:element name="BinaryObject" maxOccurs="10">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="ObjectIdentifier"/>
+						<xs:element ref="ObjectCode"/>
+						<xs:element ref="ObjectExtensionCode"/>
+						<xs:element ref="OriginalObjectSize"/>
+						<xs:element name="Object_Base64Encoded" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BinaryLetterLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XB0130X  og TypeCode=XBIN01</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XB0130X"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XBIN01"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatusCode">
+				<xs:simpleType>
+					<xs:restriction base="StatusCodeType">
+						<xs:pattern value="nytbrev"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BinaryLetterSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="StreetName"/>
+			<xs:element ref="SuburbName"/>
+			<xs:element ref="DistrictName"/>
+			<xs:element ref="PostCodeIdentifier"/>
+			<xs:element ref="TelephoneSubscriberIdentifier" minOccurs="0"/>
+			<xs:element ref="MedicalSpecialityCode"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BinaryLetterPatientType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="CivilRegistrationNumber"/>
+				<xs:element ref="AlternativeIdentifier"/>
+			</xs:choice>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

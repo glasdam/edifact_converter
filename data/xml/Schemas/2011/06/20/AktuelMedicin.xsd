@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="AktuelMedicin" type="AktuelMedicinType"/>
+	<xs:complexType name="AktuelMedicinType">
+		<xs:annotation>
+			<xs:documentation>Definition af Aktuel Medicin</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Medicin" type="MedicinType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MedicinType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="FMK"/>
+			<xs:element ref="Praeparat"/>
+			<xs:element ref="Form"/>
+			<xs:element ref="Styrke"/>
+			<xs:element ref="Dosis"/>
+			<xs:element ref="Type" minOccurs="0"/>
+			<xs:element ref="Indikation" minOccurs="0"/>
+			<xs:element ref="ATC"/>
+			<xs:element ref="UdfoertAf"/>
+			</xs:sequence>
+	</xs:complexType>
+</xs:schema>

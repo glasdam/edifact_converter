@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://rep.oio.dk/kl.dk/xml/schemas/sygedagpenge/2003/09/05/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:kl="http://rep.oio.dk/kl.dk/xml/schemas/sygedagpenge/2003/09/05/" elementFormDefault="qualified">
+	<annotation>
+		<documentation source="KL_SENumberType.xsd.meta.xml"/>
+	</annotation>
+	<element name="SENumber" type="kl:SENumberType"/>
+	<simpleType name="SENumberType">
+		<annotation>
+			<documentation>SE-nummer. Typen er modelleret som et CVR-nummer, dvs blot som en streng med 8 tegn. Dette er på sigt en for løs definition.</documentation>
+		</annotation>
+		<restriction base="string">
+			<length value="8"/>
+		</restriction>
+	</simpleType>
+</schema>

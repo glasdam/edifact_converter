@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Jesper Nielsen (Sundhedsstyrelsen) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by - (National Board of Health) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GEPJ.xsd"/>
+	<xs:complexType name="OperationeltMaal">
+		<xs:complexContent>
+			<xs:extension base="GEpj">
+				<xs:sequence>
+					<xs:element name="resType" type="SksKombi"/>
+					<xs:element name="resAktualitet" type="Tidsinterval"/>
+					<xs:element name="repPeriode" type="Tidsinterval" minOccurs="0"/>
+					<xs:element name="maalOperator" type="SksId" minOccurs="0"/>
+					<xs:element name="maalKvant1" type="FysiskStoerrelse" minOccurs="0"/>
+					<xs:element name="maalKvant2" type="FysiskStoerrelse" minOccurs="0"/>
+					<xs:element name="maalKvali" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="200"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="evalPeriode" type="Tidsperiode"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

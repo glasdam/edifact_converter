@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Jesper Nielsen (Sundhedsstyrelsen) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="../GEPJ_Datatyper.xsd"/>
+	<xs:simpleType name="Detaljer">
+		<xs:annotation>
+			<xs:documentation>Anvendes til at indikere detaljeringsniveau på forespørgsler</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:complexType name="Aktualitet">
+		<xs:annotation>
+			<xs:documentation>Aktualitet bruges til at angives tidsperspektiv bagud i forhold til NU. Anvender datatypen Tidsinterval, samt en Tidstype, der angiver enten dokumenteret eller besluttet</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="Tidsinterval"/>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

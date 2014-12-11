@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" elementFormDefault="qualified" attributeFormDefault="unqualified" id="PatientInfo">
+	<xs:import namespace="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" schemaLocation="Cpr/CPR_CivilRegistrationNumber.xsd"/>
+	<xs:import namespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" schemaLocation="Dkcc/DKCC.xsd"/>
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:element name="PatientAnalysisInfo" type="PatientAnalysisInfoType"/>
+	<xs:complexType name="AnalysisPlaceType">
+		<xs:sequence>
+			<xs:element name="Type" type="xs:string"/>
+			<xs:element name="Code" type="xs:string"/>
+			<xs:element name="NewestAnalysis" type="xs:date" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatientAnalysisInfoType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="CivilRegistrationNumber" type="cpr:CivilRegistrationNumberType"/>
+				<xs:element ref="AlternativeIdentifier"/>
+			</xs:choice>
+			<xs:element name="PersonGivenName" type="dkcc:PersonGivenNameType" minOccurs="0"/>
+			<xs:element name="PersonMiddleName" type="dkcc:PersonMiddleNameType" minOccurs="0"/>
+			<xs:element name="PersonSurnameName" type="dkcc:PersonSurnameNameType" minOccurs="0"/>
+			<xs:element name="AnalysisPlace" type="AnalysisPlaceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

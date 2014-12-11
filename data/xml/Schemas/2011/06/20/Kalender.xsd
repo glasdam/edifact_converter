@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="Kalender" type="KalenderType"/>
+	<xs:complexType name="KalenderType">
+		<xs:annotation>
+			<xs:documentation>Definition af Kalender med aftaler</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Aftale" type="AftaleType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="AftaleType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="Kode"/>
+			<xs:element ref="Tekst"/>
+			<xs:element ref="UdfoertAf"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

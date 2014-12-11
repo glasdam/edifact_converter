@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="Contacts" type="ContactsType"/>
+	<xs:complexType name="ContactsType">
+		<xs:sequence>
+			<xs:element name="HospitalContact" type="SimpleContactType" minOccurs="0"/>
+			<xs:element name="CommunityContact" type="SimpleContactType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="SimpleContactType">
+		<xs:sequence>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName"/>
+			<xs:element ref="PersonName"/>
+			<xs:element ref="TelephoneSubscriberIdentifier"/>
+			<xs:element ref="EmailIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

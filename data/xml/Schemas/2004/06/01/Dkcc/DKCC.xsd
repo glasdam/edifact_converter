@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" 
+	xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" 
+	xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<include schemaLocation="DKCC_PersonGivenName.xsd"/>
+	<include schemaLocation="DKCC_PersonMiddleName.xsd"/>
+	<include schemaLocation="DKCC_PersonSurnameName.xsd"/>
+	<include schemaLocation="DKCC_PostCodeIdentifier.xsd"/>
+</schema>

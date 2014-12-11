@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="Calender" type="CalenderType"/>
+	<xs:complexType name="CalenderType">
+		<xs:sequence>
+			<xs:element name="Appointment" type="AppointmentType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:complexType name="AppointmentType">
+		<xs:sequence>
+			<xs:element name="ID" type="String_1_15"/>
+			<xs:element name="TimeStamp" type="DateTimeType"/>
+			<xs:element name="Code" type="String_1_15"/>
+			<xs:element name="Type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Laege"/>
+						<xs:enumeration value="Sygehus"/>
+						<xs:enumeration value="Kommune"/>
+						<xs:enumeration value="Andet??"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Title" type="String_1_35"/>
+			<xs:element name="Text" type="FormattedTextType"/>
+			<xs:element name="Status">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Ansoegt"/>
+						<xs:enumeration value="Tilbudt"/>
+						<xs:enumeration value="Andet??"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

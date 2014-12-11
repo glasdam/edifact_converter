@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:element name="Paaroerende" type="PaaroerendeType"/>
+
+	<xs:complexType name="PaaroerendeType">
+		<xs:annotation>
+			<xs:documentation>Definition af Pårørende</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="Fornavn"/>
+			<xs:element ref="Efternavn"/>
+			<xs:element ref="Vej" minOccurs="0"/>
+			<xs:element ref="Postnummer" minOccurs="0"/>
+			<xs:element ref="By" minOccurs="0"/>
+			<xs:element ref="Kontakttelefon" minOccurs="0"/>
+			<xs:element ref="eMail" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

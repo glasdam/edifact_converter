@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="LA_Sender.xsd"/>
+	<xs:include schemaLocation="LA_Patient.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="GeneralTypes.xsd"/>
+	<xs:include schemaLocation="PaymentInformation.xsd"/>
+	<xs:element name="SocialMedicalFollowUpAnswer" type="SocialMedicalFollowUpAnswerType">
+		<xs:annotation>
+			<xs:documentation>Blanket til Attest vedrørende socialmedicinsk opfølgning (LÆ215)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SocialMedicalFollowUpAnswerType">
+		<xs:annotation>
+			<xs:documentation>Definition af LÆ215</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="SocialMedicalFollowUpAnswerLetterType"/>
+			<xs:element name="Sender" type="LA_SenderType"/>
+			<xs:element ref="Receiver"/>
+			<xs:element name="Patient" type="LA_PatientType"/>
+			<xs:element ref="PaymentInformation"/>
+			<xs:element name="CreationDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Oprettelsesdato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstDayOffText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Første fraværsdag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrentDiagnosisText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Aktuelle diagnoser - latin og dansk</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OtherDiagnosisText" type="String_1_Unbounded" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Evt. andre betydende diagnoser - latin og dansk</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrentTreatmentText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Igangværende undersøgelse/behandling eller henvisning til behandling andetsteds (sygehus, speciallæge m.v.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpectedDurationInDays" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Hvor længe fra dags dato forventes auarbejdsdygtigheden at vare</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RehabilitationFromTreatmentCode" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Skønnes lægeordineret behandling alene at kunne genetablere arbejdsdygtigheden</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RehabilitationFromCombinedCode" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hvis nej til forrige: Skønnes lægeordineret behandling i kombination med socialmedicinske foranstaltninger (revalidering eller lign.) at kunne genetablere arbejdsdygtigheden</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HealthDetailText" type="String_1_Unbounded" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Uddybende helbredsmæssig begrundelse for den nedsatte erhvervsfunktion</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExtraInformationText" type="String_1_Unbounded" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Supplerende oplysninger: (fx. muligheden for delvis genoptagelse af arbejdet, forslag til socialmedicinsk foranstaltning, indhentning af yderligere lægelige oplysninger, omfanget af tidligere sygemeldinger)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SocialMedicalFollowUpAnswerLetterType">
+		<xs:annotation>
+			<xs:documentation>Brevtype for LÆ215 - en LetterType, som blot begrænses til VersionCode=XLA2151001A og TypeCode=XLA215</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XLA2151001A"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XLA215"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

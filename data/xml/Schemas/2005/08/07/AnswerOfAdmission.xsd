@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Henrik Gørup Rasmussen (Acure) -->
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:element name="AnswerOfAdmission" type="AnswerOfAdmissionType">
+		<xs:annotation>
+			<xs:documentation>Indlæggelsessvar</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AnswerOfAdmissionType">
+		<xs:annotation>
+			<xs:documentation>Definition af et indlæggelsessvar</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="AnswerOfAdmissionLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XD1430C  og TypeCode=XDIS14</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="AnswerOfAdmissionSenderType"/>
+			<xs:element name="Receiver" type="AnswerOfAdmissionReceiverType"/>
+			<xs:element name="Patient" type="AnswerOfAdmissionPatientType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AnswerOfAdmissionLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XD1430C  og TypeCode=XDIS14</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XD1431C"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeWithSecType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XDIS14"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatusCode" type="StatusCodeTypeN"/>
+			<xs:element name="NotificationIdentifier" type="String_1_35"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AnswerOfAdmissionSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element name="ContactInformation" minOccurs="0" maxOccurs="5">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ContactName" type="String_1_35" minOccurs="0" maxOccurs="2"/>
+						<xs:element ref="TelephoneSubscriberIdentifier" minOccurs="0"/>
+						<xs:element name="ContactTimeText" type="String_1_35" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AnswerOfAdmissionReceiverType">
+		<xs:complexContent>
+			<xs:restriction base="ReceiverType">
+				<xs:sequence>
+					<xs:element ref="EANIdentifier"/>
+					<xs:element ref="Identifier"/>
+					<xs:element ref="IdentifierCode"/>
+					<xs:element ref="OrganisationName" minOccurs="0"/>
+					<xs:element ref="DepartmentName" minOccurs="0"/>
+					<xs:element ref="UnitName" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AnswerOfAdmissionPatientType">
+		<xs:sequence>
+			<xs:element ref="CivilRegistrationNumber"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

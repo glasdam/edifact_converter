@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="SKLNoter" type="SKLNoterType"/>
+	<xs:complexType name="SKLNoterType">
+		<xs:annotation>
+			<xs:documentation>Definition af SKL Noter</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Note" type="NoteTypeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NoteTypeType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="Titel" minOccurs="0"/>
+			<xs:element ref="Tekst" minOccurs="0"/>
+			<xs:element ref="UdfoertAf"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

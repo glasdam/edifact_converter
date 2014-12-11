@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Jesper Nielsen (Sundhedsstyrelsen) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by - (National Board of Health) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GEPJ_Datatyper.xsd"/>
+	<xs:complexType name="Kontekst" abstract="true">
+		<xs:sequence>
+			<xs:element name="id" type="ObjektId"/>
+			<xs:element name="besluttetAf" type="Personale"/>
+			<xs:element name="dokumenteret" type="Tidspunkt"/>
+			<xs:element name="besluttet" type="Tidspunkt"/>
+			<xs:element name="dokumenteretAf" type="Personale"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

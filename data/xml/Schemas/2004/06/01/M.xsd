@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Henrik Gørup Rasmussen (Acure) -->
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:element name="Prescription" type="PrescriptionType">
+		<xs:annotation>
+			<xs:documentation>Recept</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PrescriptionType">
+		<xs:annotation>
+			<xs:documentation>Definition af en recept</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XLMS015  og TypeCode=XPRE01</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="PrescriptionLetterType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Sender" type="PrescriptionSenderType"/>
+			<xs:element name="Receiver" type="PrescriptionRecieverType"/>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element name="PatientOrRelative" type="PatientOrRelaviveType"/>
+					<xs:element name="ForGPUse" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:boolean">
+								<xs:pattern value="true"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="ForGPClinicUse">
+					<xs:simpleType>
+						<xs:restriction base="xs:boolean">
+							<xs:pattern value="true"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="PrescriptionInformation" type="PrescriptionInformationType"/>
+			<xs:element name="Drug" type="DrugType" maxOccurs="99"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XLMS015  og TypeCode=XPRE01</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XLMS015"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeWithSecType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XPRE01"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element name="OrganisationName" type="String_1_70">
+				<xs:annotation>
+					<xs:documentation>70 tegns</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element ref="TelephoneSubscriberIdentifier"/>
+			<xs:element ref="MedicalSpecialityCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Afsspec</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Issuer" type="IssuerType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionRecieverType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element name="OrganisationName" type="String_1_70" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>70 tegns</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IssuerType">
+		<xs:sequence>
+			<xs:element ref="CivilRegistrationNumber" minOccurs="0"/>
+			<xs:element name="TitleAndName" type="String_1_70">
+				<xs:annotation>
+					<xs:documentation>UdstederNavn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpecialityCode" type="String_1_3" minOccurs="0"/>
+			<xs:element name="Occupation" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="laege"/>
+						<xs:enumeration value="tandlaege"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PatientOrRelaviveType">
+		<xs:sequence>
+			<xs:element name="Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PART</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="patient"/>
+						<xs:enumeration value="patienttilknyttet_person"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element ref="CivilRegistrationNumber" minOccurs="0"/>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element name="CountryCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Landekode</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CountyCode">
+				<xs:annotation>
+					<xs:documentation>Amtskode</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:maxLength value="3"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PatientDateOfBirth" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Foedselsdato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PatientSex" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PARTKOEN</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="hankoen"/>
+						<xs:enumeration value="hunkoen"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PrivateInsurance" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>FORSIKRINGSTYPE (DK)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LocalAuthorityGrant" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>FORSIKRINGSTYPE (MK)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrescriptionInformationType">
+		<xs:sequence>
+			<xs:element name="SenderComputerSystem" type="String_1_35">
+				<xs:annotation>
+					<xs:documentation>AfsSystem</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageStatusCode">
+				<xs:annotation>
+					<xs:documentation>MEDDELELSESFUNKTION</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="original"/>
+						<xs:enumeration value="kopi"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DrugDatabaseVersion" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>VersionsID  YYYYWW</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DoseDispenseInformation" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Status">
+							<xs:annotation>
+								<xs:documentation>STATUS</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="dosisdispensering"/>
+									<xs:enumeration value="seponeres"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="CopyRequired" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>COP</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:boolean"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice minOccurs="0" maxOccurs="3">
+				<xs:element name="OrderInstruction" type="String_1_70"/>
+				<xs:element name="DeliveryInformation" type="String_1_70"/>
+			</xs:choice>
+			<xs:element name="Delivery" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PriorityOfDelivery">
+							<xs:annotation>
+								<xs:documentation>Levering</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="send_til_anden_adresse_samme_dag"/>
+									<xs:enumeration value="send_til_anden_adresse_pr_post"/>
+									<xs:enumeration value="send_til_patientadresse_samme_dag"/>
+									<xs:enumeration value="send_til_patientadresse_pr_post"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:choice minOccurs="0">
+							<xs:element ref="StreetName"/>
+							<xs:element name="PseudoAddress" type="String_1_70"/>
+						</xs:choice>
+						<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+						<xs:element name="ContactName" type="String_1_70" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DrugType">
+		<xs:sequence>
+			<xs:element name="PackageIdentifier">
+				<xs:annotation>
+					<xs:documentation>VareNummer</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="999999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="NameOfDrug" type="String_1_35"/>
+			<xs:element name="DosageForm" type="String_1_35"/>
+			<xs:element name="PackageSize" type="String_1_70">
+				<xs:annotation>
+					<xs:documentation>StyrkeEllerPakningsstoerelse</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DrugStrength" type="String_1_70" minOccurs="0"/>
+			<xs:element name="Importer" minOccurs="0">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="ShortName" type="String_1_70"/>
+						<xs:element name="LongName" type="String_1_70"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="NumberOfPackings">
+				<xs:annotation>
+					<xs:documentation>AntalPakninger</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ReimbursementClause" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>TILSKUDSKODE</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="klausulbetingelse_opfyldt"/>
+						<xs:enumeration value="varig_lidelse"/>
+						<xs:enumeration value="pensionist"/>
+						<xs:enumeration value="bevilling_fra_laegemiddelstyrelsen"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SubstitutionCode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ikke_substitution"/>
+						<!--<xs:enumeration value="ikke_generisk_substitution"/>
+						<xs:enumeration value="ikke_original_substitution"/> Udgået-->
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Dosage">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DosageCode" type="String_1_8" minOccurs="0"/>
+						<xs:element name="DosageText" type="String_1_70"/>
+						<xs:element name="Period" type="String_1_35" minOccurs="0"/>
+						<xs:element name="PeriodUnit" minOccurs="0">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="dag"/>
+									<xs:enumeration value="uge"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Indication">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Code" type="String_1_17" minOccurs="0"/>
+						<xs:element name="Text" type="String_1_70"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Iteration" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Number">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Interval">
+							<xs:simpleType>
+								<xs:restriction base="xs:int">
+									<xs:minInclusive value="1"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="IntervalUnit">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="dag"/>
+									<xs:enumeration value="uge"/>
+									<xs:enumeration value="maaned"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SupplementaryInformation" type="String_1_70" minOccurs="0"/>
+			<xs:element name="DoseDispensing" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="StartDate" type="xs:date"/>
+						<xs:element name="EndDate" type="xs:date"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

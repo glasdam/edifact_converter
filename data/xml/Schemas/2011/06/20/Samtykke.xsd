@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:element name="Samtykke" type="SamtykkeType"/>
+	
+	<xs:complexType name="SamtykkeType">
+		<xs:annotation>
+			<xs:documentation>Definition af samtykke</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Dato" type="xs:dateTime"/>
+			<xs:element name="SamtykkeGivet" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

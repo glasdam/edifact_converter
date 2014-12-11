@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="LA_Patient.xsd"/>
+	<xs:include schemaLocation="LA_Contact.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:element name="StatusRequest" type="StatusRequestType">
+		<xs:annotation>
+			<xs:documentation>Blanket til Anmodning om Statusattest (LÆ121)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="StatusRequestType">
+		<xs:annotation>
+			<xs:documentation>Definition af LÆ121</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="StatusRequestLetterType"/>
+			<xs:element ref="Sender"/>
+			<xs:element ref="Receiver"/>
+			<xs:element name="Patient" type="LA_PatientType"/>
+			<xs:element name="CreationDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Oprettelsesdato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShortStatementText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Kort redegørelse</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact" type="LA_ContactType" minOccurs="0" maxOccurs="2"/>
+			<xs:element name="LegalAuthority">
+				<xs:annotation>
+					<xs:documentation>Lovgrundlag - "Oplysningerne indhentes efter"</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="ConsentCode">
+							<xs:annotation>
+								<xs:documentation>Samtykke</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:boolean">
+									<xs:pattern value="true"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:sequence>
+							<xs:element name="PublicSecurityAct">
+								<xs:annotation>
+									<xs:documentation>Retssikkerhedslovens § 11c</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:boolean">
+										<xs:pattern value="true"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="SubSectionText" type="String_1_25">
+								<xs:annotation>
+									<xs:documentation>Stykke eller Litra</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusRequestLetterType">
+		<xs:annotation>
+			<xs:documentation>Brevtype for LÆ121 - en LetterType, som blot begrænses til VersionCode=XLA1211203A og TypeCode=XLA121</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XLA1211203A"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XLA121"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

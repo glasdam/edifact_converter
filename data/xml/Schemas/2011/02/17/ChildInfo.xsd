@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/"
+	xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:element name="ChildInfo" type="ChildInfoType"/>
+	<xs:complexType name="ChildInfoType">
+		<xs:sequence>
+			<xs:element name="ChildPrincipalDiagnoses" type="FullQualifiedDiagnoseOrTreatmentType">
+				<xs:annotation>
+					<xs:documentation>Aktionsdiagnose for barn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChildAdditionalDiagnoses" type="QualifiedDiagnoseOrTreatmentType"	minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>Tillægsdiagnoser for barn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChildOtherDiagnoses" type="QualifiedDiagnoseOrTreatmentType" minOccurs="0" maxOccurs="27">
+				<xs:annotation>
+					<xs:documentation>Øvrige diagnoser for barn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChildDimensions">
+				<xs:annotation>
+					<xs:documentation>Barnets vægt (g), længde (cm) og hovedomfang (cm)</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Weight" type="xs:int"/>
+						<xs:element name="Length" type="xs:int"/>
+						<xs:element name="HeadCircumference" type="xs:int"/>
+					</xs:sequence>
+				</xs:complexType>	
+			</xs:element>
+			<xs:element name="ApgarScore" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Apgarscore v/1, 5 og 10 minutter, samt antal minutter v/score=10</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ScoreAfterOneMin" type="xs:int" minOccurs="0"/>
+						<xs:element name="ScoreAfterFiveMin" type="xs:int" minOccurs="0"/>
+						<xs:element name="ScoreAfterTenMin" type="xs:int" minOccurs="0"/>
+						<xs:element name="MinutesAtScoreTen" type="xs:int" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ChildAdditionalInfo" type="FormattedTextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Øvrige oplysninger om barnet (max. 3150 kar.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChildTransferral" type="String_1_70" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fritekst for Barn overflyttes (max. 70 kar.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+</xs:schema>

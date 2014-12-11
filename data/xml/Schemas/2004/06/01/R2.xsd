@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Henrik Gørup Rasmussen (Acure) -->
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="Reference.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="XrayRequest" type="XrayRequestType">
+		<xs:annotation>
+			<xs:documentation>Røntgenhenvisning</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="XrayRequestType">
+		<xs:annotation>
+			<xs:documentation>Definition af en røntgenhenvisning</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="XrayRequestLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XH0230R  og TypeCode=XREF02</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="XrayRequestSenderType"/>
+			<xs:element ref="Receiver"/>
+			<xs:element name="AnswerCCReceiver" type="XrayRequestAnswerCCReceiverType" minOccurs="0"/>
+			<xs:element name="Patient" type="XrayRequestPatientType"/>
+			<xs:element name="Relative" type="XrayRequestRelativeType" minOccurs="0"/>
+			<xs:element name="AdditionalInformation" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Priority" type="PriorityCodeType" minOccurs="0"/>
+						<xs:element name="ReferralStatus" type="ReferralStatusType" minOccurs="0"/>
+						<xs:element name="Transport" type="TransportType" minOccurs="0"/>
+						<xs:element name="Supplementary" type="FormattedTextType" minOccurs="0"/>
+						<xs:element name="ClinicalReason" type="FormattedTextType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Referral" type="XrayRequestReferralType" minOccurs="0"/>
+			<xs:element name="RelevantClinicalInformation" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Cave" type="FormattedTextType" minOccurs="0"/>
+						<xs:element name="Anamnesis" type="FormattedTextType"/>
+						<xs:element name="Examination" type="FormattedTextType" minOccurs="0"/>
+						<xs:element name="ActualMedicine" type="FormattedTextType" minOccurs="0"/>
+						<xs:element name="FirstDateOfPeriod" type="FormattedTextType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
+			<xs:element name="HospitalVisitation" minOccurs="0" maxOccurs="9">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="InformationCode" type="InformationCodeType"/>
+						<xs:element name="Information" type="FormattedTextType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="XrayRequestLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XH0230R  og TypeCode=XREF02</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="LetterType">
+				<xs:sequence>
+					<xs:element name="Identifier" type="String_1_14"/>
+					<xs:element name="VersionCode">
+						<xs:simpleType>
+							<xs:restriction base="VersionCodeType">
+								<xs:pattern value="XH0230R"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="StatisticalCode" type="String_1_8"/>
+					<xs:element name="Authorisation" type="DateTimeType"/>
+					<xs:element name="TypeCode">
+						<xs:simpleType>
+							<xs:restriction base="TypeCodeType">
+								<xs:pattern value="XREF02"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="StatusCode" type="StatusCodeType"/>
+					<xs:element name="EpisodeOfCareIdentifier" type="String_1_35" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="XrayRequestSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element ref="TelephoneSubscriberIdentifier" minOccurs="0"/>
+			<xs:element ref="MedicalSpecialityCode" minOccurs="0"/>
+			<xs:element name="Referrer">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonName" type="String_1_35"/>
+						<xs:element name="PersonTitle" type="String_1_35" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="XrayRequestAnswerCCReceiverType">
+		<xs:sequence>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element ref="TelephoneSubscriberIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="XrayRequestPatientType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="CivilRegistrationNumber"/>
+				<xs:element ref="AlternativeIdentifier"/>
+			</xs:choice>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element ref="TelephoneSubscriberIdentifier" minOccurs="0" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="XrayRequestRelativeType">
+		<xs:complexContent>
+			<xs:restriction base="RelativeType">
+				<xs:sequence>
+					<xs:element ref="RelationCode"/>
+					<xs:element ref="PersonIdentifier" minOccurs="0"/>
+					<xs:element ref="PersonSurnameName"/>
+					<xs:element ref="PersonGivenName" minOccurs="0"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="XrayRequestReferralType">
+		<xs:sequence>
+			<xs:element name="Refer" type="XQualifiedDiagnoseType" minOccurs="0"/>
+			<xs:element name="ReferralAdditional" type="QualifiedDiagnoseOrTreatmentType" minOccurs="0" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

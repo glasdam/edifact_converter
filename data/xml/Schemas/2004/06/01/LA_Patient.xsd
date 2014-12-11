@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:element name="LA_Patient" type="LA_PatientType">
+		<xs:annotation>
+			<xs:documentation>Patienttype til brug i LÆ blanketter - udvidelse af standard patienttype med telefonnr.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LA_PatientType">
+		<xs:annotation>
+			<xs:documentation>Patienttype til brug i LÆ blanketter - udvidelse af standard patienttype med telefonnr.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="CivilRegistrationNumber"/>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName"/>
+			<xs:element ref="StreetName"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName"/>
+			<xs:element ref="PostCodeIdentifier"/>
+			<xs:element ref="OccupancyText" minOccurs="0"/>
+			<xs:element ref="EpisodeOfCareStatusCode" minOccurs="0"/>
+			<xs:element ref="TelephoneSubscriberIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

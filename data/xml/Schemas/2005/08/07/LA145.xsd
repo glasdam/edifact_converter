@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="LA_Patient.xsd"/>
+	<xs:include schemaLocation="LA_Contact.xsd"/>
+	<xs:include schemaLocation="LA_Sender.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="PaymentInformation.xsd"/>
+	<xs:element name="GeneralHealthAnswer" type="GeneralHealthAnswerType">
+		<xs:annotation>
+			<xs:documentation>Blanket til Generel helbredsattest (LÆ145)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="GeneralHealthAnswerType">
+		<xs:annotation>
+			<xs:documentation>Definition af LÆ145</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="GeneralHealthAnswerLetterType"/>
+			<xs:element name="Sender" type="LA_SenderType"/>
+			<xs:element ref="Receiver"/>
+			<xs:element name="Patient" type="LA_PatientType"/>
+			<xs:element ref="PaymentInformation"/>
+			<xs:element name="CreationDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Oprettelsesdato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PatientAssociationDate" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Hvor længe har De været patientens læge</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HistoryOfIllnessText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Sygehistorie.
+Her beskrives alle for sagen relevante sygdomsforløb og tilstande. Der kan indgå relevante udskrivningsbreve, speciallægeundersøgelser, laboratorieundersøgelser, røntgenundersøgelser, funktionsprøver m.v., evt. i uddrag. Forbrug af medicin, tobak, alkohol og narkotika beskrives, hvis det er relevant.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ObjectiveAssesmentText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Objektiv undersøgelse, især med henblik på de aktuelle helbredsklager</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DiagnosisText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Diagnoser - Latin og dansk</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OptionsOfTreatmentText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Behandlingsmuligheder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DescriptionOfAbilityText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Beskrivelse af funktionsevnen - Beskrivelse af patientens sædvanlige arbejdsfunktion med begrundet angivelse af, hvad patienten ikke længere kan påtage sig.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PrognosisText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Prognose - Her medtages såvel de helbredsmæssige udsigter som den forventede udvikling i patientens funktionsduelighed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SocialMedicalProposalText" type="String_1_Unbounded" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Forslag til socialmedicinske behandlingsmuligheder - NB: Afgørelse om en evt. social ydelses art og omfang træffes af kommunen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpecialistText" type="String_1_Unbounded" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Speciallæge - Er der behov for speciallægeundersøgelse og i givet fald hvilket speciale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OtherText" type="String_1_Unbounded" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Eventuelt - Her kan medtages oplysninger som har betydning for den samlede bedømmelse og som ikke er medtaget i de foregående rubrikker (der gives ikke en vurdering af en evt. social ydelses art og omfang).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneralHealthAnswerLetterType">
+		<xs:annotation>
+			<xs:documentation>Brevtype for LÆ145 - en LetterType, som blot begrænses til VersionCode=XLA1451001A og TypeCode=XLA145</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XLA1451001A"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XLA145"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

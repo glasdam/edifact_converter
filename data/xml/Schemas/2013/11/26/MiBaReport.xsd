@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"
+  xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2013/11/26/"
+  xmlns:tns="http://rep.oio.dk/medcom.dk/xml/schemas/2013/11/26/"
+  targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2013/11/26/"
+  elementFormDefault="qualified" attributeFormDefault="unqualified"
+  xmlns:ns1="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2006/07/01/">
+  <xs:annotation>
+    <xs:documentation>$Id: MiBaReport.xsd 4255 2014-10-01 07:55:05Z busk $</xs:documentation>
+  </xs:annotation>
+  <xs:include schemaLocation="GeneralElements.xsd"/>
+  <xs:include schemaLocation="LetterType.xsd"/>
+  <xs:include schemaLocation="ValueLists.xsd"/>
+  <xs:element name="MiBaReport" type="MiBaReportType">
+    <xs:annotation>
+      <xs:documentation>Mikrobiologisvar</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MiBaReportType">
+    <xs:annotation>
+      <xs:documentation>Definition af en mikrobiologisvar</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Letter" type="MiBaReportLetterType">
+        <xs:annotation>
+          <xs:documentation>Kan betragtes som et Letter element, som blot begrænses til
+            VersionCode=XR0630M og TypeCode=XRPT06</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sender" type="MicrobiologyWebReportSenderType"/>
+      <xs:element name="Receiver" type="MicrobiologyWebReportReceiverType"/>
+      <xs:element name="CCReceiver" type="MicrobiologyWebReportCCReceiverType" minOccurs="0"/>
+      <xs:element name="Patient" type="MiBaReportPatientType"/>
+      <xs:element name="RequisitionInformation">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="ClinicalInformation" type="ParagraphedTextType" minOccurs="0"/>
+            <xs:element name="Comments" type="IdentificationBasicType" minOccurs="0" maxOccurs="10">
+              <xs:annotation>
+                <xs:documentation> RekvKomn </xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Sample">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="LaboratoryInternalSampleIdentifier" type="String_1_20">
+                    <xs:annotation>
+                      <xs:documentation>RekvNrLab</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="RequesterSampleIdentifier" type="String_1_15" minOccurs="0">
+                    <xs:annotation>
+                      <xs:documentation>RekvNrLaege</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="SamplingDateTime" type="DateTimeType">
+                    <xs:annotation>
+                      <xs:documentation>RekvTidLaege</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="SampleReceivedDateTime" type="DateTimeType">
+                    <xs:annotation>
+                      <xs:documentation>RekvModtLab</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LaboratoryResults">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="GeneralResultInformation">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ResultStatusCode">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="proeve_modtaget"/>
+                        <xs:enumeration value="svar_midlertidigt"/>
+                        <xs:enumeration value="svar_endeligt"/>
+                        <xs:enumeration value="svar_rettet"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="LaboratoryInternalProductionIdentifier" type="String_1_20">
+                    <xs:annotation>
+                      <xs:documentation>LabprodProvnr</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="ResultsDateTime" type="DateTimeType">
+                    <xs:annotation>
+                      <xs:documentation>SvarTid</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="ResultStatus">
+                    <xs:annotation>
+                      <xs:documentation>STATUS</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="komplet"/>
+                        <xs:enumeration value="delvis"/>
+                        <xs:enumeration value="modtaget"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="Summary" type="CodedIdentificationType" minOccurs="0"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Investigation" maxOccurs="90">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Examination">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="ExaminationTypeCode">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="maalemetode"/>
+                              <xs:enumeration value="maaleprocedure"/>
+                              <xs:enumeration value="maalbar_kvantitet"/>
+                              <xs:enumeration value="overskrift"/>
+                              <xs:enumeration value="observerbar_egenskab"/>
+                              <xs:enumeration value="antibiotika_sammensaetning"/>
+                              <xs:enumeration value="dyrkning"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:element>
+                        <xs:element ref="MICAnalysisCode"/>
+                        <xs:element ref="AnalysisCodeType">
+                          <xs:annotation>
+                            <xs:documentation>KODETABEL</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="AnalysisCodeResponsible">
+                          <xs:annotation>
+                            <xs:documentation>LabOrg</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="AnalysisShortName" minOccurs="0">
+                          <xs:annotation>
+                            <xs:documentation>KortNavn</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element ref="AnalysisMDSName">
+                          <xs:annotation>
+                            <xs:documentation>Undersoegelsesnavn:Materiale:Lokalisation</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element name="SupplementaryLocation" type="String_1_70" minOccurs="0">
+                          <xs:annotation>
+                            <xs:documentation>SupplLocation</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Examinator" type="String_1_70"/>
+                        <xs:element name="ProducerOfLabResult">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="Identifier" type="String_1_17"/>
+                              <xs:element name="IdentifierCode" type="String_1_3"/>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Summary" type="String_1_70" minOccurs="0"/>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="QuantitativeFindings" minOccurs="0">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="InterPretation" type="CodedIdentificationType"
+                          minOccurs="0"/>
+                        <xs:element name="AnalysisFindings" minOccurs="0" maxOccurs="20">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="Analysis" type="IdentificationBasicType"/>
+                              <xs:element name="Properties" type="PropertiesBasicType"/>
+                              <xs:element name="Findings" type="FindingsType"/>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Comments" type="IdentificationBasicType" minOccurs="0"
+                          maxOccurs="10">
+                          <xs:annotation>
+                            <xs:documentation>Kommtekstexamination</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="CultureFindings" minOccurs="0">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Headline" type="String_1_35">
+                          <xs:annotation>
+                            <xs:documentation>Dyrkning med fund</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Microorganism" minOccurs="0" maxOccurs="10">
+                          <xs:annotation>
+                            <xs:documentation>(Kolonner i Pattern hvis medsendt)</xs:documentation>
+                          </xs:annotation>
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="Identification" type="CodedIdentificationType"/>
+                              <xs:element name="IsolateNumber" minOccurs="1">
+                                <xs:simpleType>
+                                  <xs:restriction base="xs:int">
+                                    <xs:minInclusive value="1"/>
+                                    <xs:maxInclusive value="9"/>
+                                  </xs:restriction>
+                                </xs:simpleType>
+                              </xs:element>
+                              <xs:element name="SortOrder">
+                                <xs:annotation>
+                                  <xs:documentation>(Kolonnenummer i Pattern hvis
+                                    medsendt)</xs:documentation>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                  <xs:restriction base="xs:int">
+                                    <xs:minInclusive value="1"/>
+                                    <xs:maxInclusive value="9"/>
+                                  </xs:restriction>
+                                </xs:simpleType>
+                              </xs:element>
+                              <xs:element name="GrowthValue" type="IdentificationBasicType"
+                                minOccurs="0"/>
+                              <xs:element name="Properties" minOccurs="0" type="PropertiesBasicType"/>
+                              <xs:element name="SpeciesComment" type="IdentificationBasicType"
+                                minOccurs="0" maxOccurs="10">
+                                <xs:annotation>
+                                  <xs:documentation>Multiresistent, Epi-strain or similar information</xs:documentation>
+                                </xs:annotation>
+                              </xs:element>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Pattern" minOccurs="0">
+                          <xs:annotation>
+                            <xs:documentation>(resistensmønster)</xs:documentation>
+                          </xs:annotation>
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="Headline" type="String_1_35">
+                                <xs:annotation>
+                                  <xs:documentation>Antibiotikafølsomhed</xs:documentation>
+                                </xs:annotation>
+                              </xs:element>
+                              <xs:element name="Antibiotic" maxOccurs="80">
+                                <xs:complexType>
+                                  <xs:sequence>
+                                    <xs:element name="AntibioticName" type="IdentificationBasicType">
+                                      <xs:annotation>
+                                        <xs:documentation>(Rækker i Pattern)</xs:documentation>
+                                      </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="AntibioticNumber">
+                                      <xs:annotation>
+                                        <xs:documentation>(Rækkenummer i Pattern)</xs:documentation>
+                                      </xs:annotation>
+                                      <xs:simpleType>
+                                        <xs:restriction base="xs:positiveInteger">
+                                          <xs:minInclusive value="1"/>
+                                          <xs:maxInclusive value="80"/>
+                                        </xs:restriction>
+                                      </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element name="SusceptibilityMethod"
+                                      type="IdentificationBasicType" minOccurs="0"/>
+                                  </xs:sequence>
+                                </xs:complexType>
+                              </xs:element>
+                              <xs:element name="PatternEntry" maxOccurs="80">
+                                <xs:complexType>
+                                  <xs:sequence>
+                                    <xs:element name="RefMicroorganism">
+                                      <xs:annotation>
+                                        <xs:documentation>(KolonneNr.)</xs:documentation>
+                                      </xs:annotation>
+                                      <xs:simpleType>
+                                        <xs:restriction base="xs:int">
+                                          <xs:minInclusive value="1"/>
+                                          <xs:maxInclusive value="10"/>
+                                        </xs:restriction>
+                                      </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element name="RefAntibiotic">
+                                      <xs:annotation>
+                                        <xs:documentation>(RækkeNr.)</xs:documentation>
+                                      </xs:annotation>
+                                      <xs:simpleType>
+                                        <xs:restriction base="xs:int">
+                                          <xs:minInclusive value="1"/>
+                                          <xs:maxInclusive value="80"/>
+                                        </xs:restriction>
+                                      </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element name="Susceptibility" type="String_1_8">
+                                      <xs:annotation>
+                                        <xs:documentation>Resistenskode</xs:documentation>
+                                      </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="SusceptibilityValue"
+                                      type="PatternFindingsType" minOccurs="0"/>
+                                  </xs:sequence>
+                                </xs:complexType>
+                              </xs:element>
+                              <xs:element name="SusceptibilityInterpretation"
+                                type="ParagraphedTextType">
+                                <xs:annotation>
+                                  <xs:documentation>Følsomhed</xs:documentation>
+                                </xs:annotation>
+                              </xs:element>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="Comments" type="IdentificationBasicType" minOccurs="0"
+                          maxOccurs="10">
+                          <xs:annotation>
+                            <xs:documentation>Kommtekstfund</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                    <xs:key name="SortOrderKey">
+                      <xs:annotation>
+                        <xs:documentation>Unique og foreign key constraints</xs:documentation>
+                      </xs:annotation>
+                      <xs:selector xpath="tns:Microorganism"/>
+                      <xs:field xpath="tns:SortOrder"/>
+                    </xs:key>
+                    <xs:keyref name="SortOrderKeyRef" refer="SortOrderKey">
+                      <xs:selector xpath="tns:Pattern/tns:PatternEntry"/>
+                      <xs:field xpath="tns:RefMicroorganism"/>
+                    </xs:keyref>
+                    <xs:key name="AntibioticKey">
+                      <xs:selector xpath="tns:Pattern/tns:Antibiotic"/>
+                      <xs:field xpath="tns:AntibioticNumber"/>
+                    </xs:key>
+                    <xs:keyref name="AntibioticKeyRef" refer="AntibioticKey">
+                      <xs:selector xpath="tns:Pattern/tns:PatternEntry"/>
+                      <xs:field xpath="tns:RefAntibiotic"/>
+                    </xs:keyref>
+                  </xs:element>
+                  <xs:element name="MicroscopicFindings" minOccurs="0">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Headline" type="String_1_35">
+                          <xs:annotation>
+                            <xs:documentation>Mikroskopifund</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Comments" type="ParagraphedTextType">
+                          <xs:annotation>
+                            <xs:documentation>Svartekst</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Grouping" minOccurs="0" maxOccurs="5">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="Headline" type="IdentificationBasicType"/>
+                              <xs:element name="MicroscopicType" minOccurs="0" maxOccurs="10">
+                                <xs:complexType>
+                                  <xs:sequence>
+                                    <xs:element name="Type">
+                                      <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                          <xs:enumeration value="celler"/>
+                                          <xs:enumeration value="mikroorganisme"/>
+                                          <xs:enumeration value="konsistens"/>
+                                          <xs:enumeration value="udseende"/>
+                                          <xs:enumeration value="vurdering"/>
+                                          <xs:enumeration value="flora"/>
+                                        </xs:restriction>
+                                      </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element name="Details" minOccurs="0" maxOccurs="10">
+                                      <xs:complexType>
+                                        <xs:sequence>
+                                          <xs:element name="Identification"
+                                            type="IdentificationBasicType"/>
+                                          <xs:element name="Value" type="IdentificationBasicType"/>
+                                        </xs:sequence>
+                                      </xs:complexType>
+                                    </xs:element>
+                                  </xs:sequence>
+                                </xs:complexType>
+                              </xs:element>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Comments" type="IdentificationBasicType" minOccurs="0" maxOccurs="10">
+              <xs:annotation>
+                <xs:documentation>Kommtekstfund</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Prompt" maxOccurs="20" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Question">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="Code" type="String_1_17"/>
+                        <xs:element name="CodeType">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="lokal"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="CodeResponsible" type="String_1_3"/>
+                        <xs:element name="CodeText" type="String_1_35"/>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="Answer">
+                    <xs:complexType>
+                      <xs:choice>
+                        <xs:element name="Text" type="String_1_70"/>
+                        <xs:element name="Numerical">
+                          <xs:simpleType>
+                            <xs:restriction base="xs:decimal">
+                              <xs:totalDigits value="17"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="DiagnoseCode" type="String_1_17"/>
+                        <xs:element name="DateTime" type="DateTimeType"/>
+                      </xs:choice>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MiBaReportLetterType">
+    <xs:annotation>
+      <xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XR0630M
+        og TypeCode=XRPT06</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Identifier" type="String_1_14"/>
+      <xs:element name="VersionCode">
+        <xs:simpleType>
+          <xs:restriction base="VersionCodeType">
+            <xs:pattern value="XR0630M"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="StatisticalCode" type="String_1_8"/>
+      <xs:element name="Authorisation" type="DateTimeType"/>
+      <xs:element name="TypeCode">
+        <xs:simpleType>
+          <xs:restriction base="TypeCodeType">
+            <xs:pattern value="XRPT06"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MicrobiologyWebReportSenderType">
+    <xs:sequence>
+      <xs:element ref="EANIdentifier"/>
+      <xs:element ref="Identifier"/>
+      <xs:element ref="IdentifierCode"/>
+      <xs:element ref="OrganisationName"/>
+      <xs:element ref="DepartmentName" minOccurs="0"/>
+      <xs:element ref="UnitName" minOccurs="0"/>
+      <xs:element ref="MedicalSpecialityCode"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MicrobiologyWebReportReceiverType">
+    <xs:sequence>
+      <xs:element ref="EANIdentifier"/>
+      <xs:element ref="Identifier"/>
+      <xs:element name="IdentifierCode">
+        <xs:simpleType>
+          <xs:annotation>
+            <xs:documentation>Kode for aktør med mulighed for lokal_kode</xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="sygehusafdelingsnummer"/>
+            <xs:enumeration value="ydernummer"/>
+            <xs:enumeration value="lokationsnummer"/>
+            <xs:enumeration value="kommunenummer"/>
+            <xs:enumeration value="amt"/>
+            <xs:enumeration value="sorkode"/>
+            <xs:enumeration value="lokal_kode"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element ref="OrganisationName" minOccurs="0"/>
+      <xs:element ref="DepartmentName" minOccurs="0"/>
+      <xs:element ref="UnitName" minOccurs="0"/>
+      <xs:element ref="StreetName" minOccurs="0"/>
+      <xs:element ref="SuburbName" minOccurs="0"/>
+      <xs:element ref="DistrictName" minOccurs="0"/>
+      <xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+      <xs:element name="Physician" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="PersonInitials" type="String_1_17"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MicrobiologyWebReportCCReceiverType">
+    <xs:sequence>
+      <xs:element ref="Identifier"/>
+      <xs:element ref="IdentifierCode"/>
+      <xs:element ref="OrganisationName" minOccurs="0"/>
+      <xs:element ref="DepartmentName" minOccurs="0"/>
+      <xs:element ref="UnitName" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MiBaReportPatientType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element ref="CivilRegistrationNumber"/>
+        <xs:element ref="AlternativeIdentifier"/>
+      </xs:choice>
+      <xs:element ref="PersonSurnameName"/>
+      <xs:element ref="PersonGivenName" minOccurs="0"/>
+      <xs:element name="ConsentGiven" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IdentificationBasicType">
+    <xs:sequence>
+      <xs:group ref="CodingGroup" minOccurs="0"/>
+      <xs:element name="Text" type="ParagraphedTextType"/>
+      <xs:element name="Protected" minOccurs="0" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:group name="CodingGroup">
+    <xs:sequence>
+      <xs:element name="Code" type="String_1_20"/>
+      <xs:element name="CodeQualifier" type="CodeQualifierType"/>
+      <xs:element name="CodeType">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="lokal"/>
+            <xs:enumeration value="mds"/>
+            <xs:enumeration value="iupac"/>
+            <xs:enumeration value="miba"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="CodeResponsible" type="String_1_20"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:simpleType name="CodeQualifierType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{3}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CodedIdentificationType">
+    <xs:annotation>
+      <xs:documentation>Like IdentificationBasicType, but coding is mandatory, and Text is changed
+        to String</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:group ref="CodingGroup"/>
+      <xs:element name="Text" type="String_1_350"/>
+      <xs:element name="Protected" minOccurs="0" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StemAnalysisType">
+    <xs:annotation>
+      <xs:documentation>For resulttypes with a consistent stem followed by numerous variants - typically numbers (ex: AMP-1; Amp-2 ...)
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:group ref="CodingGroup"/>
+      <xs:element name="Stem" type="String_1_35"/>
+      <xs:element name="StemVariant" type="StemVariantType" maxOccurs="unbounded"/>
+      <xs:element name="Assay" type="AssayType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="Protected" minOccurs="0" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StemVariantType">
+    <xs:annotation>
+      <xs:documentation>To allow indication that a certain StemVariant is examined and negative</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Variant" type="String_1_35"/>
+      <xs:group ref="CodingGroup" minOccurs="0"/>
+      <xs:element name="Result" type="ResultType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="NumericResultType">
+    <xs:sequence minOccurs="0">
+      <xs:element name="Operator">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="mindre_end"/>
+            <xs:enumeration value="stoerre_end"/>
+            <xs:enumeration value="lig_med"/>
+            <xs:enumeration value="ikke_angivet"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Value" type="String_1_12"/>
+      <xs:element name="Unit" type="String_1_16" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResultType">
+    <xs:annotation>
+      <xs:documentation>Like IdentificationBasicType, but coding is mandatory, and Text is changed
+        to String</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:group ref="CodingGroup"/>
+      <xs:element name="Text" type="String_1_35"/>
+      <xs:element name="NumericValue" type="NumericResultType" minOccurs="0"/>
+      <xs:element name="Protected" minOccurs="0" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ResultExtendedType">
+    <xs:annotation>
+      <xs:documentation>Like IdentificationBasicType, but coding is mandatory, and Text is changed
+        to String and ExtraText is added</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:group ref="CodingGroup"/>
+      <xs:element name="Text" type="String_1_35"/>
+      <xs:element name="ExtraText" type="String_1_Unbounded" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>String for long sequence of chars. (for instance ribotypes,
+            dna-sequences)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NumericValue" type="NumericResultType" minOccurs="0"/>
+      <xs:element name="Protected" minOccurs="0" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FindingsType">
+    <xs:sequence>
+      <xs:element name="InterPretation" type="IdentificationBasicType"/>
+      <xs:element name="ReferenceInterval" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:sequence minOccurs="0">
+              <xs:element name="TypeOfInterval">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="fysiologisk"/>
+                    <xs:enumeration value="terapeutisk"/>
+                    <xs:enumeration value="uspecificeret"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LowerLimit" type="String_1_8" minOccurs="0"/>
+              <xs:element name="UpperLimit" type="String_1_8" minOccurs="0"/>
+            </xs:sequence>
+            <xs:element name="IntervalText" type="String_1_70" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:sequence minOccurs="0">
+        <xs:element name="Operator">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="mindre_end"/>
+              <xs:enumeration value="stoerre_end"/>
+              <xs:enumeration value="lig_med"/>
+              <xs:enumeration value="ikke_angivet"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Value" type="String_1_12"/>
+        <xs:element name="Unit" type="String_1_16" minOccurs="0"/>
+      </xs:sequence>
+      <xs:element name="ResultValidation" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="for_hoej"/>
+            <xs:enumeration value="for_lav"/>
+            <xs:enumeration value="unormal"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Comments" type="IdentificationBasicType" minOccurs="0" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>KommtekstTolkning</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Protected" minOccurs="0" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PatternFindingsType">
+    <xs:sequence>
+      <xs:element name="ReferenceInterval" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:sequence minOccurs="0">
+              <xs:element name="TypeOfInterval">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="fysiologisk"/>
+                    <xs:enumeration value="terapeutisk"/>
+                    <xs:enumeration value="uspecificeret"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LowerLimit" type="String_1_8" minOccurs="0"/>
+              <xs:element name="UpperLimit" type="String_1_8" minOccurs="0"/>
+            </xs:sequence>
+            <xs:element name="IntervalText" type="String_1_70" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:sequence minOccurs="0">
+        <xs:element name="Operator">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="mindre_end"/>
+              <xs:enumeration value="stoerre_end"/>
+              <xs:enumeration value="lig_med"/>
+              <xs:enumeration value="ikke_angivet"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Value" type="String_1_12"/>
+        <xs:element name="Unit" type="String_1_16" minOccurs="0"/>
+      </xs:sequence>
+      <xs:element name="Comments" type="IdentificationBasicType" minOccurs="0" maxOccurs="10">
+        <xs:annotation>
+          <xs:documentation>KommtekstTolkning</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PropertiesBasicType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="Property" type="CodedIdentificationType"/>
+      <xs:element name="Result" type="ResultType"/>
+      <xs:choice>
+        <xs:element name="PropertyAnalysis" type="PropertyAnalysisType" minOccurs="0"
+          maxOccurs="unbounded"/>
+        <xs:element name="StemPropertyAnalysis" type="StemAnalysisType" minOccurs="0"
+          maxOccurs="unbounded"/>
+      </xs:choice>
+      <xs:element name="Protected" minOccurs="0" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PropertyAnalysisType">
+    <xs:sequence>
+      <xs:group ref="CodingGroup"/>
+      <xs:element name="Text" type="String_1_35"/>
+      <xs:element name="Result" type="ResultExtendedType" minOccurs="0"/>
+      <xs:element name="Assay" type="AssayType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="Protected" minOccurs="0" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AssayType">
+    <xs:sequence>
+      <xs:group ref="CodingGroup"/>
+      <xs:element name="Text" type="String_1_35"/>
+      <xs:element name="Result" type="ResultExtendedType" minOccurs="0"/>
+      <xs:element name="Protected" minOccurs="0" type="xs:nonNegativeInteger"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

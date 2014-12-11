@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:m="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" version="1.0">
+	<xsl:output method="xml" indent="yes"/>
+	<xsl:include href="XD0133L.xslt"/>
+	<xsl:include href="XD0233L.xslt"/>
+	<xsl:include href="XD0333L.xslt"/>
+	<xsl:include href="XD0533L.xslt"/>
+	<xsl:include href="XD1333L.xslt"/>
+	<xsl:include href="XD9133L.xslt"/>
+	<xsl:include href="XD1431C.xslt"/>
+	<xsl:include href="XD1730C.xslt"/>
+	<xsl:include href="XD2030C.xslt"/>
+	<xsl:include href="XD1930C.xslt"/>
+	<xsl:include href="XH0130R.xslt"/>
+	<xsl:include href="XH0230R.xslt"/>
+	<xsl:include href="XR0130K.xslt"/>
+	<xsl:include href="XR0230M.xslt"/>
+	<xsl:include href="XR0330P.xslt"/>
+	<xsl:include href="XR0430P.xslt"/>
+	<xsl:include href="XLMS016.xslt"/>
+	<xsl:include href="XR6031W.xslt"/>
+	<xsl:include href="XC0130Q.xslt"/>
+	<xsl:include href="XC0230Q.xslt"/>
+	<xsl:include href="XC0330Q.xslt"/>
+	<xsl:include href="XQ0130K.xslt"/>
+	<xsl:include href="XQ0230M.xslt"/>
+	<xsl:include href="XQ0330P.xslt"/>
+	<xsl:include href="XQ0430M.xslt"/>
+	<xsl:include href="XA0132Z.xslt"/>
+	<xsl:include href="XB0130X.xslt"/>
+	<xsl:include href="XLA1211203A.xslt"/>
+	<xsl:include href="XLA1251001A.xslt"/>
+	<xsl:include href="XLA1411001A.xslt"/>
+	<xsl:include href="XLA1451001A.xslt"/>
+	<xsl:include href="XLA1651001A.xslt"/>
+	<xsl:include href="XLA2011001A.xslt"/>
+	<xsl:include href="XLA2051001A.xslt"/>
+	<xsl:include href="XLA2111001A.xslt"/>
+	<xsl:include href="XLA2151001A.xslt"/>
+	<xsl:include href="XI0001D.xslt"/>
+</xsl:stylesheet>

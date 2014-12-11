@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="http://sundcom.health-telematics.dk/svn/Konverter/trunk/Konverter/xml/viewEmessage.xslt"?>
+<Emessage xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2007/02/01/"
+  xmlns:gepj="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema"
+  xmlns:dkcpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/"
+  xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2007/02/01/ http://sundcom.health-telematics.dk/svn/Konverter/trunk/Konverter/xml/Schemas/2007/02/01/EMessage.xsd">
+  	<Envelope>
+		<Sent>
+			<Date>2007-10-17</Date>
+			<Time>09:50</Time>
+		</Sent>
+		<Identifier>E6092035412</Identifier>
+		<AcknowledgementCode>minuspositivkvitt</AcknowledgementCode>
+	</Envelope>
+	<MicrobiologyWebReport>
+		<Letter>
+			<Identifier>L6092035412</Identifier>
+			<VersionCode>XR0530M</VersionCode>
+			<StatisticalCode>XRPT05</StatisticalCode>
+			<Authorisation>
+				<Date>2007-10-17</Date>
+				<Time>09:50</Time>
+			</Authorisation>
+			<TypeCode>XRPT05</TypeCode>
+		</Letter>
+		<Sender>
+			<EANIdentifier>5790000190270</EANIdentifier>
+			<Identifier>ASSV.KM</Identifier>
+			<IdentifierCode>sygehusafdelingsnummer</IdentifierCode>
+			<OrganisationName>afsender sygehus</OrganisationName>
+			<DepartmentName>Klinisk mikrobiologisk afd. </DepartmentName>
+			<UnitName>Afsenders afsnit</UnitName>
+			<MedicalSpecialityCode>klin_mikrobiologi</MedicalSpecialityCode>
+		</Sender>
+		<Receiver>
+			<EANIdentifier>???</EANIdentifier>
+			<Identifier>073334</Identifier>
+			<IdentifierCode>ydernummer</IdentifierCode>
+			<OrganisationName>073334</OrganisationName>
+			<DepartmentName>BISPENSGADE, AALBORG PL</DepartmentName>
+			<SuburbName>LÆGERNE</SuburbName>
+		</Receiver>
+		<Patient>
+			<CivilRegistrationNumber>0108584947</CivilRegistrationNumber>
+			<PersonSurnameName>SCHWENDLUND</PersonSurnameName>
+			<PersonGivenName>MOSEBRYGGERSEN</PersonGivenName>
+		</Patient>
+		<RequisitionInformation>
+			<Comments>
+				<Text>
+					<Paragraph>Hej</Paragraph>
+					<Paragraph>Dette er en kommentar vedr. rekvisitionen.</Paragraph>
+				</Text>
+			</Comments>
+			<Comments>
+				<Text>
+					<Paragraph>PS. der kan være flere kommentarer</Paragraph>
+				</Text>
+			</Comments>
+			
+			<Sample>
+				<LaboratoryInternalSampleIdentifier>2007 60739</LaboratoryInternalSampleIdentifier>
+				<SamplingDateTime>
+					<Date>2007-10-10</Date>
+					<Time>00:00</Time>
+				</SamplingDateTime>
+				<SampleReceivedDateTime>
+					<Date>2007-10-11</Date>
+					<Time>00:00</Time>
+				</SampleReceivedDateTime>
+			</Sample>
+		</RequisitionInformation>
+		<LaboratoryResults>
+			<GeneralResultInformation>
+				<ResultStatusCode>svar_endeligt</ResultStatusCode>
+				<LaboratoryInternalProductionIdentifier>2007 60739</LaboratoryInternalProductionIdentifier>
+				<ResultsDateTime>
+					<Date>2007-10-17</Date>
+					<Time>09:50</Time>
+				</ResultsDateTime>
+				<ResultStatus>komplet</ResultStatus>
+			</GeneralResultInformation>
+			<Investigation>
+				<Examination>
+					<ExaminationTypeCode>dyrkning</ExaminationTypeCode>
+					<MICAnalysisCode>100012014000000</MICAnalysisCode>
+					<AnalysisCodeType>lokal</AnalysisCodeType>
+					<AnalysisCodeResponsible>MDS</AnalysisCodeResponsible>
+					<AnalysisShortName>AEROB DYRKNING 1-2 DØGN</AnalysisShortName>
+					<AnalysisMDSName>
+						<Examination>Dyrkning</Examination>
+						<Material>Ekspektorat</Material>
+						<Location>.</Location>
+					</AnalysisMDSName>
+					<Examinator>Klinisk mikrobiologisk afd.  (EKSPEKTORATLAB.)</Examinator>
+				</Examination>
+				<CultureFindings>
+					<Headline>Dyrkning med fund</Headline>
+					<Microorganism>
+						<Identification>
+							<Code>10650</Code>
+							<CodeType>lokal</CodeType>
+							<CodeResponsible>91</CodeResponsible>
+							<Text><Paragraph>STREPTOCOCCUS PNEUMONIAE (PNEUMOKOKKER)</Paragraph></Text>
+						</Identification>
+						<GrowthValue>
+							<Text><Paragraph>Få kolonier</Paragraph></Text>
+						</GrowthValue>
+					</Microorganism>
+					<Pattern>
+						<Headline>Antibiotikafølsomhed</Headline>
+						<Antibiotic>
+							<AntibioticName>
+								<Code>11000</Code>
+								<CodeType>lokal</CodeType>
+								<CodeResponsible>91</CodeResponsible>
+								<Text><Paragraph>PENICILLIN G</Paragraph></Text>
+							</AntibioticName>
+						</Antibiotic>
+						<Antibiotic>
+							<AntibioticName>
+								<Code>20200</Code>
+								<CodeType>lokal</CodeType>
+								<CodeResponsible>91</CodeResponsible>
+								<Text><Paragraph>ERYTROMYCIN</Paragraph></Text>
+							</AntibioticName>
+						</Antibiotic>
+						<PatternEntry>
+							<RefMicroorganism>1</RefMicroorganism>
+							<RefAntibiotic>1</RefAntibiotic>
+							<Susceptibility>S</Susceptibility>
+						</PatternEntry>
+						<PatternEntry>
+							<RefMicroorganism>1</RefMicroorganism>
+							<RefAntibiotic>2</RefAntibiotic>
+							<Susceptibility>S</Susceptibility>
+						</PatternEntry>
+						<SusceptibilityInterpretation><Paragraph>S=Sensitiv, I=Intermediær, R=Resistent, .=Ikke undersøgt</Paragraph></SusceptibilityInterpretation>
+					</Pattern>
+				</CultureFindings>
+				<MicroscopicFindings>
+					<Headline>Mikroskopifund</Headline>
+					<Comments>
+					<Paragraph>Få pladeepitelceller</Paragraph>
+						<Paragraph/>
+						<Paragraph>Mange leukocytter</Paragraph>
+						<Paragraph/>
+						<Paragraph>Mange</Paragraph>
+						<Paragraph>Gram-positive kokker i kæde</Paragraph>
+					</Comments>
+				</MicroscopicFindings>
+			</Investigation>
+			<Investigation>
+				<Examination>
+					<ExaminationTypeCode>dyrkning</ExaminationTypeCode>
+					<MICAnalysisCode>100012014000000</MICAnalysisCode>
+					<AnalysisCodeType>lokal</AnalysisCodeType>
+					<AnalysisCodeResponsible>MDS</AnalysisCodeResponsible>
+					<AnalysisShortName>AEROB DYRKNING 1-2 DØGN</AnalysisShortName>
+					<AnalysisMDSName>
+						<Examination>Dyrkning</Examination>
+						<Material>Ekspektorat</Material>
+						<Location>.</Location>
+					</AnalysisMDSName>
+					<Examinator>Klinisk mikrobiologisk afd.  (EKSPEKTORATLAB.)</Examinator>
+				</Examination>
+				<CultureFindings>
+					<Headline>Dyrkning med fund (Anden udgave)</Headline>
+					<Microorganism>
+						<Identification>
+							<Code>10650</Code>
+							<CodeType>lokal</CodeType>
+							<CodeResponsible>91</CodeResponsible>
+							<Text><Paragraph>STREPTOCOCCUS PNEUMONIAE (PNEUMOKOKKER)</Paragraph></Text>
+						</Identification>
+						<GrowthValue>
+							<Text><Paragraph>Få kolonier</Paragraph></Text>
+						</GrowthValue>
+					</Microorganism>
+					<Pattern>
+						<Headline>Antibiotikafølsomhed</Headline>
+						<Antibiotic>
+							<AntibioticName>
+								<Code>11000</Code>
+								<CodeType>lokal</CodeType>
+								<CodeResponsible>91</CodeResponsible>
+								<Text><Paragraph>PENICILLIN G</Paragraph></Text>
+							</AntibioticName>
+						</Antibiotic>
+						<Antibiotic>
+							<AntibioticName>
+								<Code>20200</Code>
+								<CodeType>lokal</CodeType>
+								<CodeResponsible>91</CodeResponsible>
+								<Text><Paragraph>ERYTROMYCIN</Paragraph></Text>
+							</AntibioticName>
+						</Antibiotic>
+						<PatternEntry>
+							<RefMicroorganism>1</RefMicroorganism>
+							<RefAntibiotic>1</RefAntibiotic>
+							<Susceptibility>S</Susceptibility>
+						</PatternEntry>
+						<PatternEntry>
+							<RefMicroorganism>1</RefMicroorganism>
+							<RefAntibiotic>2</RefAntibiotic>
+							<Susceptibility>S</Susceptibility>
+						</PatternEntry>
+						<SusceptibilityInterpretation><Paragraph>S=Sensitiv, I=Intermediær, R=Resistent, .=Ikke undersøgt</Paragraph></SusceptibilityInterpretation>
+					</Pattern>
+				</CultureFindings>
+				<MicroscopicFindings>
+					<Headline>Mikroskopifund</Headline>
+					<Comments>
+						<Paragraph>Dette er anden undersøgelse</Paragraph>
+					</Comments>
+				</MicroscopicFindings>
+			</Investigation>
+			
+		</LaboratoryResults>
+	</MicrobiologyWebReport>
+</Emessage>

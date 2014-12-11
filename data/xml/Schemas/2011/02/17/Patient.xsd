@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:include schemaLocation="TelephoneSubscriber.xsd"/>
+	<xs:element name="Patient" type="PatientType"/>
+	<xs:complexType name="PatientType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="CivilRegistrationNumber"/>
+				<xs:element ref="AlternativeIdentifier"/>
+			</xs:choice>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element ref="OccupancyText" minOccurs="0"/>
+			<xs:element ref="MaritalStatus" minOccurs="0"/>
+			<xs:element ref="TelephoneSubscriber" minOccurs="0"/>
+			<xs:element name="InterpretationNeeds" type="InterpretationNeedsType" minOccurs="0"/>
+			<xs:element name="EpisodeOfCareStatusCode" type="EpisodeOfCareStatusCode04Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="InterpretationNeedsType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="InterpretationIsNeededCode" type="InterpretationIsNeededCodeType"/>
+				<xs:sequence>
+					<xs:element name="ISOLanguageCode" type="String_1_3"/>
+					<xs:element name="ISOLanguageCodeDescription" type="String_1_25"/>		
+				</xs:sequence>
+			</xs:choice>			
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

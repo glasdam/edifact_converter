@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Jesper Nielsen (Sundhedsstyrelsen) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by - (National Board of Health) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GEPJ.xsd"/>
+	<xs:complexType name="EksplicitIndberetning" abstract="1">
+		<xs:complexContent>
+			<xs:extension base="GEpj">
+				<xs:sequence>
+					<xs:element name="art" type="SksId"/>
+					<xs:choice>
+						<xs:annotation>
+							<xs:documentation>Reference til {xor} SpontantOpstaaetOplysning, Diagnose, EksternAarsag eller Intervention</xs:documentation>
+						</xs:annotation>
+						<xs:element name="diagnose_id" type="ObjektId"/>
+						<xs:element name="intervention_id" type="ObjektId"/>
+						<xs:element name="eksternAarsag_id" type="ObjektId"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

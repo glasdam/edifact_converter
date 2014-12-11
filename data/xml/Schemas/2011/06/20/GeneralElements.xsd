@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralTypes.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:include schemaLocation="ClinicalTypes.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:import namespace="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" schemaLocation="CPR_CivilRegistrationNumber.xsd"/>
+	<xs:element name="AlternativeIdentifier" type="AlternativeCprType"/>
+	<xs:element name="CivilRegistrationNumber" type="cpr:CivilRegistrationNumberType"/>
+	<xs:element name="RelationCode" type="RelationCodeType"/>
+	<xs:element name="PersonIdentifier" type="String_1_10"/>
+	<xs:element name="PersonSurnameName" type="String_1_70"/>
+	<xs:element name="PersonGivenName" type="String_1_70"/>
+	<xs:element name="PersonName" type="String_1_70"/>
+	<xs:element name="Occupation" type="String_1_25"/>
+	<xs:element name="OccupancyText" type="String_1_35"/>
+	<xs:element name="EpisodeOfCareStatusCode" type="EpisodeOfCareStatusCode01Type"/>
+	<xs:element name="EANIdentifier" type="EANIdentifierType"/>
+	<xs:element name="Identifier" type="String_1_17"/>
+	<xs:element name="IdentifierCode" type="IdentifierCodeType"/>
+	<xs:element name="OrganisationName" type="String_1_35"/>
+	<xs:element name="DepartmentName" type="String_1_35"/>
+	<xs:element name="UnitName" type="String_1_35"/>
+	<xs:element name="StreetName" type="String_1_35"/>
+	<xs:element name="SuburbName" type="String_1_35"/>
+	<xs:element name="DistrictName" type="String_1_35"/>
+	<xs:element name="PostCodeIdentifier">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="9"/>
+				<xs:minLength value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="TelephoneCode" type="TelephoneCodeType"/>
+	<xs:element name="TelephoneSubscriberIdentifier" type="String_1_25"/>
+	<xs:element name="TelefaxSubscriberIdentifier" type="String_1_25"/>
+	<xs:element name="EmailIdentifier" type="String_1_35"/>
+	<xs:element name="MedicalSpecialityCode" type="MedicalSpecialityCodeType"/>
+	<xs:element name="ObjectIdentifier" type="String_1_35"/>
+	<xs:element name="ObjectCode" type="ObjectCodeType"/>
+	<xs:element name="ObjectExtensionCode" type="ObjectExtensionCodeType"/>
+	<xs:element name="OriginalObjectSize" type="xs:positiveInteger"/>
+	<xs:element name="MaritalStatus" type="MaritalStatusType"/>
+
+	<xs:complexType name="RelativesType">
+		<xs:sequence>
+			<xs:element ref="Relative" minOccurs="0" maxOccurs="5"/>
+			<xs:element name="Comment" type="FormattedTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Elementer til Kroniker Data Sættet-->
+
+	<xs:element name="Fornavn" type="xs:string"/>
+	<xs:element name="Efternavn" type="xs:string"/>
+	<xs:element name="FoedselsDato" type="xs:date"/>
+	<xs:element name="Koen">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="K"/>
+				<xs:enumeration value="M"/>
+				<xs:enumeration value="U"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Vej" type="xs:string"/>
+	<xs:element name="Postnummer" type="xs:string"/>
+	<xs:element name="By" type="xs:string"/>
+	<xs:element name="Kontakttelefon" type="xs:string"/>
+	<xs:element name="eMail" type="xs:string"/>
+	<xs:element name="Ydernummer" type="xs:string"/>
+	<xs:element name="Praksis" type="xs:string"/>
+	<xs:element name="Navn" type="xs:string"/>
+	<xs:element name="ID" type="xs:string"/>
+	<xs:element name="Dato" type="xs:dateTime"/>
+	<xs:element name="Tekst" type="FormattedTextType"/>
+	<xs:element name="Organisation" type="xs:string"/>
+	<xs:element name="Afdeling" type="xs:string"/>
+	<xs:element name="Person" type="xs:string"/>
+	<xs:element name="DiagnoseKode" type="xs:string"/>
+	<xs:element name="DiagnoseBeskrivelse" type="xs:string"/>
+	<xs:element name="Analyse" type="xs:string"/>
+	<xs:element name="Resultat" type="xs:string"/>
+	<xs:element name="Enhed" type="xs:string"/>
+	<xs:element name="Min" type="xs:string"/>
+	<xs:element name="Max" type="xs:string"/>
+	<xs:element name="AnalyseID" type="xs:string"/>
+	<xs:element name="IUPAC" type="xs:string"/>
+	<xs:element name="UdfoertAf" type="xs:string"/>
+	<xs:element name="Praeparat" type="xs:string"/>
+	<xs:element name="Form" type="xs:string"/>
+	<xs:element name="Styrke" type="xs:string"/>
+	<xs:element name="Dosis" type="xs:string"/>
+	<xs:element name="Type" type="xs:string"/>
+	<xs:element name="Indikation" type="xs:string"/>
+	<xs:element name="ATC" type="xs:string"/>
+	<xs:element name="Titel" type="xs:string"/>
+	<xs:element name="Kode" type="xs:string"/>
+	<xs:element name="PatientensMaal" type="xs:string"/>
+	
+	<xs:element name="DiagnoseType">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="SKS"/>
+				<xs:enumeration value="ICD10"/>
+				<xs:enumeration value="ICPC"/>
+				<xs:enumeration value="Uspecificeret"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	
+	<xs:element name="Abnorm">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="Normal"/>
+				<xs:enumeration value="Abnorm"/>
+				<xs:enumeration value="Uspecificeret"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+
+	<xs:element name="FMK">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="FMK"/>
+				<xs:enumeration value="PEM"/>
+				<xs:enumeration value="Uspecificeret"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	
+	<xs:simpleType name="SKLType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="LAEGE"/>
+			<xs:enumeration value="KOMMUNE"/>
+			<xs:enumeration value="HOSPITAL"/>
+			<xs:enumeration value="SYGEHUS"/>
+			<xs:enumeration value="Uspecificeret"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="KvalificeretDiagnoseType">
+		<xs:sequence>
+			<xs:element ref="DiagnoseType"/>
+			<xs:element ref="DiagnoseKode"/>
+			<xs:element ref="DiagnoseBeskrivelse" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="HjemmeMonType">
+		<xs:sequence>
+			<xs:element ref="IUPAC"/>
+			<xs:element ref="Analyse"/>
+			<xs:element ref="Resultat"/>
+			<xs:element ref="Enhed"/>
+			<xs:element ref="Min" minOccurs="0"/>
+			<xs:element ref="Max" minOccurs="0"/>
+			<xs:element ref="Abnorm" minOccurs="0"/>
+			<xs:element ref="PatientensMaal" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="StdHjemmeMonType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="AnalyseID"/>
+			<xs:element ref="IUPAC"/>
+			<xs:element ref="Analyse"/>
+			<xs:element ref="Resultat"/>
+			<xs:element ref="Enhed"/>
+			<xs:element ref="Min" minOccurs="0"/>
+			<xs:element ref="Max" minOccurs="0"/>
+			<xs:element ref="Abnorm" minOccurs="0"/>
+			<xs:element ref="PatientensMaal" minOccurs="0"/>
+			<xs:element ref="UdfoertAf"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Jens Møller (ACURE) -->
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Contact.xsd"/>
+	<xs:element name="LA_Contact" type="LA_ContactType">
+		<xs:annotation>
+			<xs:documentation>Kontakperson anvendt i LÆ blanketter</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LA_ContactType">
+		<xs:annotation>
+			<xs:documentation>Kontakperont anvendt i LÆ blanketter</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName"/>
+			<xs:element ref="OccupancyText"/>
+			<xs:element name="OfficeHoursText" type="String_1_35"/>
+			<xs:element ref="TelephoneSubscriberIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

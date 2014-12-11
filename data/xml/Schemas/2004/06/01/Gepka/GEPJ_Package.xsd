@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Jesper Nielsen (Sundhedsstyrelsen) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by - (National Board of Health) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- GEPJ-->
+	<xs:include schemaLocation="GEPJ_Patient.xsd"/>
+	<xs:include schemaLocation="GEPJ_Intervention.xsd"/>
+	<xs:include schemaLocation="GEPJ_Interventionsstatus.xsd"/>
+	<xs:include schemaLocation="GEPJ_IDelRekurs.xsd"/>
+	<xs:include schemaLocation="GEPJ_IFoelRekurs.xsd"/>
+	<xs:include schemaLocation="GEPJ_Diagnose.xsd"/>
+	<xs:include schemaLocation="GEPJ_Indikationstilknytning.xsd"/>
+	<xs:include schemaLocation="GEPJ_Aarsagstilknytning.xsd"/>
+	<xs:include schemaLocation="GEPJ_EksternAarsag.xsd"/>
+	<xs:include schemaLocation="GEPJ_DAarsagRekurs.xsd"/>
+	<xs:include schemaLocation="GEPJ_DFoelRekurs.xsd"/>
+	<xs:include schemaLocation="GEPJ_Forloeb.xsd"/>
+	<xs:include schemaLocation="GEPJ_ForloebSymbolisering.xsd"/>
+	<xs:include schemaLocation="GEPJ_Forloebsansvar.xsd"/>
+	<xs:include schemaLocation="GEPJ_SpontantOpstaaetOplysning.xsd"/>
+	<xs:include schemaLocation="GEPJ_SpontanHenvendelse.xsd"/>
+	<xs:include schemaLocation="GEPJ_Tilstedevaerelse.xsd"/>
+	<xs:include schemaLocation="GEPJ_Plejeansvar.xsd"/>
+	<xs:include schemaLocation="GEPJ_PladsRessource.xsd"/>
+	<xs:include schemaLocation="GEPJ_Henvendelse.xsd"/>
+	<xs:include schemaLocation="GEPJ_Journalfoeringskontekst.xsd"/>
+	<!-- GEPj Light + medicinering (LevMed) -->
+	<xs:include schemaLocation="GEPJ_Medicinblanding.xsd"/>
+	<xs:include schemaLocation="GEPJ_Medicinudlevering.xsd"/>
+	<xs:include schemaLocation="GEPJ_SkemaMedicinering.xsd"/>
+	<xs:include schemaLocation="GEPJ_FastMedicinering.xsd"/>
+	<xs:include schemaLocation="GEPJ_VariabelMedicinering.xsd"/>
+	<xs:include schemaLocation="GEPJ_Ingrediens.xsd"/>
+	<!-- GEPKA tilføjelser -->
+	<xs:include schemaLocation="GEPJ_Paaroerende.xsd"/>
+	<xs:include schemaLocation="GEPJ_Kontaktprioritet.xsd"/>
+	<xs:include schemaLocation="GEPJ_PersonaleKontakt.xsd"/>
+	<xs:include schemaLocation="GEPJ_Interventionsresultat.xsd"/>
+	<xs:include schemaLocation="GEPJ_Evalueringsresultat.xsd"/>
+	<xs:include schemaLocation="GEPJ_OperationeltMaal.xsd"/>
+	<xs:include schemaLocation="GEPJ_MaalTilknytning.xsd"/>
+	<xs:include schemaLocation="GEPJ_INotatTilknytning.xsd"/>
+	<xs:include schemaLocation="GEPJ_Interventionsnotat.xsd"/>
+	<xs:include schemaLocation="GEPJ_UdfoerendePersonale.xsd"/>
+	<xs:include schemaLocation="GEPJ_Formaal.xsd"/>
+	<xs:include schemaLocation="GEPJ_IPriorRekurs.xsd"/>
+	<xs:include schemaLocation="GEPJ_Vejledning.xsd"/>
+	<xs:include schemaLocation="GEPJ_Komplikationstilknytning.xsd"/>
+	<xs:include schemaLocation="GEPJ_DPriorRekurs.xsd"/>
+	<xs:include schemaLocation="GEPJ_DNotatTilknytning.xsd"/>
+	<xs:include schemaLocation="GEPJ_Diagnostiknotat.xsd"/>
+	<xs:include schemaLocation="GEPJ_Fokusering.xsd"/>
+	<!--Ændringer pr. 1/05-2003-->
+	<xs:include schemaLocation="GEPJ_DDelRekurs.xsd"/>
+	<xs:include schemaLocation="GEPJ_GEpjRettelse.xsd"/>
+	<xs:include schemaLocation="GEPJ_StatusRettelse.xsd"/>
+	<xs:include schemaLocation="GEPJ_Indberetningsstatus.xsd"/>
+	<xs:include schemaLocation="GEPJ_Diagnosestatus.xsd"/>
+	<xs:include schemaLocation="GEPJ_Doedsattest.xsd"/>
+	<xs:include schemaLocation="GEPJ_Skadesanmeldelse.xsd"/>
+</xs:schema>

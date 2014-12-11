@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/" xmlns:xs="http://www.w3.org/2001/XMLSchema"  elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="MaternityMother" type="MaternityMotherType">
+		<xs:annotation>
+			<xs:documentation>Jordemoder</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MaternityMotherType">
+		<xs:sequence>
+			<xs:element ref="Identifier" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Som oftest et personalenummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>	
+			<xs:element ref="IdentifierCode" minOccurs="0"/>
+			<xs:element name="PersonName" type="String_1_35"/>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	</xs:schema>

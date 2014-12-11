@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="LA_Patient.xsd"/>
+	<xs:include schemaLocation="LA_Contact.xsd"/>
+	<xs:include schemaLocation="LA_Sender.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="PaymentInformation.xsd"/>
+	<xs:element name="StatusAnswer" type="StatusAnswerType">
+		<xs:annotation>
+			<xs:documentation>Blanket til Statusattest (LÆ125)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="StatusAnswerType">
+		<xs:annotation>
+			<xs:documentation>Definition af LÆ125</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="StatusAnswerLetterType"/>
+			<xs:element name="Sender" type="LA_SenderType"/>
+			<xs:element ref="Receiver"/>
+			<xs:element name="Patient" type="LA_PatientType"/>
+			<xs:element ref="PaymentInformation"/>
+			<xs:element name="CreationDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Oprettelsesdato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:sequence>
+					<xs:annotation>
+						<xs:documentation>Statusbedømmelse på grundlag af patientjournal m.v.</xs:documentation>
+					</xs:annotation>
+					<xs:element name="ObjectiveAssesmentText" type="String_1_Unbounded">
+						<xs:annotation>
+							<xs:documentation>Sygehistorie, diagnoser (latin og dansk), prognose. Evt. planlagt/igangværende behandling eller andre oplysninger af betydning for sagen</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SubjectiveAssesmentText" type="String_1_Unbounded" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Vurdering af helbredsforholdenes betydning for sagen (der angives ikke en vurdering af en evt. social ydelses art og omfang)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="Returned">
+					<xs:annotation>
+						<xs:documentation>Attesten returneres grundet mangel på relevante oplysninger</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:boolean">
+							<xs:pattern value="true"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StatusAnswerLetterType">
+		<xs:annotation>
+			<xs:documentation>Brevtype for LÆ125 - en LetterType, som blot begrænses til VersionCode=XLA1251001A og TypeCode=XLA125</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XLA1251001A"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XLA125"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

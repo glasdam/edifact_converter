@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:element name="Kontakter" type="KontakterType"/>
+	<xs:complexType name="KontakterType">
+		<xs:annotation>
+			<xs:documentation>Definition af Kontakter</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Sygehuskontakt" type="KontakterTypeType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Kommunekontakt" type="KontakterTypeType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="KontakterTypeType">
+		<xs:annotation>
+			<xs:documentation>Definition af Kontakter type</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Kontakt" type="xs:string"/>
+			<xs:element ref="ID"/>
+			<xs:element ref="UdfoertAf"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

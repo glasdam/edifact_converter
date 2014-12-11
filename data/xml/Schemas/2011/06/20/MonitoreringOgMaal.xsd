@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+
+	<xs:element name="MonitoreringOgMaal" type="MonitoreringOgMaalType"/>
+	<xs:complexType name="MonitoreringOgMaalType">
+		<xs:annotation>
+			<xs:documentation>Definition af Monitorering og Mål</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Spirometri" type="SpirometriType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="MRC" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="NYHA" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Iltmaetning" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="AntalExacerbationer" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="KlinikBT" type="BlodtrykType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="HjemmeBT" type="BlodtrykType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Puls" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="HbA1C" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Blodsukker" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Kolesterol" type="KolesterolType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Kost" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Rygning" type="RygningType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Vaegt" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Livvidde" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Hoejde" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="BMI" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Skridttaeller" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Motion" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ProteinUri" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="OedemGrad" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FosterAktivitet" type="StdHjemmeMonType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SpirometriType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="AnalyseID"/>
+			<xs:element name="FEV1" type="HjemmeMonType"/>
+			<xs:element name="FVC" type="HjemmeMonType"/>
+			<xs:element name="FEV1FVCRatio" type="HjemmeMonType"/>
+			<xs:element name="FEV1Pct" type="HjemmeMonType"/>
+			<xs:element ref="UdfoertAf"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="BlodtrykType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="AnalyseID"/>
+			<xs:element name="Systolisk" type="HjemmeMonType"/>
+			<xs:element name="Diastolisk" type="HjemmeMonType"/>
+			<xs:element ref="UdfoertAf"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KolesterolType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="AnalyseID"/>
+			<xs:element name="SamletKolesterol" type="HjemmeMonType"/>
+			<xs:element name="HDL" type="HjemmeMonType"/>
+			<xs:element name="LDL" type="HjemmeMonType"/>
+			<xs:element name="Triglycerid" type="HjemmeMonType"/>
+			<xs:element ref="UdfoertAf"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="RygningType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="AnalyseID"/>
+			<xs:element name="Status" type="HjemmeMonType"/>
+			<xs:element name="PakkeAar" type="HjemmeMonType"/>
+			<xs:element ref="UdfoertAf"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

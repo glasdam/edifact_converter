@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Henrik Thomsen (Sundhedsstyrelsen) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="RequestDatatyper.xsd"/>
+	<xs:include schemaLocation="../GEPJ_Patient.xsd"/>
+	<xs:include schemaLocation="../GEPJ_Journalfoeringskontekst.xsd"/>
+	<xs:include schemaLocation="../GEPJ_StatusRettelse.xsd"/>
+	<xs:include schemaLocation="../GEPJ_GEpjRettelse.xsd"/>
+	<xs:element name="hentPatientIdRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="patient_identitet" type="KvalificeretId"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="hentPatientIdResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="patient" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Svaret på forsprøgslen er muligvis tomt</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="Patient">
+								<xs:sequence>
+									<xs:element name="gepjRettelse" type="GEpjRettelse" minOccurs="0" maxOccurs="unbounded"/>
+									<xs:element name="journalfoeringskontekst" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="Journalfoeringskontekst">
+													<xs:sequence>
+														<xs:element name="statusRettelse" type="StatusRettelse" minOccurs="0" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

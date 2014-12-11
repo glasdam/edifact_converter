@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/"
+	xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:include schemaLocation="ClinicalTypes.xsd"/>
+	<xs:element name="Pregnancy" type="PregnancyType">
+		<xs:annotation>
+			<xs:documentation>Graviditet</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="PregnancyType">
+		<xs:sequence>
+			<xs:element name="DateOfLastMenstruation" type="DateTimeType" minOccurs="0"/>
+			<xs:element name="DateofDelivery" type="DateTimeType"/>
+			<xs:element name="PregnancyPrincipalDiagnoses" type="FullQualifiedDiagnoseOrTreatmentType">
+				<xs:annotation>
+					<xs:documentation>Aktionsdiagnose ifm. graviditeten</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PregnancyAdditionalDiagnoses" type="QualifiedDiagnoseOrTreatmentType"
+				minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>Tillægsdiagnoser ifm. graviditeten</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PregnancyInvestigationAndTreatments" type="PregnancyInvestigationType" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>Undersøgelser, behandlinger og indgreb ifm. graviditeten</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PregnancyInvestigationType">
+		<xs:sequence>
+			<xs:element name="InvestigationAndTreatmentDiagnoses" type="QualifiedDiagnoseOrTreatmentType" minOccurs="0" maxOccurs="9"/>
+			<xs:element name="ClinicalInfoDate" type="DateTimeType" minOccurs="0"/>
+			<xs:element name="InvestigationAndTreatmentText" type="FormattedTextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fritekst til Undersøgelser, behandlinger og indgreb ifm. graviditeten (max. 1750 kar.) </xs:documentation>
+				</xs:annotation>
+				
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

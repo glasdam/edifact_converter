@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="PresentMedication" type="PresentMedicationType"/>
+	<xs:complexType name="PresentMedicationType">
+		<xs:sequence>
+			<xs:element name="Medication" type="MedicationType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MedicationType">
+		<xs:sequence>
+			<xs:element name="ID" type="String_1_15"/>
+			<xs:element name="TimeStamp" type="DateTimeType"/>
+			<xs:element name="Name" type="String_1_70"/>
+			<xs:element name="Form">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Tablet"/>
+						<xs:enumeration value="Andre ??"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Strength" type="String_1_15"/>
+			<xs:element name="Dose" type="String_1_35"/>
+			<xs:element name="Type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Fast"/>
+						<xs:enumeration value="Flydende"/>
+						<xs:enumeration value="Andre ??"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="IndicationOf" type="String_1_70"/>
+			<xs:element name="AtcCode" type="String_1_15"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by Kim Vinter (Acure A/S) -->
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2004/06/01/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="LA_Sender.xsd"/>
+	<xs:include schemaLocation="LA_Patient.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="GeneralTypes.xsd"/>
+	<xs:include schemaLocation="PaymentInformation.xsd"/>
+	<xs:element name="WorkingDisabilityAnswer" type="WorkingDisabilityAnswerType">
+		<xs:annotation>
+			<xs:documentation>Blanket til Attest vedrørende uarbejdsdygtighed (LÆ205)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="WorkingDisabilityAnswerType">
+		<xs:annotation>
+			<xs:documentation>Definition af LÆ205</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="WorkingDisabilityAnswerLetterType"/>
+			<xs:element name="Sender" type="LA_SenderType"/>
+			<xs:element ref="Receiver"/>
+			<xs:element name="Patient" type="LA_PatientType"/>
+			<xs:element ref="PaymentInformation"/>
+			<xs:element name="CreationDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Oprettelsesdato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstDayOffText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Første fraværsdag</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WorkingDisabilityFromCode" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Er ovennævnte (eller har ovennævnte været) uarbejdsdygtig på grund af sygdom/ulykke?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PartlyOrFullWorkingDisabilityCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Medfører (medførte) sygdommen/ulykken fuld eller delvis uarbejdsdygtighed</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="fuld"/>
+						<xs:enumeration value="delvis"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ExpectedDurationText" type="String_1_Unbounded" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Forventet varighed i dage fra dags dato (hvis arbejdet ikke er genoptaget)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StartedWorkingAgainCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Arbejdet genoptaget?</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:boolean">
+						<xs:pattern value="true"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="DescriptionText" type="String_1_Unbounded">
+				<xs:annotation>
+					<xs:documentation>Aktuel sygdom/ulykke - Diagnose latin og dansk</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstVisitDate" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Første konsultation hos Dem vedr. nuværende sygdom/ulykke</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OtherTreatmentText" type="String_1_Unbounded" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Evt. behandling andre steder /sygehus, speciallæge m.v.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalInformationText" type="String_1_Unbounded" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Supplerende oplysninger, herunder behandling hos egen læge (lægen foretager ikke en vurdering af en evt. social ydelses art og omfang)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="WorkingDisabilityAnswerLetterType">
+		<xs:annotation>
+			<xs:documentation>Brevtype for LÆ205 - en LetterType, som blot begrænses til VersionCode=XLA2051001A og TypeCode=XLA205</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XLA2051001A"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XLA205"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

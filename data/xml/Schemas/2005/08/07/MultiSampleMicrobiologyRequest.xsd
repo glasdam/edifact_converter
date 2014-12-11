@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Henrik Gørup Rasmussen (Acure) -->
+<xs:schema targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="Reference.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:include schemaLocation="Payer.xsd"/>
+	<xs:include schemaLocation="Collector.xsd"/>
+	<xs:include schemaLocation="MicroBiologyTypes.xsd"/>
+	<xs:element name="MultiSampleMicrobiologyRequest" type="MultiSampleMicrobiologyRequestType">
+		<xs:annotation>
+			<xs:documentation>Mikrobiologirekvisition med plads til at registrere flere prøver (Findes ikke i Edifact-format)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="MultiSampleMicrobiologyRequestType">
+		<xs:annotation>
+			<xs:documentation>Definition af en mikrobiologirekvisition</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="MultiSampleMicrobiologyRequestLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XQ0430M  og TypeCode=XREQ02</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="MicrobiologyRequestSenderType"/>
+			<xs:element name="Receiver" type="MicrobiologyRequestReceiverType"/>
+			<xs:element name="CCReceiver" type="MicrobiologyRequestCCReceiverType" minOccurs="0"/>
+			<xs:element ref="Payer" minOccurs="0"/>
+			<xs:element ref="Collector" minOccurs="0"/>
+			<xs:element name="Patient" type="MicrobiologyRequestPatientType"/>
+			<xs:element name="RequisitionInformation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RequestersRequisitionIdentifier" type="String_1_15"/>
+						<xs:element ref="RequisitionDateTime">
+							<xs:annotation>
+								<xs:documentation>RekvTid</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:sequence>
+							<xs:element ref="SamplingLocationCode"/>
+							<xs:element ref="SamplingDateTimeType"/>
+							<xs:element ref="SamplingDateTime"/>
+						</xs:sequence>
+						<xs:element name="Sample" maxOccurs="5">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="RequesterSampleIdentifier" type="String_1_15">
+										<xs:annotation>
+											<xs:documentation>AprovnrRekvir</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="NumberOfTestTubes" type="xs:int">
+							<xs:annotation>
+								<xs:documentation>Antalglas</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="ClinicalInformation" type="BreakableText" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>KlinInform</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Comments" type="BreakableText" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>RekvKomm</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="CarbonCopyReceiver" type="String_1_70" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Requests">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RequestedAnalysis">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Analysis">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element ref="MICAnalysisCode"/>
+												<xs:element ref="AnalysisCodeType"/>
+												<xs:element ref="AnalysisCodeResponsible"/>
+												<xs:element ref="AnalysisMDSName"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="SupplementaryLocation" type="String_1_70" minOccurs="0"/>
+									<xs:element name="SupplementaryAnalysis" type="String_1_70" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Prompt" minOccurs="0" maxOccurs="10">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Question">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Code" type="String_1_17"/>
+												<xs:element name="CodeType">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="lokal"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:element>
+												<xs:element name="CodeResponsible" type="String_1_3"/>
+												<xs:element name="CodeText" type="String_1_35"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Answer">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Text" type="String_1_70"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MultiSampleMicrobiologyRequestLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XQ0430M  og TypeCode=XREQ01</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XQ0430M"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XREQ04"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

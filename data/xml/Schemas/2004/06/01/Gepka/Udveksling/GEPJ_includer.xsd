@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Jesper Nielsen (Sundhedsstyrelsen) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- Denne fil er udelukkende til brug for XMLSPY til automatisk dokumentations-generering -->
+	<xs:include schemaLocation="GEPJ_journal_package.xsd"/>
+	<xs:include schemaLocation="hentAktuelleForloebsdiagnoser.xsd"/>
+	<xs:include schemaLocation="hentAktuelleInterventionsHierarkiroedder.xsd"/>
+	<xs:include schemaLocation="hentDiagnoseliste.xsd"/>
+	<xs:include schemaLocation="hentDiagnoseNetvaerk.xsd"/>
+	<xs:include schemaLocation="hentDiagnostiknotater.xsd"/>
+	<xs:include schemaLocation="hentDiagnostiskvejledning.xsd"/>
+	<xs:include schemaLocation="hentEksplicitindberetninger.xsd"/>
+	<xs:include schemaLocation="hentEksterneAarsager.xsd"/>
+	<xs:include schemaLocation="hentEvalueringsresultater.xsd"/>
+	<xs:include schemaLocation="hentFokuseredeOplysninger.xsd"/>
+	<xs:include schemaLocation="hentForloeb.xsd"/>
+	<xs:include schemaLocation="hentFormaal.xsd"/>
+	<xs:include schemaLocation="hentGEpjObjekt.xsd"/>
+	<xs:include schemaLocation="hentIndikationer.xsd"/>
+	<xs:include schemaLocation="hentIndikeretIntervention.xsd"/>
+	<xs:include schemaLocation="hentInterventionsliste.xsd"/>
+	<xs:include schemaLocation="hentInterventionsNetvaerk.xsd"/>
+	<xs:include schemaLocation="hentInterventionsnotater.xsd"/>
+	<xs:include schemaLocation="hentInterventionsresultater.xsd"/>
+	<xs:include schemaLocation="hentInterventionsvejledninger.xsd"/>
+	<xs:include schemaLocation="hentJournal.xsd"/>
+	<xs:include schemaLocation="hentKomplicerendeInterventioner.xsd"/>
+	<xs:include schemaLocation="hentKomplikationer.xsd"/>
+	<xs:include schemaLocation="hentMaal.xsd"/>
+	<xs:include schemaLocation="hentPaaroerende.xsd"/>
+	<xs:include schemaLocation="hentPatientId.xsd"/>
+	<xs:include schemaLocation="hentSOO.xsd"/>
+	<xs:include schemaLocation="RequestDatatyper.xsd"/>
+</xs:schema>

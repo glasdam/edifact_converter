@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralTypes.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:include schemaLocation="ClinicalTypes.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:import namespace="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/"
+		schemaLocation="CPR_CivilRegistrationNumber.xsd"/>
+	<xs:element name="AlternativeIdentifier" type="AlternativeCprType"/>
+	<xs:element name="CivilRegistrationNumber" type="cpr:CivilRegistrationNumberType"/>
+	<xs:element name="RelationCode" type="RelationCodeType"/>
+	<xs:element name="PersonIdentifier" type="String_1_10"/>
+	<xs:element name="PersonSurnameName" type="String_1_70"/>
+	<xs:element name="PersonGivenName" type="String_1_70"/>
+	<xs:element name="Occupation" type="String_1_25"/>
+	<xs:element name="OccupancyText" type="String_1_35"/>
+	<xs:element name="EpisodeOfCareStatusCode" type="EpisodeOfCareStatusCode01Type"/>
+	<xs:element name="EANIdentifier" type="EANIdentifierType"/>
+	<xs:element name="Identifier" type="String_1_17"/>
+	<xs:element name="IdentifierCode" type="IdentifierCodeType"/>
+	<xs:element name="OrganisationName" type="String_1_35"/>
+	<xs:element name="DepartmentName" type="String_1_35"/>
+	<xs:element name="UnitName" type="String_1_35"/>
+	<xs:element name="StreetName" type="String_1_35"/>
+	<xs:element name="SuburbName" type="String_1_35"/>
+	<xs:element name="DistrictName" type="String_1_35"/>
+	<xs:element name="PostCodeIdentifier">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="9"/>
+				<xs:minLength value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="TelephoneCode" type="TelephoneCodeType"/>
+	<xs:element name="TelephoneSubscriberIdentifier" type="String_1_25"/>
+	<xs:element name="TelefaxSubscriberIdentifier" type="String_1_25"/>
+	<xs:element name="EmailIdentifier" type="String_1_35"/>
+	<xs:element name="MedicalSpecialityCode" type="MedicalSpecialityCodeType"/>
+	<xs:element name="ObjectIdentifier" type="String_1_35"/>
+	<xs:element name="ObjectCode" type="ObjectCodeType"/>
+	<xs:element name="ObjectExtensionCode" type="ObjectExtensionCodeType"/>
+	<xs:element name="OriginalObjectSize" type="xs:positiveInteger"/>
+	<xs:element name="MaritalStatus" type="MaritalStatusType"/>
+	
+	<xs:complexType name="RelativesType">
+		<xs:sequence>
+			<xs:element ref="Relative" minOccurs="0" maxOccurs="5"/>
+			<xs:element name="Comment" type="FormattedTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+</xs:schema>

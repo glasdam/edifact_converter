@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/"
+	xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:include schemaLocation="ClinicalTypes.xsd"/>
+	<xs:element name="Birth" type="BirthType">
+		<xs:annotation>
+			<xs:documentation>Fødsel</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="BirthType">
+		<xs:sequence>
+			<xs:element name="PregnancyDuration" type="WeeksDaysDurationType"/>
+			<xs:element name="BirthPrincipalDiagnoses" type="FullQualifiedDiagnoseOrTreatmentType">
+				<xs:annotation>
+					<xs:documentation>Aktionsdiagnose ifm. fødslen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BirthAdditionalDiagnoses" type="QualifiedDiagnoseOrTreatmentType"	minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>Tillægsdiagnoser ifm. fødslen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BirthInvestigationAndTreatmentDiagnoses" type="QualifiedDiagnoseOrTreatmentType" minOccurs="0" maxOccurs="45">
+				<xs:annotation>
+					<xs:documentation>Undersøgelser, behandlinger og indgreb ifm. fødslen på kodet form</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BleedingVolume" type="FormattedTextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Blødningsmængde incl. angivelse af enhed, f.eks. ml. (max. 350 kar.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AmnioticFluidDescription" type="FormattedTextType">
+				<xs:annotation>
+					<xs:documentation>Fostervandsmængde, farve mm. (max. 350 kar.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BirthAdditionalInfo" type="FormattedTextType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Andre oplysninger ifm. fødslen (max. 3150 kar.)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaternityMotherAppointment" type="String_1_70" minOccurs="0">
+				<xs:annotation> 
+					<xs:documentation>Aftalt tid til jordemoderbesøg/tlf.kontakt til jordemoder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

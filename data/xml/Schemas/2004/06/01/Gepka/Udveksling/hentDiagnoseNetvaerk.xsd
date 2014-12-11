@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Jesper Nielsen (Sundhedsstyrelsen) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="RequestDatatyper.xsd"/>
+	<xs:include schemaLocation="../GEPJ_Diagnose.xsd"/>
+	<xs:include schemaLocation="../GEPJ_DDelRekurs.xsd"/>
+	<xs:include schemaLocation="../GEPJ_DFoelRekurs.xsd"/>
+	<xs:include schemaLocation="../GEPJ_DPriorRekurs.xsd"/>
+	<xs:include schemaLocation="../GEPJ_DAarsagRekurs.xsd"/>
+	<xs:include schemaLocation="../GEPJ_Diagnosestatus.xsd"/>
+	<xs:include schemaLocation="../GEPJ_Journalfoeringskontekst.xsd"/>
+	<xs:include schemaLocation="../GEPJ_StatusRettelse.xsd"/>
+	<xs:include schemaLocation="../GEPJ_GEpjRettelse.xsd"/>
+	<xs:element name="hentDiagnoseNetvaerkRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="patient_id" type="ObjektId"/>
+				<xs:element name="aktualitet" type="Aktualitet" nillable="true"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="hentDiagnoseNetvaerkResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="diagnose" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Svaret på forsprøgslen er muligvis tomt</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="Diagnose">
+								<xs:sequence>
+									<xs:element name="gepjRettelse" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="GEpjRettelse"/>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="diagnosestatus" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="Diagnosestatus">
+													<xs:sequence>
+														<xs:element name="statusRettelse" type="StatusRettelse" minOccurs="0" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dAarsagRekurs" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DAarsagRekurs">
+								<xs:sequence>
+									<xs:element name="gepjRettelse" type="GEpjRettelse" minOccurs="0" maxOccurs="unbounded"/>
+									<xs:element name="journalfoeringskontekst" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="Journalfoeringskontekst">
+													<xs:sequence>
+														<xs:element name="statusRettelse" type="StatusRettelse" minOccurs="0" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dDelRekurs" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DDelRekurs">
+								<xs:sequence>
+									<xs:element name="gepjRettelse" type="GEpjRettelse" minOccurs="0" maxOccurs="unbounded"/>
+									<xs:element name="journalfoeringskontekst" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="Journalfoeringskontekst">
+													<xs:sequence>
+														<xs:element name="statusRettelse" type="StatusRettelse" minOccurs="0" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dPriorRekurs" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DPriorRekurs">
+								<xs:sequence>
+									<xs:element name="gepjRettelse" type="GEpjRettelse" minOccurs="0" maxOccurs="unbounded"/>
+									<xs:element name="journalfoeringskontekst" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="Journalfoeringskontekst">
+													<xs:sequence>
+														<xs:element name="statusRettelse" type="StatusRettelse" minOccurs="0" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dFoelRekurs" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="DFoelRekurs">
+								<xs:sequence>
+									<xs:element name="gepjRettelse" type="GEpjRettelse" minOccurs="0" maxOccurs="unbounded"/>
+									<xs:element name="journalfoeringskontekst" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="Journalfoeringskontekst">
+													<xs:sequence>
+														<xs:element name="statusRettelse" type="StatusRettelse" minOccurs="0" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

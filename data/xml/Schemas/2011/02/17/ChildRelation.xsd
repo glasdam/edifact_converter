@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/"
+	xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:element name="ChildRelation" type="ChildRelationType"/>
+	<xs:complexType name="ChildRelationType">
+		<xs:sequence>
+			<xs:element name="RelationCode">
+				<xs:simpleType>
+					<xs:restriction base="RelationCodeType">
+						<xs:pattern value="barn"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element ref="PersonIdentifier" minOccurs="0"/>
+			<xs:element name="TimeOfBirth" type="DateTimeType"/>
+			<xs:element name="BirthStatus1">
+				<xs:simpleType>
+					<xs:restriction base="BirthStatusType">
+						<xs:pattern value="levendefødt"/>
+						<xs:pattern value="dødfødt"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="BirthStatus2">
+				<xs:simpleType>
+					<xs:restriction base="BirthStatusType">
+						<xs:pattern value="enkeltfødt"/>
+						<xs:pattern value="flerfødt"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Gender">
+				<xs:simpleType>
+					<xs:restriction base="GenderType">
+						<xs:pattern value="pige"/>
+						<xs:pattern value="dreng"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2007/02/01/" targetNamespace="http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2007/02/01/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+<xs:element name="TestComment">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="Subject">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:maxLength value="70"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element ref="Max10LinesText"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+<xs:element name="Max10LinesText" type="ParagraphedTextType"/>
+
+<xs:complexType name="ParagraphedTextType">
+  <xs:sequence>
+    <xs:element name="Paragraph" maxOccurs="10">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:maxLength value="500"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+</xs:schema>

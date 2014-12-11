@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+    xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    <xs:include schemaLocation="GeneralElements.xsd"/>
+    <xs:include schemaLocation="Sender.xsd"/>
+    <xs:include schemaLocation="Receiver.xsd"/>
+    <xs:include schemaLocation="Borger.xsd"/>
+    <xs:include schemaLocation="EgenLaege.xsd"/>
+    <xs:include schemaLocation="Paaroerende.xsd"/>
+    <xs:include schemaLocation="Samtykke.xsd"/>
+    <xs:include schemaLocation="MinDagbog.xsd"/>
+    <xs:include schemaLocation="LaegensUdredning.xsd"/>
+    <xs:include schemaLocation="CitizensOwnData.xsd"/>
+    <xs:include schemaLocation="Kontakter.xsd"/>
+    <xs:include schemaLocation="RelevanteDiagnoser.xsd"/>
+    <xs:include schemaLocation="RelevanteLabsvar.xsd"/>
+    <xs:include schemaLocation="AktuelMedicin.xsd"/>
+    <xs:include schemaLocation="SKLNoter.xsd"/>
+    <xs:include schemaLocation="Kalender.xsd"/>
+    <xs:include schemaLocation="MonitoreringOgMaal.xsd"/>
+    <xs:include schemaLocation="LetterType.xsd"/>
+
+    <xs:element name="MedComKD" type="MedComKDType">
+        <xs:annotation>
+            <xs:documentation>KronikerDataSæt</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="MedComKDType">
+        <xs:annotation>
+            <xs:documentation>Definition af en KronikerDataSæt meddelelse</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Letter" type="MedComKDLetterType">
+                <xs:annotation>
+                    <xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XMC001A og
+                        TypeCode=XMIT01</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="Sender"/>
+            <xs:element ref="Receiver"/>
+            <xs:element ref="Borger"/>
+            <xs:element ref="EgenLaege" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="Paaroerende" minOccurs="0"/>
+            <xs:element ref="Samtykke" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="MinDagbog" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="LaegensUdredning" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="Kontakter" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="RelevanteDiagnoser" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="RelevanteLabsvar" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="AktuelMedicin" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="SKLNoter" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="Kalender" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="MonitoreringOgMaal" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="MedComKDLetterType">
+        <xs:annotation>
+            <xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XMC001A og TypeCode=XMIT01</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:restriction base="LetterType">
+                <xs:sequence>
+                    <xs:element name="Identifier" type="String_1_14"/>
+                    <xs:element name="VersionCode">
+                        <xs:simpleType>
+                            <xs:restriction base="VersionCodeType">
+                                <xs:pattern value="XMC001A"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="StatisticalCode" type="String_1_8"/>
+                    <xs:element name="Authorisation" type="DateTimeType"/>
+                    <xs:element name="TypeCode">
+                        <xs:simpleType>
+                            <xs:restriction base="TypeCodeType">
+                                <xs:pattern value="XMIT01"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="StatusCode" type="StatusCodeType"/>
+                    <xs:element name="EpisodeOfCareIdentifier" type="String_1_35" minOccurs="0"/>
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

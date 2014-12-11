@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="RelevanteLabsvar" type="RelevanteLabsvarType"/>
+	<xs:complexType name="RelevanteLabsvarType">
+		<xs:annotation>
+			<xs:documentation>Definition af Relevante Laboratoriesvar</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Labsvar" type="LabSvarType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LabSvarType">
+		<xs:sequence>
+			<xs:element ref="ID"/>
+			<xs:element ref="Dato"/>
+			<xs:element ref="Analyse"/>
+			<xs:element ref="Resultat"/>
+			<xs:element ref="Enhed"/>
+			<xs:element ref="Abnorm" minOccurs="0"/>
+			<xs:element ref="Min" minOccurs="0"/>
+			<xs:element ref="Max" minOccurs="0"/>
+			<xs:element ref="AnalyseID"/>
+			<xs:element ref="IUPAC"/>
+			<xs:element ref="UdfoertAf"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

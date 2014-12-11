@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Henrik Gørup Rasmussen (Acure) -->
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by - (National Board of Health) -->
+<xs:schema targetNamespace="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="SksId">
+		<xs:annotation>
+			<xs:documentation>SKS identifikation</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="lbnr" type="xs:unsignedLong" minOccurs="0"/>
+			<xs:element name="dato" type="Tidspunkt" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dato i amerikansk notation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="kode" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SygehusEnhed">
+		<xs:annotation>
+			<xs:documentation>Enhed inden for Danks Sygehusvæsen</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="navn" type="SksId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SksKombi">
+		<xs:annotation>
+			<xs:documentation>Kombination af Sks ID'er</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="primaerkode" type="SksId"/>
+			<xs:element name="tillaegskode" type="SksId" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Tidsinterval">
+		<xs:annotation>
+			<xs:documentation>Angives i sekunder</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="sekunder" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KvalificeretId">
+		<xs:annotation>
+			<xs:documentation>Kvalificering af noget</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>Valg: lokaltNumId og lokalStrId må ikke begge være NULL</xs:documentation>
+				</xs:annotation>
+				<xs:sequence>
+					<xs:element name="lokalStrId">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="20"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="lokaltNumId" type="xs:long" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element name="lokaltNumId" type="xs:long"/>
+			</xs:choice>
+			<xs:element name="domaene" type="SksId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Personale">
+		<xs:annotation>
+			<xs:documentation>Information om et personale</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="personaleId" type="KvalificeretId"/>
+			<xs:element name="signatur" type="xs:string"/>
+			<xs:element name="tilknyttetEnhed" type="SygehusEnhed"/>
+			<xs:element name="rolle" type="SksId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Laegemiddel">
+		<xs:annotation>
+			<xs:documentation>Id for et lægemiddel</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:annotation>
+				<xs:documentation>Valg: registreretSom og angivetSom må ikke begge være NULL, og kun den ene må være angivet.</xs:documentation>
+			</xs:annotation>
+			<xs:element name="registreretSom" type="KvalificeretId"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ObjektId">
+		<xs:annotation>
+			<xs:documentation>ObjektId - Unik identifikation af instanser af alle objekttyper - Baseret på 'præfix' og 'værdi'. Præfix udgør de første 10bit, de resterende 54 bit er 'værdi'</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="prefix">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:maxInclusive value="9999"/>
+						<xs:minInclusive value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="vaerdi">
+				<xs:simpleType>
+					<xs:restriction base="xs:unsignedLong">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="999999999999999999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FysiskStoerrelse">
+		<xs:annotation>
+			<xs:documentation>Mængdeangivelse med enhedsangivelse</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="stoerrelse" type="xs:float"/>
+			<xs:element name="enhed" type="SksId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Tidsperiode">
+		<xs:annotation>
+			<xs:documentation>Fra (og-med) og til (og-ikke-med) periodeangivelse</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="fra" type="Tidspunkt"/>
+				<xs:element name="til" type="Tidspunkt" minOccurs="0"/>
+			</xs:sequence>
+			<xs:element name="til" type="Tidspunkt"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Tidspunkt">
+		<xs:annotation>
+			<xs:documentation>Eksakt tidsangivelse (dato/tidspunkt)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="datotid" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2011/06/20/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:include schemaLocation="RelevantLabReports.xsd"/>
+
+	<xs:element name="Monitoring" type="MonitoringType"/>
+	<xs:complexType name="MonitoringType">
+		<xs:sequence>
+			<xs:element name="Weight" type="WeightType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Pulse" type="WeightType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="HomePBM" type="HomeBPMType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Spiometri" type="SpiometriType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CitizensGoals" type="CiizensGoalsType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="HomeBPMType">
+		<xs:sequence>
+			<xs:element name="ID" type="String_1_15"/>
+			<xs:element name="TimeStamp" type="DateTimeType"/>
+			<xs:element name="AnalysisID" type="String_1_17"/>
+			<xs:element name="Systolic" type="HomeAnalysisType"/>
+			<xs:element name="Diatolic" type="HomeAnalysisType"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SpiometriType">
+		<xs:sequence>
+			<xs:element name="ID" type="String_1_15"/>
+			<xs:element name="TimeStamp" type="DateTimeType"/>
+			<xs:element name="AnalysisID" type="String_1_17"/>
+			<xs:element name="FEV1" type="HomeAnalysisType"/>
+			<xs:element name="FVC" type="HomeAnalysisType"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="HomeAnalysisType">
+		<xs:sequence>
+			<xs:element name="IupacCode" type="String_1_15"/>
+			<xs:element name="Analysis" type="String_1_70"/>
+			<xs:element name="Result" type="xs:decimal"/>
+			<xs:element name="UnitOfResult" type="String_1_15"/>
+			<xs:element name="Min" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="Max" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="Abnorm" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="CiizensGoalsType">
+		<xs:sequence>
+			<xs:element name="Date" type="xs:date"/>
+			<xs:element name="Weight" type="xs:decimal"/>
+			<xs:element name="Smoking" type="FormattedTextType" minOccurs="0"/>
+			<xs:element name="Exercise" type="FormattedTextType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="WeightType">
+		<xs:sequence>
+			<xs:element name="ID" type="String_1_15"/>
+			<xs:element name="TimeStamp" type="DateTimeType"/>
+			<xs:element name="AnalysisID" type="String_1_17"/>
+			<xs:element name="IupacCode" type="String_1_15"/>
+			<xs:element name="Analysis" type="String_1_70"/>
+			<xs:element name="Result" type="xs:decimal"/>
+			<xs:element name="UnitOfResult" type="String_1_15"/>
+			<xs:element name="Min" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="Max" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="Abnorm" type="xs:boolean"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

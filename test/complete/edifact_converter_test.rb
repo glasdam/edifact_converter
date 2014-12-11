@@ -11,7 +11,6 @@ module EdifactConverter::EDI2XML
     end
 
     def test_edifact_to_xml
-      return
       Dir.glob "#{File.dirname(__FILE__)}/files/edifact/*" do |filename|
         xml11 = nil
         messages = []
