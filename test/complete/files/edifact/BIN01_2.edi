@@ -1,25 +1,4 @@
-UNA:+.? '
-UNB+UNOC:3+5790000120420:14+5790000125067:14+021121:2026+MEDBIN00171++++0'
-UNH+021121TAU00171+MEDBIN:D:93A:UN:B0131X+BIN01'
-BGM+OBJ++9+NA'
-DTM+137:200211212026:203'
-S01+01'
-NAD+SSP+004391:YNR:SFU++Laege Gunnild Vedel Nielsen:_:Sekr./ GVN:::US'
-ADR++US:Borgbjergsvej 34+Koebenhavn SV+2450'
-SEQ++1'
-SPR+ORG+2524:YNR:SFU+BIN01:SKS:SST'
-S01+01'
-NAD+PO+654321:YNR:SFU++Laegehuset i Taulov:_:Joergen Damsgaard:::US'
-ADR++US:Parupvej 3+Fredericia+7000'
-SEQ++2'
-S02+02'
-GIS+N'
-RFF+SRI:021121TAU00171'
-DTM+182:200211212026:203'
-S07+07'
-PNA+PAT+1111111118:::CPR:IM+++SU:Testesen+FO:Test'
-S11+11'
-UNO+1+AID:7B193BA41EEE4291802DEBCB20447E0E+OBJ:SND:WAV:91+192044:14:1:A'RIFF$î WAVEfmt      +  "V    data î à ™@ÔT¼
+UNA:+.? 'UNB+UNOC:3+5790000120420:14+5790000125067:14+021121:2026+MEDBIN00171++++0'UNH+021121TAU00171+MEDBIN:D:93A:UN:B0131X+BIN01'BGM+OBJ++9+NA'DTM+137:200211212026:203'S01+01'NAD+SSP+004391:YNR:SFU++Laege Gunnild Vedel Nielsen:_:Sekr./ GVN:::US'ADR++US:Borgbjergsvej 34+Koebenhavn SV+2450'SEQ++1'SPR+ORG+2524:SKS:SST+BIN01:SKS:SST'S01+01'NAD+PO+654321:YNR:SFU++Laegehuset i Taulov:_:Joergen Damsgaard:::US'ADR++US:Parupvej 3+Fredericia+7000'SEQ++2'S02+02'GIS+N'RFF+SRI:021121TAU00171'DTM+182:200211212026:203'S07+07'PNA+PAT+1111111118:::CPR:IM+++SU:Testesen+FO:Test'S11+11'UNO+1+AID:7B193BA41EEE4291802DEBCB20447E0E+OBJ:MUL:WAV:91+192044:14:1:A'RIFF$î WAVEfmt      +  "V    data î à ™@ÔT¼
 
 :K9§#x¦°™f¿TŞ^ÖC¤ö
 5
@@ -935,6 +914,4 @@ d
 ä
 ¿¨Ÿ¢­ºÅÈ¾¡mµ.ŠÊïûîÊ9ÍH«÷,KSC×|Š
 şnßVÓWàÿnşı™û8úßø÷LöõíóÔòÍñÙğûï3ï€îâíWíŞìtììĞë•ënë[ë`ë|ë±ëüë[ìÌìLí×ínîï¶ïgğ!ñæñ·ò•ó„ô„õ”ö¶÷çø%úmû½üşmÿÍ 3¢›"«	0¬q´ÜêÚ­búuÕFXM%ÜsêCªÁÊÇ»§‰c4ü	»qÆgŸ 9ÿÔıqüû¶ù_ø÷Âõ}ôAóòíğÜïàîıí3í‚ìèëcëïêˆê*êÕé‰éEééßèÁè´èºèÓèÿè?é‘éõéiêğêˆë3ìôìÉí´î±ï½ğÕñöòôFõsö¥÷ÚøúPûüĞıÿQ Ë2]²	¾
-½¯Z¯9®d¨İUNP+192044+1'
-UNT+22+021121TAU00171'
-UNZ+1+MEDBIN00171'
+½¯Z¯9®d¨İUNP+192044+1'UNT+22+021121TAU00171'UNZ+1+MEDBIN00171'

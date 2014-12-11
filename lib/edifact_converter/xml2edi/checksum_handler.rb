@@ -21,7 +21,7 @@ module EdifactConverter::XML2EDI
 			when 'UNZ'
 				self.inside_UNZ = true
 			end
-			self.segments += 1
+			self.segments += 1 unless name == 'OBJ'
 			super
 		end
 

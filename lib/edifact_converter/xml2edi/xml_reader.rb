@@ -45,13 +45,7 @@ module EdifactConverter::XML2EDI
       handler.endDocument
       enc_converter = Encoding::Converter.new("utf-8", "iso-8859-1")
       edi_text = enc_converter.convert(edifact.edifact.string)
-      if edifact.binary.any?
-        edi_text.force_encoding 'ASCII-8BIT'
-        edifact.binary.each do |id, base64|
-          edi_text.gsub!(id, Base64.decode64(base64))
-        end
-      end
-      edi_text
+      include_binaries edi_text
     end
 
     def self.stylesheet
@@ -68,6 +62,16 @@ module EdifactConverter::XML2EDI
           )
         )
       end
+    end
+
+    def include_binaries(source)
+      return source if edifact.binary.empty?
+      source.force_encoding 'ASCII-8BIT'
+      edifact.binary.each do |id, base64|
+        start = source.index(id)
+        source[start, id.size] = Base64.decode64(base64)
+      end
+      source
     end
 
     def self.test(file)

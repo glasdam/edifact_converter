@@ -1,25 +1,4 @@
-UNA:+.? '
-UNB+UNOC:3+5790000123456:14+5790000125067:14+021123:1501+MEDBIN00178++++0'
-UNH+021123TAU00178+MEDBIN:D:93A:UN:B0131X+BIN01'
-BGM+OBJ++9+NA'
-DTM+137:200211231501:203'
-S01+01'
-NAD+SSP+123456:YNR:SFU++Laegehuset MultiMed:_:Petra Soerensen:::US'
-ADR++US:Storhaven 12+Vejle+7100'
-SEQ++1'
-SPR+ORG+2524:SKS:SST+BIN01:SKS:SST'
-S01+01'
-NAD+PO+654321:YNR:SFU++Laegehuset i Taulov:_:Joergen Damsgaard:::US'
-ADR++US:Parupvej 3+Fredericia+7000'
-SEQ++2'
-S02+02'
-GIS+N'
-RFF+SRI:021123TAU00178'
-DTM+182:200211231501:203'
-S07+07'
-PNA+PAT+1111111118:::CPR:IM+++SU:Testesen+FO:Test'
-S11+11'
-UNO+1+AID:317C2E58F6C14D798828EFDAF221283E+OBJ:BSG:SCP:91+11944:14:1:A'€¨.  y  ˆ   
+UNA:+.? 'UNB+UNOC:3+5790000123456:14+5790000125067:14+021123:1501+MEDBIN00178++++0'UNH+021123TAU00178+MEDBIN:D:93A:UN:B0131X+BIN01'BGM+OBJ++9+NA'DTM+137:200211231501:203'S01+01'NAD+SSP+123456:YNR:SFU++Laegehuset MultiMed:_:Petra Soerensen:::US'ADR++US:Storhaven 12+Vejle+7100'SEQ++1'SPR+ORG+2524:SKS:SST+BIN01:SKS:SST'S01+01'NAD+PO+654321:YNR:SFU++Laegehuset i Taulov:_:Joergen Damsgaard:::US'ADR++US:Parupvej 3+Fredericia+7000'SEQ++2'S02+02'GIS+N'RFF+SRI:021123TAU00178'DTM+182:200211231501:203'S07+07'PNA+PAT+1111111118:::CPR:IM+++SU:Testesen+FO:Test'S11+11'UNO+1+AID:317C2E58F6C14D798828EFDAF221283E+OBJ:BSG:SCP:91+11944:14:1:A'€¨.  y  ˆ   
          ˆ       p       ¿   ÿ    Z   ¾         G  .   $  u   &   ˆ)   E  ®)  	         
  ¶  ó*           Ë‘ p   
         231277-2341 ¹ ²  èı $       dMDW10 
@@ -111,6 +90,4 @@ J%”€™<Ì’)fí­»j’ÂR[÷ìÿƒ?â_ø“ş ÿˆáßø_şüÏ¿÷ŸıÙÿsÿÛ?ö×ı»ÿmÛÿ÷Ÿğgüò@l@‰‘2
   sinus rhythm (slow)   LVH 7   age-corrected Sokolow index (SV1+RV5 or V6) = 3.8 mV 8   age-corrected vectorial R in extremity leads = 2.8 mV   possible septal infarct    R in V2 < R in V1    R < 0.15 mV in V2   RSR' in V1 and V2 	  
 0  findings of definite pathological significance ?
  ¶  
-        >  : Z £ d šC  «    q ¼,    ”ÿ{       ş/u/u  /u  ŸÿŸÿŸÿ : Z £ d šC  ¯    y &t    ‹ÿ…       ô/u/u   /u  ‘ÿÿÿ : Z £ d š9 … ­    j Ğù    «ÿf       ô/u/u  /u  ¯ÿ±ÿ±ÿ? : Z £ d šx §       » „      Íÿ?         /u/u  /u  ÔÿÔÿÓÿ : Z £ d šC  °    p g¼    ƒÿ‰       ş/u/u   /u  ‰ÿ‡ÿŠÿ : Z £ d šC  °    S ¢     §ÿb       è/u/u   /u  ¬ÿªÿ¬ÿ : Z £ d šn ± ®    ó œ}     èÿ"       ô/u/u   /u  êÿëÿçÿ> : Z £ d š  ©¬    n À  o   ÿ¨ş  ô/u/u  /u  f e d  : Z £ d š  ¬¯    Å æ8  ƒ   bÿgş  ü/u/u   /u  z x ~ = : Z £ d š+ { «    + Ÿ                /u/u  /u  ÷ÿøÿúÿ : Z £ d šC  °    c q    —ÿx       ş/u/u   /u  ™ÿ—ÿ›ÿ : Z £ d š  ó ««    } ZÅ      Ùÿÿ  Ğ/u/u  /u       : Z £ d š?  ¯    8 (µ     ³ÿS       è/u/u   /u  »ÿ¹ÿ»ÿ : Z £ d š9 … ¬    € 	V    ÿƒ       ş/u/u  /u  —ÿ˜ÿšÿ@ : Z £ d š9 … ­    S ³Û    ÅÿE       ş/u/u  /u  ÇÿÈÿÊÿUNP+11944+1'
-UNT+22+021123TAU00178'
-UNZ+1+MEDBIN00178'
+        >  : Z £ d šC  «    q ¼,    ”ÿ{       ş/u/u  /u  ŸÿŸÿŸÿ : Z £ d šC  ¯    y &t    ‹ÿ…       ô/u/u   /u  ‘ÿÿÿ : Z £ d š9 … ­    j Ğù    «ÿf       ô/u/u  /u  ¯ÿ±ÿ±ÿ? : Z £ d šx §       » „      Íÿ?         /u/u  /u  ÔÿÔÿÓÿ : Z £ d šC  °    p g¼    ƒÿ‰       ş/u/u   /u  ‰ÿ‡ÿŠÿ : Z £ d šC  °    S ¢     §ÿb       è/u/u   /u  ¬ÿªÿ¬ÿ : Z £ d šn ± ®    ó œ}     èÿ"       ô/u/u   /u  êÿëÿçÿ> : Z £ d š  ©¬    n À  o   ÿ¨ş  ô/u/u  /u  f e d  : Z £ d š  ¬¯    Å æ8  ƒ   bÿgş  ü/u/u   /u  z x ~ = : Z £ d š+ { «    + Ÿ                /u/u  /u  ÷ÿøÿúÿ : Z £ d šC  °    c q    —ÿx       ş/u/u   /u  ™ÿ—ÿ›ÿ : Z £ d š  ó ««    } ZÅ      Ùÿÿ  Ğ/u/u  /u       : Z £ d š?  ¯    8 (µ     ³ÿS       è/u/u   /u  »ÿ¹ÿ»ÿ : Z £ d š9 … ¬    € 	V    ÿƒ       ş/u/u  /u  —ÿ˜ÿšÿ@ : Z £ d š9 … ­    S ³Û    ÅÿE       ş/u/u  /u  ÇÿÈÿÊÿUNP+11944+1'UNT+22+021123TAU00178'UNZ+1+MEDBIN00178'

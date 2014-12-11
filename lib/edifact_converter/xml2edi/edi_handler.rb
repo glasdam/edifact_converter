@@ -26,6 +26,7 @@ module EdifactConverter::XML2EDI
 
     def startDocument
       self.edifact = nil
+      binary.clear
       edifact.write("UNA:+.? '#{linebreak}")
     end
 
