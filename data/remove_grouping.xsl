@@ -29,7 +29,7 @@
                 </xsl:element>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:copy-of select="*[1]"/>
+                <xsl:apply-templates select="*[1]"/>
             </xsl:otherwise>
         </xsl:choose>
         <xsl:apply-templates select="*[position() &gt; 1]"/>

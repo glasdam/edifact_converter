@@ -39,7 +39,7 @@ module EdifactConverter::EDI2XML
         end
         assert_equal [], messages, "XML1-1 failed for #{filename}"
         edifact = ""
-        p "Final part for #{filename}"
+        #p "Final part for #{filename}"
         assert_nothing_raised message="Edifact failed for #{filename}" do
           edifact = EdifactConverter::XML2EDI.convert(xml11, messages)
         end
@@ -53,7 +53,7 @@ module EdifactConverter::EDI2XML
           EdifactConverter.read_file(edi_file).gsub(/[\n\r]/, '')
         end
         max = [edi_text.size, edifact.size].max
-        step = 20
+        step = 50
         (0..max).step(step) do |start|
           assert_equal edi_text[start, step], edifact[start, step] #.encode("iso-8859-1")
         end

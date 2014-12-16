@@ -11,6 +11,7 @@ module EdifactConverter::XML11
     xml11 = xslt.transform(xml)
     xml11.encoding = "ISO-8859-1"
     extract_errors(xml11, messages)
+    process_ftxs xml11, messages
     xml11 = process_xftxs xml11, messages
     xml11
   end
@@ -25,6 +26,19 @@ module EdifactConverter::XML11
     extract_errors(xml, messages)
     schema_validate(xml, messages)
     xml
+  end
+
+  def self.process_ftxs(xml, messages)
+    xml.xpath("//FTX/Elm/SubElm").each do |subelm|
+      subelm.content = subelm.text.gsub(/[\+\'\:\?']/) {|s| "?#{s}"}
+    end
+    # xml.xpath("//FTX").each do |ftx|
+    #   ftx.children.each do |elm|
+    #     elm.children.each do |value|
+
+    #     end
+    #   end
+    # end
   end
 
   def self.process_xftxs(xml, messages)
