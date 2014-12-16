@@ -19,7 +19,7 @@ module EdifactConverter::XML11
     end
 
     def text2
-      %{paravertebralmuskulatur primært på højre side. Smerterne stråler fra lænden ned i højre lår. Smerterne centraliseres ved gentagne øvelser (centraliseringsfænomenet er ifølge Mc.Kenziekonceptet tegn på}
+      %{paravertebralmuskulatur primært på højre side. Smerterne stråler fra lænden ned i højre lår. Smerterne centraliseres ved gentagne øvelser (centraliseringsfænomenet er ifølge Mc.Kenziekonceptet tegn på }
     end
 
     def text2s
@@ -124,18 +124,35 @@ module EdifactConverter::XML11
       assert_equal "F0M", @p.ftx_format
     end
 
+    def test_insert_split
+      texts = {
+        "Hej Arne Bjarne" => ["Hej Arne \\", "Bjarne"],
+        "Hej Arne_Bjarne" => ["Hej \\", "Arne_Bjarne"],
+        "Hej_Arne_Bjarne" => ["Hej_Arne_Bjarne\\", ''],
+        "Hej Arne Bjarne " => ["Hej Arne Bjarne \\", '']
+      }
+      texts.each do |text, result|
+        source = StringIO.new
+        source.write text
+        line = ""
+        source.string = @p.insert_split(source) { |text| line = text }  
+        assert_equal result.first, line, "Wrong split for #{text}"
+        assert_equal result.last, source.string, "Wrong split for #{text}"
+      end
+    end
+
     def test_divide_text
       result = []
       result << @p.divide_text(text1) { |txt| result << txt }      
       assert_equal 3, result.size
       3.times do |index|
-        assert_equal text1s[index], result[index], "Mismatch at #{index}"
+        assert_equal text1s[index], result[index].encode("utf-8"), "Mismatch at #{index}"
       end
       result = []
       result << @p.divide_text(text2) { |txt| result << txt }      
       assert_equal 3, result.size, "Result = #{result}"
       3.times do |index|
-        assert_equal text2s[index], result[index], "Mismatch at #{index}"
+        assert_equal text2s[index], result[index].encode("utf-8"), "Mismatch at #{index}"
       end
     end
 
