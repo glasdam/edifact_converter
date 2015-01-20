@@ -29,7 +29,7 @@ module EdifactConverter
   end
 
   def self.read_file(filename)
-  	File.open(filename, 'r', encoding: 'ISO-8859-1') { |f| f.read }
+  	File.open(filename, 'r:iso-8859-1:iso-8859-1') { |f| f.read } #  encoding: 'ISO-8859-1'
   end
 
   def self.xml_parse_errors(xml, messages)
