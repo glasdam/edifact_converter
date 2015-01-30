@@ -16,7 +16,6 @@ module EdifactConverter::EDI2XML
       end
 
       def render(xml)
-        puts "Rendering #{@name}" unless @position
         args = []
         args << @text if @text
         unless EdifactConverter::Configuration.hide_position?
@@ -37,7 +36,7 @@ module EdifactConverter::EDI2XML
 
     def endDocument
       unless @current == @document
-        raise "BAD SYNTAX"
+        raise EdifactConverter::EdifactError.new "Internal Error, please report to jacob@medware.dk", Position.new(0,0)
       end
       super
     end
