@@ -18,6 +18,7 @@ module EdifactConverter::XML11
   end
 
   def self.to_xml(xml11, messages = [])
+    return unless xml11 and xml11.root
     type = xml11.xpath("/Edifact/Brev[1]/UNH[1]/Elm[2]/SubElm[1]")
     version = xml11.xpath("/Edifact/Brev[1]/UNH[1]/Elm[2]/SubElm[5]")
     type = type && type.text
