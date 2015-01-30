@@ -29,7 +29,7 @@ module EdifactConverter::EDI2XML
         while(parseSegment edifile)
           eatCrap edifile
         end
-      rescue EOFError => e
+      rescue EOFError
         @handler.endDocument
       end
       edifile.close if close
@@ -58,7 +58,7 @@ module EdifactConverter::EDI2XML
       start = edifile.position
       name = edifile.read 3
       return false unless name
-      raise EdifactConverter::EdifactError.new "Bad Segment name >#{name}< #{start}", start unless name =~ /[A-Z][A-Z0-9]{2}/
+      raise EdifactConverter::EdifactError.new "Bad Segment name #{name} #{start}", start unless name =~ /[A-Z][A-Z0-9]{2}/
       @handler.startSegment name, start
       if name == 'UNO'
         3.times { parseElement edifile }
@@ -124,7 +124,7 @@ module EdifactConverter::EDI2XML
     def eatCrap(edifile)
       begin
         nextchar = edifile.read
-      end while nextchar =~ /[\s\r\t]/
+      end while nextchar =~ /[\s\r]/
       edifile.unread
     end
 
@@ -160,11 +160,10 @@ module EdifactConverter::EDI2XML
         edifile.unread
       end
       begin
-        size = Integer(text)
-      rescue ArgumentError => e
-        raise EdifactConverter::EdifactError.new "Wrong format for size (#{text})", start
+        Integer(text)
+      rescue ArgumentError
+        raise EdifactConverter::EdifactError.new "Wrong format for binary size (#{text})", start
       end
-      return Integer(text)
     end    
 
     def parseBinary(edifile, size)

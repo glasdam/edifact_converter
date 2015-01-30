@@ -30,7 +30,7 @@ module EdifactConverter::XML11
 
   def self.process_ftxs(xml, messages)
     xml.xpath("//FTX/Elm/SubElm").each do |subelm|
-      subelm.content = subelm.text.gsub(/[\+\'\:\?']/) {|s| "?#{s}"}
+      subelm.content = subelm.text.gsub(/[\+\'\:\?]/) {|s| "?#{s}"}
     end
     # xml.xpath("//FTX").each do |ftx|
     #   ftx.children.each do |elm|

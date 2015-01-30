@@ -14,8 +14,13 @@ module EdifactConverter
 
   def self.convert_edifact(text, only_xml11 = false)
     messages = []
-    xml11 = EdifactConverter::EDI2XML.convert(text, messages)
-    xml = EdifactConverter::XML11.to_xml(xml11, messages) unless only_xml11
+    xml11 = xml = nil
+    begin
+      xml11 = EdifactConverter::EDI2XML.convert(text, messages)
+      xml = EdifactConverter::XML11.to_xml(xml11, messages) unless only_xml11 and xml11
+    rescue EdifactConverter::EdifactError => error
+      messages << error.to_message
+    end
     Result.new xml11, xml, text, messages
   end
 
@@ -31,6 +36,12 @@ module EdifactConverter
   def self.read_file(filename)
   	File.open(filename, 'r:iso-8859-1:iso-8859-1') { |f| f.read } #  encoding: 'ISO-8859-1'
   end
+
+  def xml?(text)
+    Nokogiri::XML(text).errors.empty?
+  end
+
+  private
 
   def self.xml_parse_errors(xml, messages)
     xml.errors.each do |error|

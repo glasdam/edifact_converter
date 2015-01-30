@@ -49,12 +49,13 @@ module EdifactConverter::XML2EDI
       if processing_binary?
         id = binary_id
         binary[id] = text
-        edifact.write(id)
+        text = id
+      elsif first_value
+        self.first_value = false
       else
         edifact.write(':') unless first_value?
-        edifact.write(text)
-        self.first_value = false
       end
+      edifact.write(text)
     end
 
     def endSegment

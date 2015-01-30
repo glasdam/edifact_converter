@@ -14,7 +14,12 @@ require "edifact_converter"
 module EdifactConverter::EDI2XML
 
   def self.convert(edifact, messages = [])
-    xml11 = parser.parse_string(edifact, messages)
+    begin
+      parser.parse_string(edifact, messages)
+    rescue EdifactConverter::EdifactError => error
+      messages << error.to_message
+      nil
+    end
   end
 
 

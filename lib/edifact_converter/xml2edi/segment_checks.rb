@@ -34,7 +34,7 @@ module EdifactConverter::XML2EDI
     end
 
     def escape_text(text)
-      text.gsub(/[\+\'\:\?']/) {|s| "?#{s}"} 
+      text.gsub(/[\+\'\:\?]/) {|s| "?#{s}"} 
     end
 
   end
