@@ -27,6 +27,7 @@ module EdifactConverter::XML2EDI
     end
 
     def parse_xml(xml, messages)
+      return unless xml and xml.root
       xml = self.class.stylesheet.transform(xml) do |config|
         config.default_xml.noblanks
       end

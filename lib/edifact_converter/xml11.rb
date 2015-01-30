@@ -5,6 +5,7 @@ require 'edifact_converter/xml11/paragraph'
 module EdifactConverter::XML11
 
   def self.from_xml(xml, messages = [])
+    return unless xml and xml.root
     namespace = xml.root.namespace
     schema_validate(xml, messages)
     xslt = EdifactConverter::Configuration.xml2edi(namespace.href)
