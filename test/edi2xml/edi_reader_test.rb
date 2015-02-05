@@ -80,7 +80,7 @@ module EdifactConverter::EDI2XML
       edifact = %#UNB+UN?OC:3'#
       reader.parse_string edifact
       # Ignore warning from missing UNA
-      assert_equal Position.new(0, 7), EdifactConverter.properties[:errors].last.position
+      assert_equal Position.new(0, 8), EdifactConverter.properties[:errors].last.position
     end
 
     def test_throws_edifact_error_when_bad_syntax
@@ -118,30 +118,30 @@ module EdifactConverter::EDI2XML
       edifact_ok = %#UNA:+? '#
       edifact_error = "UNP+1'"
 
-      edifile = PositionIO.new StringIO.new(edifact_ok)
-      reader.send :parseUNA, edifile
+      reader.edifile = PositionIO.new StringIO.new(edifact_ok)
+      reader.send :parseUNA
       assert_equal 0, EdifactConverter.properties[:errors].size
-      assert_equal Position.new(0, edifact_ok.size), edifile.position
+      assert_equal Position.new(0, edifact_ok.size), reader.edifile.position
 
-      edifile = PositionIO.new StringIO.new(edifact_error)
-      reader.send :parseUNA, edifile
+      reader.edifile = PositionIO.new StringIO.new(edifact_error)
+      reader.send :parseUNA
       assert_equal 1, EdifactConverter.properties[:warnings].size
-      assert_equal Position.new(0, 0), edifile.position
+      assert_equal Position.new(0, 0), reader.edifile.position
 
     end
 
     def test_parseSegment
       edifact_ok = "TST+1:2+3:4'"
-      edifile = PositionIO.new StringIO.new(edifact_ok)
-      reader.send :parseSegment, edifile
+      reader.edifile = PositionIO.new StringIO.new(edifact_ok)
+      reader.send :parseSegment
       assert_equal 0, EdifactConverter.properties[:errors].size
       assert_equal 1, handler.number_of(:segment)
       assert_equal 2, handler.number_of(:element)
       assert_equal 4, handler.number_of(:value)
       edifact_error = "TØT+1'".encode!('iso-8859-1')
-      edifile = PositionIO.new StringIO.new(edifact_error)
+      reader.edifile = PositionIO.new StringIO.new(edifact_error)
       assert_raise EdifactConverter::EdifactError do
-        reader.send :parseSegment, edifile
+        reader.send :parseSegment
       end
     end
 
@@ -153,13 +153,13 @@ module EdifactConverter::EDI2XML
       file.write image_data
       file.write "UNP+1+2'"
       file.rewind
-      file_input = PositionIO.new file
-      reader.send :parseSegment, file_input
+      reader.edifile = PositionIO.new file
+      reader.send :parseSegment
       assert handler.balanced?
       assert_equal 2, handler.number_of(:segment)
       assert_equal 5, handler.number_of(:element)
       assert_equal 6, handler.number_of(:value)
-      reader.send :parseSegment, file_input
+      reader.send :parseSegment
       assert handler.balanced?
       assert_equal 3, handler.number_of(:segment)
       assert_equal 7, handler.number_of(:element)
@@ -168,88 +168,93 @@ module EdifactConverter::EDI2XML
 
     def test_parseElement
       edifact_ok = "+1:2+3:4'"
-      edifile = PositionIO.new StringIO.new(edifact_ok)
-      reader.send :parseElement, edifile
+      reader.edifile = PositionIO.new StringIO.new(edifact_ok)
+      reader.send :parseElement
       assert_equal 0, EdifactConverter.properties[:errors].size
       assert_equal 1, handler.number_of(:element)
       assert_equal 2, handler.number_of(:value)
       edifact_error = "TØT+1'".encode!('iso-8859-1')
-      edifile = PositionIO.new StringIO.new(edifact_error)
+      reader.edifile = PositionIO.new StringIO.new(edifact_error)
       assert_raise EdifactConverter::EdifactError do
-        reader.send :parseElement, edifile
+        reader.send :parseElement
       end
     end
 
     def test_parseElementWithSize
       edi_ok = "+35:5'"
-      size = reader.send :parseElementWithSize, PositionIO.new(StringIO.new(edi_ok))
+      reader.edifile = PositionIO.new(StringIO.new(edi_ok))
+      size = reader.send :parseElementWithSize
       assert_equal 35, size
       assert_equal 1, handler.number_of(:element)
       assert_equal 2, handler.number_of(:value)
       edi_errors = %w(35A:5' :5' +' 5' 5'5 '5)
       edi_errors.each do |edifact|
         assert_raise EdifactConverter::EdifactError do
-          reader.send :parseElementWithSize, PositionIO.new(StringIO.new(edifact))
+          reader.edifile = PositionIO.new(StringIO.new(edifact))
+          reader.send :parseElementWithSize
         end
       end
     end
 
     def test_parseValueSize
       edi_ok = "35:"
-      size = reader.send :parseValueSize, PositionIO.new(StringIO.new(edi_ok))
+      reader.edifile = PositionIO.new(StringIO.new(edi_ok))
+      size = reader.send :parseValueSize
       assert_equal 35, size
       assert_equal 1, handler.number_of(:value)
       assert_equal "35", handler.last[:value].value
       edi_errors = %w(35A: ')
       edi_errors.each do |edifact|
+        reader.edifile = PositionIO.new(StringIO.new(edifact))
         assert_raise EdifactConverter::EdifactError do
-          reader.send :parseValueSize, PositionIO.new(StringIO.new(edifact))
+          reader.send :parseValueSize
         end
       end
     end
 
     def test_parseValue
       edifact_ok = "1:2'"
-      edifile = PositionIO.new StringIO.new(edifact_ok)
-      reader.send :parseValue, edifile
+      reader.edifile = PositionIO.new StringIO.new(edifact_ok)
+      reader.send :parseValue
       assert_equal 0, EdifactConverter.properties[:errors].size
       assert_equal 1, handler.number_of(:value)
       assert_equal "1", handler.last[:value].value
       edifact_error = "?1:2'"
-      edifile = PositionIO.new StringIO.new(edifact_error)
-      reader.send :parseValue, edifile
+      reader.edifile = PositionIO.new StringIO.new(edifact_error)
+      reader.send :parseValue
       assert_equal 1, EdifactConverter.properties[:errors].size
     end
 
     def test_escape
-      escapable = reader.send :escape, '?', Position.new
+      reader.edifile = PositionIO.new StringIO.new('?ø'.encode('iso-8859-1'))
+      escapable = reader.send :escape
       assert_equal '?', escapable
       assert_equal 0, EdifactConverter.properties[:errors].size
-      char = 'ø'.encode('iso-8859-1')
-      escapable = reader.send :escape, char, Position.new
-      assert_equal char, escapable
+      
+      escapable = reader.send :escape
+      assert_equal 'ø', escapable
       assert_equal 1, EdifactConverter.properties[:errors].size      
     end
 
     def test_eatCrap
       edifact = " \n \t \r 1"
-      edifile = PositionIO.new StringIO.new(edifact)
-      reader.send :eatCrap, edifile
-      assert_equal Position.new(1, 5), edifile.position
+      reader.edifile = PositionIO.new StringIO.new(edifact)
+      reader.send :eatCrap
+      assert_equal Position.new(1, 5), reader.edifile.position
     end
 
     def test_parseBinary
       edi_ok = "Hello World!:'+"
-      edi_file = PositionIO.new(StringIO.new(edi_ok))
-      reader.send :parseBinary, edi_file, edi_ok.size
+      reader.edifile = PositionIO.new(StringIO.new(edi_ok))
+      reader.send :parseBinary, edi_ok.size
       assert handler.balanced?
       assert_equal Base64.encode64(edi_ok), handler.last[:value].value
       assert_equal 1, handler.number_of(:segment)
       assert_equal 1, handler.number_of(:element)
       assert_equal 1, handler.number_of(:value)
-      edi_file = PositionIO.new(StringIO.new(edi_ok))
+      reader.edifile = PositionIO.new(StringIO.new(edi_ok))
       assert_raise EdifactConverter::EdifactError do
-        reader.send :parseBinary, edi_file, edi_ok.size + 23
+        reader.send :parseBinary, edi_ok.size + 23
       end
     end
 

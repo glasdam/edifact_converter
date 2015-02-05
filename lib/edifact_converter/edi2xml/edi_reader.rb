@@ -3,10 +3,10 @@ require "base64"
 
 module EdifactConverter::EDI2XML
   class EdiReader
-    attr_accessor :handler, :locator
+    attr_accessor :handler, :locator, :edifile
 
     def initialize(handler)
-      @handler = handler
+      self.handler = handler
       self.locator = Locator.new
     end
 
@@ -17,28 +17,28 @@ module EdifactConverter::EDI2XML
     def parse(edifile, close=false)
       if edifile.kind_of? String
         close = true
-        edifile = PositionIO.new (File.open edifile, 'rb', encoding: 'ISO-8859-1')
+        self.edifile = PositionIO.new (File.open edifile, 'rb', encoding: 'ISO-8859-1')
       else
-        edifile = PositionIO.new edifile
+        self.edifile = PositionIO.new edifile
       end
       @handler.startDocument
       begin
-        eatCrap edifile
-        parseUNA edifile
-        eatCrap edifile
-        while(parseSegment edifile)
-          eatCrap edifile
+        eatCrap
+        parseUNA
+        eatCrap
+        while(parseSegment)
+          eatCrap
         end
       rescue EOFError
         @handler.endDocument
       end
-      edifile.close if close
+      self.edifile.close if close
       @handler.xml
     end
 
     private
 
-    def parseUNA(edifile)
+    def parseUNA
       segname = edifile.read 3
       if segname != "UNA"
         edifile.unread 3
@@ -54,28 +54,28 @@ module EdifactConverter::EDI2XML
       end
     end
 
-    def parseSegment(edifile)
+    def parseSegment
       locator.position = edifile.position
       name = edifile.read 3
       return false unless name
       raise EdifactConverter::EdifactError.new "Bad Segment name #{name} #{locator}", locator.position unless name =~ /[A-Z][A-Z0-9]{2}/
       @handler.startSegment name, locator.position
       if name == 'UNO'
-        3.times { parseElement edifile }
-        size = parseElementWithSize(edifile)
-        while(parseElement edifile)
+        3.times { parseElement }
+        size = parseElementWithSize
+        while parseElement
         end
         @handler.endSegment name
-        parseBinary(edifile, size.to_i)
+        parseBinary(size.to_i)
       else
-        while(parseElement edifile)
+        while parseElement
         end
         @handler.endSegment name
       end
       true
     end
 
-    def parseElement(edifile)
+    def parseElement
       locator.position = edifile.position
       nextchar = edifile.read
       case nextchar
@@ -86,26 +86,25 @@ module EdifactConverter::EDI2XML
       else
         raise EdifactConverter::EdifactError.new "Bad Syntax at #{locator.position}", locator.position
       end
-      while(parseValue edifile)
+      while(parseValue)
       end
       @handler.endElement
       return true
     end
 
-    def parseValue(edifile)
-      value_start = edifile.position
+    def parseValue
+      locator.position = edifile.position
       text = ''
       while not((nextchar = edifile.read) =~ /[+:']/)
         case nextchar
         when '?'
-          position = edifile.position
-          text << escape(edifile.read, position)
+          text << escape
         when '\n'
         else
           text << nextchar
         end
       end
-      @handler.value text, value_start
+      @handler.value text, locator.position
       case nextchar
       when /[+']/
         edifile.unread
@@ -114,38 +113,39 @@ module EdifactConverter::EDI2XML
       return true
     end
 
-    def escape(escapable, position)
+    def escape
+      escapable = edifile.read
       unless escapable =~ /[':?+]/
-        EdifactConverter.properties[:errors] << EdifactConverter::Message.new(position, "Wrong use of escape for #{escapable}")
+        EdifactConverter.properties[:errors] << EdifactConverter::Message.new(edifile.position, "Wrong use of escape for #{escapable}")
       end
       return escapable
     end
 
-    def eatCrap(edifile)
+    def eatCrap
       begin
         nextchar = edifile.read
       end while nextchar =~ /[\s\r]/
       edifile.unread
     end
 
-    def parseElementWithSize(edifile)
-      start = edifile.position
+    def parseElementWithSize
+      locator.position = edifile.position
       nextchar = edifile.read
       case nextchar
       when '+'
-        @handler.startElement start
+        @handler.startElement locator.position
       else
-        raise EdifactConverter::EdifactError.new "Bad Syntax #{start}", start
+        raise EdifactConverter::EdifactError.new "Bad Syntax #{locator.position}", locator.position
       end
-      size = parseValueSize edifile
-      while(parseValue edifile)
+      size = parseValueSize
+      while(parseValue)
       end
       @handler.endElement
       return size
     end
 
-    def parseValueSize(edifile)
-      start = edifile.position
+    def parseValueSize
+      locator.position = edifile.position
       text = ''
       while not((nextchar = edifile.read) =~ /[+:']/)
         case nextchar
@@ -154,7 +154,7 @@ module EdifactConverter::EDI2XML
           text << nextchar
         end
       end
-      @handler.value text, start
+      @handler.value text, locator.position
       case nextchar
       when /[+']/
         edifile.unread
@@ -162,19 +162,19 @@ module EdifactConverter::EDI2XML
       begin
         Integer(text)
       rescue ArgumentError
-        raise EdifactConverter::EdifactError.new "Wrong format for binary size (#{text})", start
+        raise EdifactConverter::EdifactError.new "Wrong format for binary size (#{text})", locator.position
       end
     end    
 
-    def parseBinary(edifile, size)
-      start = edifile.position
-      @handler.startSegment "OBJ", start
-      @handler.startElement start
+    def parseBinary(size)
+      locator.position = edifile.position
+      @handler.startSegment "OBJ", locator.position
+      @handler.startElement locator.position
       data = edifile.binread(size)
       if data.size < size
-        raise EdifactConverter::EdifactError.new "Binary size is larger than edifact file", start
+        raise EdifactConverter::EdifactError.new "Binary size is larger than edifact file", locator.position
       end
-      @handler.value Base64.encode64(data), start
+      @handler.value Base64.encode64(data), locator.position
       @handler.endElement
       @handler.endSegment "OBJ"
     end
