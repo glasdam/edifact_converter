@@ -4,20 +4,19 @@ require 'edifact_converter/xml11/paragraph'
 
 module EdifactConverter::XML11
 
-  def self.from_xml(xml, messages = [])
+  def self.from_xml(xml)
     return unless xml and xml.root
     namespace = xml.root.namespace
-    schema_validate(xml, messages)
+    schema_validate(xml)
     xslt = EdifactConverter::Configuration.xml2edi(namespace.href)
     xml11 = xslt.transform(xml)
     xml11.encoding = "ISO-8859-1"
-    extract_errors(xml11, messages)
-    process_ftxs xml11, messages
-    xml11 = process_xftxs xml11, messages
-    xml11
+    extract_errors(xml11)
+    process_ftxs xml11
+    xml11 = process_xftxs xml11
   end
 
-  def self.to_xml(xml11, messages = [])
+  def self.to_xml(xml11)
     return unless xml11 and xml11.root
     type = xml11.xpath("/Edifact/Brev[1]/UNH[1]/Elm[2]/SubElm[1]")
     version = xml11.xpath("/Edifact/Brev[1]/UNH[1]/Elm[2]/SubElm[5]")
@@ -25,25 +24,18 @@ module EdifactConverter::XML11
     version = version && version.text
     xslt = EdifactConverter::Configuration.edi2xml(type, version)
     xml = xslt.transform(xml11)
-    extract_errors(xml, messages)
-    schema_validate(xml, messages)
+    extract_errors(xml)
+    schema_validate(xml)
     xml
   end
 
-  def self.process_ftxs(xml, messages)
+  def self.process_ftxs(xml)
     xml.xpath("//FTX/Elm/SubElm").each do |subelm|
       subelm.content = subelm.text.gsub(/[\+\'\:\?]/) {|s| "?#{s}"}
     end
-    # xml.xpath("//FTX").each do |ftx|
-    #   ftx.children.each do |elm|
-    #     elm.children.each do |value|
-
-    #     end
-    #   end
-    # end
   end
 
-  def self.process_xftxs(xml, messages)
+  def self.process_xftxs(xml)
     xml.xpath("//XFTX").each do |xftx|
       xftx.name = "GFTX"
       xftx.children.each_slice(4) do |elms|
@@ -59,7 +51,7 @@ module EdifactConverter::XML11
       max = gftx['maxOccurs']
       max = (max && max.to_i) || Float::INFINITY
       if gftx.children.size > max
-        messages << EdifactConverter::Message.new(
+        EdifactConverter.properties[:errors] << EdifactConverter::Message.new(
           nil,
           "Too many FTXs in segmentgroup #{gftx.parent.name}. Max allowed is #{max}, needs #{gftx.children.size} FTX."
         )
@@ -72,19 +64,19 @@ module EdifactConverter::XML11
     xml
   end
 
-  def self.extract_errors(xml, messages)
+  def self.extract_errors(xml)
     xml.xpath("//FEJL").each do |error|
-      messages << EdifactConverter::Message.new(nil, error.content)
+      EdifactConverter.properties[:errors] << EdifactConverter::Message.new(nil, error.content)
       error.remove
     end
   end
 
-  def self.schema_validate(xml, messages)
+  def self.schema_validate(xml)
     namespace = xml.root.namespace
     # TODO namespace may be nil, perhaps it is crap
     xsd = EdifactConverter::Configuration.schema(namespace.href)
     xsd.validate(xml).each do |error|
-      messages << EdifactConverter::Message.from_syntax_error(error)
+      EdifactConverter.properties[:errors] << EdifactConverter::Message.from_syntax_error(error)
     end
   end
 

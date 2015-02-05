@@ -23,6 +23,14 @@ module EdifactConverter
 			@@active ||= {}
 		end
 
+		def self.locator=(locator)
+			@locator = locator
+		end
+
+		def self.locator
+			@locator
+		end
+
 	end
 
 end

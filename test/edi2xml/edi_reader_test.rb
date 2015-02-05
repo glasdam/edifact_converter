@@ -17,7 +17,7 @@ module EdifactConverter::EDI2XML
 
     def setup
       handler.startDocument
-      reader.messages = []
+      EdifactConverter.properties = nil
     end
 
     def test_parses_edifact
@@ -30,32 +30,32 @@ module EdifactConverter::EDI2XML
       UCM+1111MAN01095+MEDREF:D:93A:UN:H0130R+4'
       UNT+6+BrevNr5678'
       UNZ+1+KuvertNr1234#
-      reader.parse_string(edifact, [])
-      assert_equal 0, reader.messages.size
+      reader.parse_string(edifact)
+      assert_equal 0, EdifactConverter.properties[:errors].size
     end
 
     def test_missing_una
       edifact = %#TST+1'TST+2'TST+3'TST+4'TST+5'#
-      reader.parse_string edifact, []
-      assert_equal Position.new(0,0), reader.messages.first.position
+      reader.parse_string edifact
+      assert_equal Position.new(0,0), EdifactConverter.properties[:warnings].first.position
     end
 
     def test_announces_segments
       edifact = %#UNA:+.? '
       TST+1'TST+2'TST+3'TST+4'TST+5'#
-      reader.parse_string edifact, []
+      reader.parse_string edifact
       assert_equal 5, handler.number_of(:segment)
       assert handler.balanced?
       edifact = %#TST+1'TST+2'TST+3'TST+4'TST+5'#
       handler.startDocument
-      reader.parse_string edifact, []
+      reader.parse_string edifact
       assert_equal 5, handler.number_of(:segment)
       assert handler.balanced?
     end
 
     def test_announces_elements
       edifact = %#TST+1'TST+2+2'TST+3+3:3+3'TST+4+4:4+:4'TST++5'#
-      reader.parse_string edifact, []
+      reader.parse_string edifact
       assert_equal 11, handler.number_of(:element)
       assert handler.balanced?
     end
@@ -63,14 +63,14 @@ module EdifactConverter::EDI2XML
     def test_passes_values
       edifact = %#UNB+1:2'
       TST+3:4+5:6:::9'#
-      reader.parse_string edifact, []
+      reader.parse_string edifact
       assert_equal 9, handler.number_of(:value)
     end
 
     def test_sends_line_and_column
       edifact = %#UNB+1:2'
       TST+3:4+5:6:::9'#
-      reader.parse_string edifact, []
+      reader.parse_string edifact
       assert_equal Position.new(1, 6), handler.last[:segment].position
       assert_equal Position.new(1, 14), handler.last[:element].position
       assert_equal Position.new(1, 20), handler.last[:value].position
@@ -78,9 +78,9 @@ module EdifactConverter::EDI2XML
 
     def test_finds_illegal_escape
       edifact = %#UNB+UN?OC:3'#
-      reader.parse_string edifact, []
+      reader.parse_string edifact
       # Ignore warning from missing UNA
-      assert_equal Position.new(0, 7), reader.messages.last.position
+      assert_equal Position.new(0, 7), EdifactConverter.properties[:errors].last.position
     end
 
     def test_throws_edifact_error_when_bad_syntax
@@ -91,7 +91,7 @@ module EdifactConverter::EDI2XML
       edifacts << %#S1++11'#
       edifacts.each do |edifact|
         assert_raise EdifactConverter::EdifactError do
-          reader.parse_string edifact, []
+          reader.parse_string edifact
         end
       end
     end
@@ -101,14 +101,14 @@ module EdifactConverter::EDI2XML
       UNO+1+AID:2BE66629DA66406D9E3FCD78219E1377+OBJ:IMG:TIF:91+17:14:1:A'
       HelloWorld
       UNP+1327700+1'#
-      reader.parse_string edifact, []
-      assert_equal 0, reader.messages.size
+      reader.parse_string edifact
+      assert_equal 0, EdifactConverter.properties[:errors].size
       edifact = %#UNA:+.? '
       UNO+1+AID:2BE66629DA66406D9E3FCD78219E1377+OBJ:IMG:TIF:91+10:14:1:A'
       HelloWorld
       UNP+1327700+1'#
       assert_raise EdifactConverter::EdifactError do
-        reader.parse_string edifact, []
+        reader.parse_string edifact
       end
     end
 
@@ -120,12 +120,12 @@ module EdifactConverter::EDI2XML
 
       edifile = PositionIO.new StringIO.new(edifact_ok)
       reader.send :parseUNA, edifile
-      assert_equal 0, reader.messages.size
+      assert_equal 0, EdifactConverter.properties[:errors].size
       assert_equal Position.new(0, edifact_ok.size), edifile.position
 
       edifile = PositionIO.new StringIO.new(edifact_error)
       reader.send :parseUNA, edifile
-      assert_equal 1, reader.messages.size
+      assert_equal 1, EdifactConverter.properties[:warnings].size
       assert_equal Position.new(0, 0), edifile.position
 
     end
@@ -134,7 +134,7 @@ module EdifactConverter::EDI2XML
       edifact_ok = "TST+1:2+3:4'"
       edifile = PositionIO.new StringIO.new(edifact_ok)
       reader.send :parseSegment, edifile
-      assert_equal 0, reader.messages.size
+      assert_equal 0, EdifactConverter.properties[:errors].size
       assert_equal 1, handler.number_of(:segment)
       assert_equal 2, handler.number_of(:element)
       assert_equal 4, handler.number_of(:value)
@@ -170,7 +170,7 @@ module EdifactConverter::EDI2XML
       edifact_ok = "+1:2+3:4'"
       edifile = PositionIO.new StringIO.new(edifact_ok)
       reader.send :parseElement, edifile
-      assert_equal 0, reader.messages.size
+      assert_equal 0, EdifactConverter.properties[:errors].size
       assert_equal 1, handler.number_of(:element)
       assert_equal 2, handler.number_of(:value)
       edifact_error = "TØT+1'".encode!('iso-8859-1')
@@ -212,23 +212,23 @@ module EdifactConverter::EDI2XML
       edifact_ok = "1:2'"
       edifile = PositionIO.new StringIO.new(edifact_ok)
       reader.send :parseValue, edifile
-      assert_equal 0, reader.messages.size
+      assert_equal 0, EdifactConverter.properties[:errors].size
       assert_equal 1, handler.number_of(:value)
       assert_equal "1", handler.last[:value].value
       edifact_error = "?1:2'"
       edifile = PositionIO.new StringIO.new(edifact_error)
       reader.send :parseValue, edifile
-      assert_equal 1, reader.messages.size
+      assert_equal 1, EdifactConverter.properties[:errors].size
     end
 
     def test_escape
       escapable = reader.send :escape, '?', Position.new
       assert_equal '?', escapable
-      assert_equal 0, reader.messages.size
+      assert_equal 0, EdifactConverter.properties[:errors].size
       char = 'ø'.encode('iso-8859-1')
       escapable = reader.send :escape, char, Position.new
       assert_equal char, escapable
-      assert_equal 1, reader.messages.size      
+      assert_equal 1, EdifactConverter.properties[:errors].size      
     end
 
     def test_eatCrap

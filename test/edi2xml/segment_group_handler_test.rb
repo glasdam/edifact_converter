@@ -21,7 +21,6 @@ module EdifactConverter::EDI2XML
 
     def setup
       handler.startDocument
-      reader.messages = []
     end
 
     def test_startSegmentGroup

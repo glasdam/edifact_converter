@@ -19,7 +19,6 @@ module EdifactConverter::XML11
 			paragraphs << Paragraph.new 
 			self.code = xftx.children[0].children[0].text
 			parse_mixed xftx.children[3].children[0]
-			#puts self
 			to_ftx
 		end
 

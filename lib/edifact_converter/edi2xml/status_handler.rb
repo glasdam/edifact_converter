@@ -4,7 +4,7 @@ module EdifactConverter::EDI2XML
 
 	class StatusHandler < EdifactConverter::EmptyHandler
 
-		attr_accessor :groups, :segment, :element_in_segment, :value_in_element, :type, :version, :settings, :rules
+		attr_accessor :groups, :segment, :element_index, :value_index, :settings, :rules
 
 		def hidden
 			if rules
@@ -17,8 +17,8 @@ module EdifactConverter::EDI2XML
 		def startDocument
 			self.groups = []
 			self.segment = 'Edifact'
-			self.element_in_segment = 0
-			self.value_in_element = 0
+			self.element_index = 0
+			self.value_index = 0
 			self.version = self.type = 'default'
 			self.settings = EdifactConverter::Configuration.rules_edi('default', 'default')
 			super
@@ -42,7 +42,7 @@ module EdifactConverter::EDI2XML
 
 		def startSegment(name, position)
 			self.segment = name
-			self.element_in_segment = 0
+			self.element_index = 0
 			super
 		end
 
@@ -52,8 +52,8 @@ module EdifactConverter::EDI2XML
 		end
 
 		def startElement(position)
-			self.element_in_segment += 1
-			self.value_in_element = 0
+			self.element_index += 1
+			self.value_index = 0
 			super
 		end
 
@@ -62,17 +62,17 @@ module EdifactConverter::EDI2XML
 		end
 
 		def value(value, position)
-			if segment == 'UNH' && element_in_segment == 2
-				case value_in_element
+			if segment == 'UNH' && element_index == 2
+				case value_index
 				when 0
-					self.type = value
-					self.settings = EdifactConverter::Configuration.rules_edi(type, version)
+					EdifactConverter.properties[:type] = value
+					self.settings = EdifactConverter::Configuration.rules_edi(EdifactConverter.properties[:type], EdifactConverter.properties[:version])
 				when 4
-					self.version = value
-					self.settings = EdifactConverter::Configuration.rules_edi(type, version)
+					EdifactConverter.properties[:version]
+					self.settings = EdifactConverter::Configuration.rules_edi(EdifactConverter.properties[:type], EdifactConverter.properties[:version])
 				end
 			end
-			self.value_in_element += 1
+			self.value_index += 1
 			super
 		end
 

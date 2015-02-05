@@ -63,7 +63,7 @@ module EdifactConverter::EDI2XML
       handler.value "14", Position.new(2, 26)
       handler.endElement
       handler.endSegment 'UNB'
-      assert_raise RuntimeError do
+      assert_raise EdifactConverter::EdifactError do
         handler.endDocument
       end
     end

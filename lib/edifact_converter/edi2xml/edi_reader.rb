@@ -3,18 +3,18 @@ require "base64"
 
 module EdifactConverter::EDI2XML
   class EdiReader
-    attr_accessor :handler, :messages
+    attr_accessor :handler, :locator
 
     def initialize(handler)
       @handler = handler
+      self.locator = Locator.new
     end
 
-    def parse_string(edistring, messages)
-      parse(StringIO.new(edistring), messages)
+    def parse_string(edistring, properties = nil)
+      parse StringIO.new(edistring)
     end
 
-    def parse(edifile, messages, close=false)
-      self.messages = messages
+    def parse(edifile, close=false)
       if edifile.kind_of? String
         close = true
         edifile = PositionIO.new (File.open edifile, 'rb', encoding: 'ISO-8859-1')
@@ -42,7 +42,7 @@ module EdifactConverter::EDI2XML
       segname = edifile.read 3
       if segname != "UNA"
         edifile.unread 3
-        messages << EdifactConverter::Message.new(
+        EdifactConverter.properties[:warnings] << EdifactConverter::Message.new(
           edifile.position,
           "Missing UNA segment",
           :warning
@@ -55,11 +55,11 @@ module EdifactConverter::EDI2XML
     end
 
     def parseSegment(edifile)
-      start = edifile.position
+      locator.position = edifile.position
       name = edifile.read 3
       return false unless name
-      raise EdifactConverter::EdifactError.new "Bad Segment name #{name} #{start}", start unless name =~ /[A-Z][A-Z0-9]{2}/
-      @handler.startSegment name, start
+      raise EdifactConverter::EdifactError.new "Bad Segment name #{name} #{locator}", locator.position unless name =~ /[A-Z][A-Z0-9]{2}/
+      @handler.startSegment name, locator.position
       if name == 'UNO'
         3.times { parseElement edifile }
         size = parseElementWithSize(edifile)
@@ -76,7 +76,7 @@ module EdifactConverter::EDI2XML
     end
 
     def parseElement(edifile)
-      start = edifile.position
+      locator.position = edifile.position
       nextchar = edifile.read
       case nextchar
       when '+'
@@ -84,7 +84,7 @@ module EdifactConverter::EDI2XML
       when '\''
         return false
       else
-        raise EdifactConverter::EdifactError.new "Bad Syntax at #{start}", start
+        raise EdifactConverter::EdifactError.new "Bad Syntax at #{locator.position}", locator.position
       end
       while(parseValue edifile)
       end
@@ -116,7 +116,7 @@ module EdifactConverter::EDI2XML
 
     def escape(escapable, position)
       unless escapable =~ /[':?+]/
-        self.messages << EdifactConverter::Message.new(position, "Wrong use of escape for >#{escapable}<")
+        EdifactConverter.properties[:errors] << EdifactConverter::Message.new(position, "Wrong use of escape for #{escapable}")
       end
       return escapable
     end

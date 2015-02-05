@@ -8,20 +8,20 @@ require "edifact_converter/edi2xml/status_handler"
 require "edifact_converter/edi2xml/hidden_group_handler"
 require "edifact_converter/edi2xml/parent_group_handler"
 require "edifact_converter/edi2xml/pipeline"
+require "edifact_converter/edi2xml/locator"
 require "edifact_converter"
 
 
 module EdifactConverter::EDI2XML
 
-  def self.convert(edifact, messages = [])
+  def self.convert(edifact)
     begin
-      parser.parse_string(edifact, messages)
+      parser.parse_string(edifact)
     rescue EdifactConverter::EdifactError => error
-      messages << error.to_message
+      EdifactConverter.properties[:errors] << error.to_message
       nil
     end
   end
-
 
   def self.parser
     @parser ||= EdiReader.new pipeline.handler

@@ -12,21 +12,19 @@ module EdifactConverter::XML2EDI
       self.handler = ChecksumHandler.new edifact
     end
 
-    def parse_string(xmlstr, messages)
+    def parse_string(xmlstr)
       parse_xml(
-        Nokogiri::XML(xmlstr){ |config| config.default_xml.noblanks },
-        messages
+        Nokogiri::XML(xmlstr){ |config| config.default_xml.noblanks }
       )
     end
 
-    def parse_file(file, messages)
+    def parse_file(file)
       parse_xml(
-        Nokogiri::XML(File.open(file, encoding: 'ISO-8859-1')){ |config| config.default_xml.noblanks },
-        messages
+        Nokogiri::XML(File.open(file, encoding: 'ISO-8859-1')){ |config| config.default_xml.noblanks }
       )
     end
 
-    def parse_xml(xml, messages)
+    def parse_xml(xml)
       return "" unless xml and xml.root
       xml = self.class.stylesheet.transform(xml) do |config|
         config.default_xml.noblanks
@@ -73,10 +71,6 @@ module EdifactConverter::XML2EDI
         source[start, id.size] = Base64.decode64(base64)
       end
       source
-    end
-
-    def self.test(file)
-      puts self.new.parse_file('test/files/DIS91_XFTX.xml')
     end
 
   end
