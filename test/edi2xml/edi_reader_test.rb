@@ -72,7 +72,7 @@ module EdifactConverter::EDI2XML
       TST+3:4+5:6:::9'#
       reader.parse_string edifact
       assert_equal Position.new(1, 6), handler.last[:segment].position
-      assert_equal Position.new(1, 14), handler.last[:element].position
+      assert_equal Position.new(1, 13), handler.last[:element].position
       assert_equal Position.new(1, 20), handler.last[:value].position
     end
 

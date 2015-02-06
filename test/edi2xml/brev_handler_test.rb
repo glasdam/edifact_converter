@@ -27,7 +27,8 @@ module EdifactConverter::EDI2XML
       handler.startDocument
       assert not(handler.brev?)
       assert not(handler.indhold?)
-      handler.startSegment("UNH", "Pos")
+      EdifactConverter::EmptyHandler.locator.position = "Pos"
+      handler.startSegment("UNH")
       assert_equal 1, log_handler.number_of(:segment_group)
       assert_equal 'Brev', log_handler.last[:segment_group].value
       assert_equal 'Pos', log_handler.last[:segment_group].position
@@ -43,7 +44,7 @@ module EdifactConverter::EDI2XML
       assert_equal 1, log_handler.number_of(:segment)
       assert_equal 0, log_handler.last[:segment_group].select(:segment).size
 
-      handler.startSegment("TST", "Pos2")
+      handler.startSegment("TST")
       assert_equal 2, log_handler.number_of(:segment_group)
       assert_equal 'BrevIndhold', log_handler.last[:segment_group].value
       assert_equal 'Pos', log_handler.last[:segment_group].position
@@ -59,7 +60,7 @@ module EdifactConverter::EDI2XML
       assert_equal 2, log_handler.number_of(:segment)
       assert_equal 1, log_handler.last[:segment_group].select(:segment).size
 
-      handler.startSegment("UNT", "Pos3")
+      handler.startSegment("UNT")
       assert_equal 2, log_handler.number_of(:segment_group)
       assert_equal 'BrevIndhold', log_handler.last[:segment_group].value
       assert_equal 'Pos', log_handler.last[:segment_group].position

@@ -17,13 +17,13 @@ module EdifactConverter::EDI2XML
 			self.indhold = (name == 'BrevIndhold') unless indhold?
 		end
 
-		def startSegment(name, position)
+		def startSegment(name)
 			if indhold? && name =~ /S[0-9]{2}/
 				if open_groups.last
 					endSegmentGroup(open_groups.pop)
 				end
 				open_groups.push name
-				startSegmentGroup name, position, false
+				startSegmentGroup name, locator.position, false
 			else
 				super
 			end

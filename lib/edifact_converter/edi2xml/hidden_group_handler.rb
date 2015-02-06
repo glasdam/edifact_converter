@@ -20,11 +20,11 @@ module EdifactConverter::EDI2XML
 			end
 		end
 
-		def startSegment(name, position)
+		def startSegment(name)
 			if status.hidden.include? name
 				self.inserted_group = status.hidden[name]
 				self.next.endSegmentGroup(status.groups.last) unless status.groups.last == 'BrevIndhold'
-				self.next.startSegmentGroup(inserted_group, position, true)
+				self.next.startSegmentGroup(inserted_group, locator.position, true)
 			end
 			super
 		end

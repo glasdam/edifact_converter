@@ -19,11 +19,11 @@ module EdifactConverter::EDI2XML
 			super
 		end
 
-		def startSegment(name, position)
-			self.last_position = position.dup
+		def startSegment(name)
+			self.last_position = locator.position
 			case name
 			when 'UNH'
-				startSegmentGroup('Brev', position, true)
+				startSegmentGroup('Brev', locator.position, true)
 				self.brev = true
 			when 'UNT'
 				endSegmentGroup 'BrevIndhold' if indhold?

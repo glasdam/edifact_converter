@@ -83,8 +83,8 @@ class LogReaderHandler < EdifactConverter::EmptyHandler
     super
   end
 
-  def startSegment(name, position)
-    push Node.segment(name, position)
+  def startSegment(name)
+    push Node.segment(name, locator.position)
     super
   end
 
@@ -93,17 +93,17 @@ class LogReaderHandler < EdifactConverter::EmptyHandler
     super
   end
   
-  def startElement(position)
-    push Node.element('elm', position)
-    super position
+  def startElement
+    push Node.element('elm', locator.position)
+    super
   end
 
   def endElement
     pop 'elm', :element
     super
   end
-  def value(value, position)
-    push Node.value(value, position)
-    super value, position
+  def value(value)
+    push Node.value(value, locator.position)
+    super
   end
 end

@@ -23,12 +23,16 @@ module EdifactConverter
 			@@active ||= {}
 		end
 
+		def locator
+			self.class.locator
+		end
+
 		def self.locator=(locator)
-			@locator = locator
+			@@locator = locator			
 		end
 
 		def self.locator
-			@locator
+			@@locator ||= EdifactConverter::EDI2XML::Locator.new
 		end
 
 	end

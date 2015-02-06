@@ -3,11 +3,10 @@ require "base64"
 
 module EdifactConverter::EDI2XML
   class EdiReader
-    attr_accessor :handler, :locator, :edifile
+    attr_accessor :handler, :edifile
 
     def initialize(handler)
       self.handler = handler
-      self.locator = Locator.new
     end
 
     def parse_string(edistring, properties = nil)
@@ -59,7 +58,7 @@ module EdifactConverter::EDI2XML
       name = edifile.read 3
       return false unless name
       raise EdifactConverter::EdifactError.new "Bad Segment name #{name} #{locator}", locator.position unless name =~ /[A-Z][A-Z0-9]{2}/
-      @handler.startSegment name, locator.position
+      @handler.startSegment name
       if name == 'UNO'
         3.times { parseElement }
         size = parseElementWithSize
@@ -80,7 +79,7 @@ module EdifactConverter::EDI2XML
       nextchar = edifile.read
       case nextchar
       when '+'
-        @handler.startElement edifile.position
+        @handler.startElement
       when '\''
         return false
       else
@@ -104,7 +103,7 @@ module EdifactConverter::EDI2XML
           text << nextchar
         end
       end
-      @handler.value text, locator.position
+      @handler.value text
       case nextchar
       when /[+']/
         edifile.unread
@@ -133,7 +132,7 @@ module EdifactConverter::EDI2XML
       nextchar = edifile.read
       case nextchar
       when '+'
-        @handler.startElement locator.position
+        @handler.startElement
       else
         raise EdifactConverter::EdifactError.new "Bad Syntax #{locator.position}", locator.position
       end
@@ -154,7 +153,7 @@ module EdifactConverter::EDI2XML
           text << nextchar
         end
       end
-      @handler.value text, locator.position
+      @handler.value text
       case nextchar
       when /[+']/
         edifile.unread
@@ -168,15 +167,19 @@ module EdifactConverter::EDI2XML
 
     def parseBinary(size)
       locator.position = edifile.position
-      @handler.startSegment "OBJ", locator.position
-      @handler.startElement locator.position
+      @handler.startSegment "OBJ"
+      @handler.startElement
       data = edifile.binread(size)
       if data.size < size
         raise EdifactConverter::EdifactError.new "Binary size is larger than edifact file", locator.position
       end
-      @handler.value Base64.encode64(data), locator.position
+      @handler.value Base64.encode64(data)
       @handler.endElement
       @handler.endSegment "OBJ"
+    end
+
+    def locator
+      EdifactConverter::EmptyHandler.locator
     end
 
   end

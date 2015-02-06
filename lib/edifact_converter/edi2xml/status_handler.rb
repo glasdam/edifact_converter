@@ -40,7 +40,7 @@ module EdifactConverter::EDI2XML
 			super
 		end
 
-		def startSegment(name, position)
+		def startSegment(name)
 			self.segment = name
 			self.element_index = 0
 			super
@@ -51,7 +51,7 @@ module EdifactConverter::EDI2XML
 			super
 		end
 
-		def startElement(position)
+		def startElement
 			self.element_index += 1
 			self.value_index = 0
 			super
@@ -61,7 +61,7 @@ module EdifactConverter::EDI2XML
 			super
 		end
 
-		def value(value, position)
+		def value(value)
 			if segment == 'UNH' && element_index == 2
 				case value_index
 				when 0
