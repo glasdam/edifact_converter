@@ -30,7 +30,7 @@ module EdifactConverter::EDI2XML
       handler = XmlHandler.new
       handler.startDocument
       EdifactConverter::EmptyHandler.locator.position = Position.new(1, 0)
-      handler.startSegmentGroup "S01", nil, false
+      handler.startSegmentGroup "S01", false
       handler.startElement
       handler.value "01"
       handler.endElement

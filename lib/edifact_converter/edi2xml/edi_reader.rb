@@ -9,7 +9,7 @@ module EdifactConverter::EDI2XML
       self.handler = handler
     end
 
-    def parse_string(edistring, properties = nil)
+    def parse_string(edistring)
       parse StringIO.new(edistring)
     end
 
@@ -20,7 +20,7 @@ module EdifactConverter::EDI2XML
       else
         self.edifile = PositionIO.new edifile
       end
-      @handler.startDocument
+      handler.startDocument
       begin
         eatCrap
         parseUNA
@@ -29,10 +29,10 @@ module EdifactConverter::EDI2XML
           eatCrap
         end
       rescue EOFError
-        @handler.endDocument
+        handler.endDocument
       end
       self.edifile.close if close
-      @handler.xml
+      handler.xml
     end
 
     private
@@ -48,7 +48,7 @@ module EdifactConverter::EDI2XML
         )
         return
       end
-      @handler.una
+      handler.una
       while edifile.read != '\''
       end
     end
@@ -58,18 +58,18 @@ module EdifactConverter::EDI2XML
       name = edifile.read 3
       return false unless name
       raise EdifactConverter::EdifactError.new "Bad Segment name #{name} #{locator}", locator.position unless name =~ /[A-Z][A-Z0-9]{2}/
-      @handler.startSegment name
+      handler.startSegment name
       if name == 'UNO'
         3.times { parseElement }
         size = parseElementWithSize
         while parseElement
         end
-        @handler.endSegment name
+        handler.endSegment name
         parseBinary(size.to_i)
       else
         while parseElement
         end
-        @handler.endSegment name
+        handler.endSegment name
       end
       true
     end
@@ -79,7 +79,7 @@ module EdifactConverter::EDI2XML
       nextchar = edifile.read
       case nextchar
       when '+'
-        @handler.startElement
+        handler.startElement
       when '\''
         return false
       else
@@ -87,7 +87,7 @@ module EdifactConverter::EDI2XML
       end
       while(parseValue)
       end
-      @handler.endElement
+      handler.endElement
       return true
     end
 
@@ -103,7 +103,7 @@ module EdifactConverter::EDI2XML
           text << nextchar
         end
       end
-      @handler.value text
+      handler.value text
       case nextchar
       when /[+']/
         edifile.unread
@@ -132,14 +132,14 @@ module EdifactConverter::EDI2XML
       nextchar = edifile.read
       case nextchar
       when '+'
-        @handler.startElement
+        handler.startElement
       else
         raise EdifactConverter::EdifactError.new "Bad Syntax #{locator.position}", locator.position
       end
       size = parseValueSize
       while(parseValue)
       end
-      @handler.endElement
+      handler.endElement
       return size
     end
 
@@ -153,7 +153,7 @@ module EdifactConverter::EDI2XML
           text << nextchar
         end
       end
-      @handler.value text
+      handler.value text
       case nextchar
       when /[+']/
         edifile.unread
@@ -167,15 +167,15 @@ module EdifactConverter::EDI2XML
 
     def parseBinary(size)
       locator.position = edifile.position
-      @handler.startSegment "OBJ"
-      @handler.startElement
+      handler.startSegment "OBJ"
+      handler.startElement
       data = edifile.binread(size)
       if data.size < size
         raise EdifactConverter::EdifactError.new "Binary size is larger than edifact file", locator.position
       end
-      @handler.value Base64.encode64(data)
-      @handler.endElement
-      @handler.endSegment "OBJ"
+      handler.value Base64.encode64(data)
+      handler.endElement
+      handler.endSegment "OBJ"
     end
 
     def locator

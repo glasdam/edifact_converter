@@ -73,8 +73,8 @@ class LogReaderHandler < EdifactConverter::EmptyHandler
     super
   end
 
-  def startSegmentGroup(name, position, hiddent)
-    push Node.segment_group(name, position)
+  def startSegmentGroup(name, hidden = false)
+    push Node.segment_group(name, locator.position)
     super
   end
 

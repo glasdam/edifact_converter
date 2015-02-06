@@ -2,16 +2,15 @@
 module EdifactConverter
 
 	class EmptyHandler
-		attr_accessor :next, :status
+		attr_accessor :next_handler
 
-		def initialize(nexthandler = nil, status = nil)
-			self.next = nexthandler
-			self.status = status
+		def initialize(nexthandler = nil)
+			self.next_handler = nexthandler
 		end
 
 		def method_missing(sym, *args, &block)
-			if self.next
-				self.next.send(sym, *args, &block)
+			if self.next_handler
+				self.next_handler.send(sym, *args, &block)
 			end
 		end
 

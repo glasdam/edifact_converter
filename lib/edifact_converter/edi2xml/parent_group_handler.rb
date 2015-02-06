@@ -10,13 +10,13 @@ module EdifactConverter::EDI2XML
 			@ancestors ||= []
 		end
 
-		def startSegmentGroup(name, position, hidden)
+		def startSegmentGroup(name, hidden = false)
 			if ancestors
 				self.ancestors = ancestors.drop_while do |parent_group|					
-					if status.rules['children'].include?(name)
+					if locator.rules['children'].include?(name)
 						false
 					else
-						self.next.endSegmentGroup(parent_group)
+						next_handler.endSegmentGroup(parent_group)
 						true
 					end
 				end
@@ -32,7 +32,7 @@ module EdifactConverter::EDI2XML
 				super
 				self.ancestors = nil
 				previous = nil
-			elsif status.rules['children'].any?
+			elsif locator.rules['children'].any?
 				ancestors << name
 			else
 				super

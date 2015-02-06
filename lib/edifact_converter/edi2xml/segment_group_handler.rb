@@ -12,7 +12,7 @@ module EdifactConverter::EDI2XML
 			@open_groups ||= []
 		end
 
-		def startSegmentGroup(name, position, hidden)
+		def startSegmentGroup(name, hidden = false)
 			super
 			self.indhold = (name == 'BrevIndhold') unless indhold?
 		end
@@ -23,7 +23,7 @@ module EdifactConverter::EDI2XML
 					endSegmentGroup(open_groups.pop)
 				end
 				open_groups.push name
-				startSegmentGroup name, locator.position, false
+				startSegmentGroup name, false
 			else
 				super
 			end

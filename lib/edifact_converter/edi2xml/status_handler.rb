@@ -4,15 +4,7 @@ module EdifactConverter::EDI2XML
 
 	class StatusHandler < EdifactConverter::EmptyHandler
 
-		attr_accessor :groups, :segment, :element_index, :value_index, :settings, :rules
-
-		def hidden
-			if rules
-				rules['hidden'] || {}
-			else
-				{}
-			end
-		end
+		attr_accessor :groups, :segment, :element_index, :value_index, :settings
 
 		def startDocument
 			self.groups = []
@@ -28,15 +20,15 @@ module EdifactConverter::EDI2XML
 			super
 		end
 
-		def startSegmentGroup(name, position, hidden)
+		def startSegmentGroup(name, hidden = false)
 			groups << name
-			self.rules = settings[:edifact][name]
+			locator.rules = settings[:edifact][name]
 			super
 		end
 
 		def endSegmentGroup(name)
 			groups.pop
-			self.rules = settings[:edifact][groups.last]
+			locator.rules = settings[:edifact][groups.last]
 			super
 		end
 
@@ -65,10 +57,10 @@ module EdifactConverter::EDI2XML
 			if segment == 'UNH' && element_index == 2
 				case value_index
 				when 0
-					EdifactConverter.properties[:type] = value
+					#EdifactConverter.properties[:type] = value
 					self.settings = EdifactConverter::Configuration.rules_edi(EdifactConverter.properties[:type], EdifactConverter.properties[:version])
 				when 4
-					EdifactConverter.properties[:version]
+					#EdifactConverter.properties[:version]
 					self.settings = EdifactConverter::Configuration.rules_edi(EdifactConverter.properties[:type], EdifactConverter.properties[:version])
 				end
 			end

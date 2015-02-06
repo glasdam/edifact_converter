@@ -20,10 +20,9 @@ module EdifactConverter::EDI2XML
 		end
 
 		def startSegment(name)
-			self.last_position = locator.position
 			case name
 			when 'UNH'
-				startSegmentGroup('Brev', locator.position, true)
+				startSegmentGroup('Brev', true)
 				self.brev = true
 			when 'UNT'
 				endSegmentGroup 'BrevIndhold' if indhold?
@@ -40,7 +39,7 @@ module EdifactConverter::EDI2XML
 					self.brev = false
 				when 'UNH'
 					unless indhold?
-						startSegmentGroup 'BrevIndhold', last_position, false
+						startSegmentGroup 'BrevIndhold', false
 						self.indhold = true
 					end
 				end

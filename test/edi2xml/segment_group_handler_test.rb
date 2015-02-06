@@ -25,21 +25,21 @@ module EdifactConverter::EDI2XML
 
     def test_startSegmentGroup
       assert not(handler.indhold?)
-      handler.startSegmentGroup 'BrevIndhold', "Pos", true
+      handler.startSegmentGroup 'BrevIndhold', true
       assert handler.indhold?
       assert_equal 1, log_handler.number_of(:segment_group)
     end
 
     def test_endSegmentGroup
       assert handler.open_groups.empty?
-      handler.startSegmentGroup 'Unused', "Pos", true
+      handler.startSegmentGroup 'Unused', true
       handler.startSegment 'S01'
       assert handler.open_groups.empty?
       assert_equal 1, log_handler.number_of(:segment)
       assert_equal 1, log_handler.number_of(:segment_group)
       handler.endSegment 'S01'
       handler.endSegmentGroup 'Unused'
-      handler.startSegmentGroup 'BrevIndhold', "Pos", true
+      handler.startSegmentGroup 'BrevIndhold', true
       assert handler.open_groups.empty?
       assert_equal 1, log_handler.number_of(:segment)
       assert_equal 2, log_handler.number_of(:segment_group)
@@ -60,11 +60,11 @@ module EdifactConverter::EDI2XML
 
     def test_startSegment_and_endSegment
       assert handler.open_groups.empty?
-      handler.startSegmentGroup 'Root', 'Pos', true
+      handler.startSegmentGroup 'Root', true
       handler.startSegment 'S01'
       assert handler.open_groups.empty?
       handler.endSegment 'S01'
-      handler.startSegmentGroup 'BrevIndhold', 'Pos', true
+      handler.startSegmentGroup 'BrevIndhold', true
       handler.startSegment 'SS1'
       handler.endSegment 'SS1'
       assert handler.open_groups.empty?

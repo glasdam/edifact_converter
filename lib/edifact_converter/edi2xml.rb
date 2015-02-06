@@ -9,18 +9,21 @@ require "edifact_converter/edi2xml/hidden_group_handler"
 require "edifact_converter/edi2xml/parent_group_handler"
 require "edifact_converter/edi2xml/pipeline"
 require "edifact_converter/edi2xml/locator"
+require "edifact_converter/edi2xml/properties_handler.rb"
+
 require "edifact_converter"
 
 
 module EdifactConverter::EDI2XML
 
   def self.convert(edifact)
-    begin
+    xml = begin
       parser.parse_string(edifact)
     rescue EdifactConverter::EdifactError => error
       EdifactConverter.properties[:errors] << error.to_message
       nil
     end
+    xml
   end
 
   def self.parser

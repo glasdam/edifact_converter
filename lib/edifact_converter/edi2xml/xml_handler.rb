@@ -43,7 +43,7 @@ module EdifactConverter::EDI2XML
       super
     end
 
-    def startSegmentGroup(name, position, hidden)
+    def startSegmentGroup(name, hidden = false)
       self.current = XmlElement.new name.encode(Encoding::UTF_8), locator.position, current
       super
     end

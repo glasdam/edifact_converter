@@ -4,9 +4,10 @@ module EdifactConverter::EDI2XML
 
 	class HiddenGroupHandler < EdifactConverter::EmptyHandler
 
-		attr_accessor :inserted_group
+		attr_accessor :inserted_group, :groups
 
-		def startSegmentGroup(name, position, hidden)
+		def startSegmentGroup(name, hidden = false)
+			groups << name
 			super
 		end
 
@@ -18,19 +19,27 @@ module EdifactConverter::EDI2XML
 			else
 				super
 			end
+			groups.pop
 		end
 
 		def startSegment(name)
-			if status.hidden.include? name
-				self.inserted_group = status.hidden[name]
-				self.next.endSegmentGroup(status.groups.last) unless status.groups.last == 'BrevIndhold'
-				self.next.startSegmentGroup(inserted_group, locator.position, true)
+			if locator.rules['hidden'].include? name
+				self.inserted_group = locator.rules['hidden'][name]
+				next_handler.endSegmentGroup(groups.last) unless groups.last == 'BrevIndhold'
+				next_handler.startSegmentGroup(inserted_group, true)
+				groups << group
 			end
 			super
 		end
 
 		def endSegment(name)
 			super
+		end
+
+		private
+
+		def groups
+			@groups ||= []
 		end
 
 	end
