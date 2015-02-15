@@ -1,19 +1,22 @@
-require 'edifact_converter/edi2xml'
+require 'edifact_converter/edi2xml11'
 require "base64"
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
   class EdiReader
-    attr_accessor :handler, :edifile
+    attr_accessor :handler, :edifile, :locator
 
-    def initialize(handler)
+    def initialize(handler = Pipeline.handler)
+      self.locator = Locator.new
       self.handler = handler
+      handler.locator = locator
     end
 
-    def parse_string(edistring)
-      parse StringIO.new(edistring)
+    def parse_string(edistring, properties)
+      parse StringIO.new(edistring), properties
     end
 
-    def parse(edifile, close=false)
+    def parse(edifile, properties, close = false)
+      locator.properties = properties
       if edifile.kind_of? String
         close = true
         self.edifile = PositionIO.new (File.open edifile, 'rb', encoding: 'ISO-8859-1')
@@ -41,10 +44,9 @@ module EdifactConverter::EDI2XML
       segname = edifile.read 3
       if segname != "UNA"
         edifile.unread 3
-        EdifactConverter.properties[:warnings] << EdifactConverter::Message.new(
+        locator.properties[:warnings] << EdifactConverter::Message.new(
           edifile.position,
-          "Missing UNA segment",
-          :warning
+          "Missing UNA segment"
         )
         return
       end
@@ -57,7 +59,7 @@ module EdifactConverter::EDI2XML
       locator.position = edifile.position
       name = edifile.read 3
       return false unless name
-      raise EdifactConverter::EdifactError.new "Bad Segment name #{name} #{locator}", locator.position unless name =~ /[A-Z][A-Z0-9]{2}/
+      raise EdifactConverter::EdifactError.new "Bad Segment name \"#{name}\"", locator.position unless name =~ /[A-Z][A-Z0-9]{2}/
       handler.startSegment name
       if name == 'UNO'
         3.times { parseElement }
@@ -115,7 +117,7 @@ module EdifactConverter::EDI2XML
     def escape
       escapable = edifile.read
       unless escapable =~ /[':?+]/
-        EdifactConverter.properties[:errors] << EdifactConverter::Message.new(edifile.position, "Wrong use of escape for #{escapable}")
+        locator.properties[:errors] << EdifactConverter::Message.new(edifile.position, "Wrong use of escape for #{escapable}")
       end
       return escapable
     end
@@ -176,10 +178,6 @@ module EdifactConverter::EDI2XML
       handler.value Base64.encode64(data)
       handler.endElement
       handler.endSegment "OBJ"
-    end
-
-    def locator
-      EdifactConverter::EmptyHandler.locator
     end
 
   end

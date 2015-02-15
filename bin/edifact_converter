@@ -4,49 +4,27 @@ require 'edifact_converter'
 
 $COMMAND_NAME = 'edifact_converter'
 options = EdifactConverter::CommandLineParser.parse
+#EdifactConverter::Configuration.hide_position = true
 
-EdifactConverter::Configuration.load
-EdifactConverter::Configuration.hide_position = true
+def print_errors(errors)
+  errors.each do |error|
+    $stderr.puts error
+  end
+end
 
 if options[:source] == :xml
   xmltext = EdifactConverter.read_file(options[:input])
-  result = EdifactConverter.convert_xml(xmltext, options[:xml11])
-  if options[:xml11]
-    puts result.xml11
-  else
-    puts result.edifact
-  end
+#  result = nil
+#  10.times do |number|
+    result = EdifactConverter.convert_xml(xmltext)
+#    $stderr.puts "Round: #{number}"
+#  end
+  print_errors result.properties[:errors]
+  puts result.format_edifact
 else
   editxt = EdifactConverter.read_file(options[:input])
-  result = EdifactConverter.convert_edifact(editxt, options[:xml11])
-  if options[:xml11]
-    puts result.xml11
-  else
-    puts result.xml
-  end
+  result = EdifactConverter.convert_edifact(editxt)
+  print_errors result.properties[:errors]
+  puts result.xml
 end
-exit
 
-EdifactConverter::Configuration.load
-
-time = Time.now
-EdifactConverter::Configuration.hide_position = true
-#result = EdifactConverter.convert_edifact(EdifactConverter.read_file('test/files/XBIN_hello_World.edi'))
-#result = EdifactConverter.convert_edifact(EdifactConverter.read_file('tmp.edi'))
-#puts result.xml
-#puts Time.now - time
-
-xmltext = EdifactConverter.read_file("test/files/XBIN_hello_World.xml")
-result = EdifactConverter.convert_xml(xmltext)
-#puts result.xml11
-#puts result.edifact
-
-#File.open('tmp.edi', 'w') { |file| file.write(result.edifact) }
-
-puts Time.now - time
-
-#puts result.xml
-#p result.messages
-#p EdifactConverter::Configuration.xml2edis
-#p EdifactConverter::Configuration.edi2xmls
-#p EdifactConverter::Configuration.schemas

@@ -1,6 +1,6 @@
-require 'edifact_converter/edi2xml'
+require 'edifact_converter/edi2xml11'
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
 	class ParentGroupHandler < EdifactConverter::EmptyHandler
 
@@ -13,7 +13,7 @@ module EdifactConverter::EDI2XML
 		def startSegmentGroup(name, hidden = false)
 			if ancestors
 				self.ancestors = ancestors.drop_while do |parent_group|					
-					if locator.rules['children'].include?(name)
+					if locator.rules.child?(name)
 						false
 					else
 						next_handler.endSegmentGroup(parent_group)
@@ -31,7 +31,7 @@ module EdifactConverter::EDI2XML
 				end
 				super
 				self.ancestors = nil
-			elsif locator.rules['children'].any?
+			elsif locator.rules.children.any?
 				ancestors << name
 			else
 				super

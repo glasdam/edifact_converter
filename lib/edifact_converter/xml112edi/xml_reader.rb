@@ -1,7 +1,7 @@
 require 'nokogiri'
-require 'edifact_converter/xml2edi'
+require 'edifact_converter/xml112edi'
 
-module EdifactConverter::XML2EDI
+module EdifactConverter::XML112EDI
 
   class XmlReader
 
@@ -10,6 +10,19 @@ module EdifactConverter::XML2EDI
     def initialize()
       self.edifact = EdiHandler.new
       self.handler = ChecksumHandler.new edifact
+    end
+
+    def parse(xmlstr, properties)
+
+      xml11 = if xmlstr.is_a? String
+        Nokogiri::XML(xmlstr) { |config| config.nonet }
+      else
+        xmlstr
+      end
+      xml11.errors.each do |error|
+        properties[:errors] << EdifactConverter::Message.from_syntax_error(error)
+      end
+      parse_xml xml11
     end
 
     def parse_string(xmlstr)
@@ -31,11 +44,13 @@ module EdifactConverter::XML2EDI
       end
       handler.startDocument
       xml.root.children.each do |segment|
+        next unless  segment.element?
         handler.startSegment(segment.name)
         segment.children.each do |element|
+          next unless  element.element? and element.name == 'Elm'
           handler.startElement()
           element.children.each do |subelm|
-            handler.value subelm.text
+            handler.value subelm.text if subelm.name == 'SubElm'
           end
           handler.endElement()
         end

@@ -1,8 +1,8 @@
-require 'edifact_converter/xml2edi'
+require 'edifact_converter/xml112edi'
 require 'base64'
 require 'securerandom'
 
-module EdifactConverter::XML2EDI
+module EdifactConverter::XML112EDI
 
   class EdiHandler < EdifactConverter::EmptyHandler
 
@@ -46,6 +46,7 @@ module EdifactConverter::XML2EDI
     end
 
     def value(text)
+      raise 'hell' if text =~ /text/
       if processing_binary?
         id = binary_id
         binary[id] = text

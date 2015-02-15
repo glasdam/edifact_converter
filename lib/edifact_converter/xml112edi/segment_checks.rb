@@ -1,6 +1,6 @@
-require 'edifact_converter/xml2edi'
+require 'edifact_converter/xml112edi'
 
-module EdifactConverter::XML2EDI
+module EdifactConverter::XML112EDI
 
   class SegmentChecks
     def is_segment(nodeset)

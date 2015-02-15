@@ -2,7 +2,7 @@
 module EdifactConverter
 
 	class EmptyHandler
-		attr_accessor :next_handler
+		attr_accessor :next_handler, :locator
 
 		def initialize(nexthandler = nil)
 			self.next_handler = nexthandler
@@ -14,16 +14,13 @@ module EdifactConverter
 			end
 		end
 
+		def locator=(locator)
+			@locator = locator
+			next_handler.locator = locator if next_handler
+		end
+
 		def locator
-			self.class.locator
-		end
-
-		def self.locator=(locator)
-			@@locator = locator			
-		end
-
-		def self.locator
-			@@locator ||= EdifactConverter::EDI2XML::Locator.new
+			@locator ||= (next_handler.locator if next_handler )
 		end
 
 	end

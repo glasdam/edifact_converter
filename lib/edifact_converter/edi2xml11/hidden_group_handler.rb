@@ -1,6 +1,6 @@
-require 'edifact_converter/edi2xml'
+require 'edifact_converter/edi2xml11'
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
 	class HiddenGroupHandler < EdifactConverter::EmptyHandler
 
@@ -23,8 +23,8 @@ module EdifactConverter::EDI2XML
 		end
 
 		def startSegment(name)
-			if locator.rules['hidden'].include? name
-				self.inserted_group = locator.rules['hidden'][name]
+			if locator.rules.hidden? name
+				self.inserted_group = locator.rules.hidden[name]
 				next_handler.endSegmentGroup(groups.last) unless groups.last == 'BrevIndhold'
 				next_handler.startSegmentGroup(inserted_group, true)
 				groups << group

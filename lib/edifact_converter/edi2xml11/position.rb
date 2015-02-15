@@ -1,4 +1,4 @@
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
   class Position
     attr_reader :line, :column

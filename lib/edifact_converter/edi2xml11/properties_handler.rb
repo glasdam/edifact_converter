@@ -1,6 +1,6 @@
-require 'edifact_converter/edi2xml'
+require 'edifact_converter/edi2xml11'
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
   class UNBHandler < EdifactConverter::EmptyHandler
 
@@ -24,16 +24,16 @@ module EdifactConverter::EDI2XML
       self.values += 1
       case
       when elements == 2 && values == 1
-        EdifactConverter.properties[:sender_ean] = value
+        locator.properties[:sender_ean] = value
       when elements == 3 && values == 1
-        EdifactConverter.properties[:receiver_ean] = value
+        locator.properties[:receiver_ean] = value
       when elements == 4 && values == 1
         self.time_str = value
       when elements == 4 && values == 2
         self.time_str << value
-        EdifactConverter.properties[:sent_at] = Time.strptime time_str, "%y%m%d%H%M"
+        locator.properties[:sent_at] = Time.strptime time_str, "%y%m%d%H%M"
       when elements == 5 && values == 1
-        EdifactConverter.properties[:envelope_id] = value
+        locator.properties[:envelope_id] = value
       end
     end
 
@@ -60,9 +60,10 @@ module EdifactConverter::EDI2XML
       self.values += 1
       case
       when elements == 2 && values == 1
-        EdifactConverter.properties[:type] = value
+        locator.properties[:type] = value
+        #locator.settings = EdifactConverter::Configuration.rules[locator.properties[:type]]
       when elements == 2 && values == 5
-        EdifactConverter.properties[:version] = value
+        locator.properties[:version] = value
       end
     end
   end
@@ -86,6 +87,7 @@ module EdifactConverter::EDI2XML
       when 'UNH'
         self.state = UNHHandler.new
       end
+      state.locator = locator if state 
       super
     end
 

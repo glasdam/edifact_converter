@@ -1,10 +1,10 @@
 require 'edifact_converter'
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
 	class SegmentGroupHandler < EdifactConverter::EmptyHandler
 
-		attr_accessor :indhold, :open_groups
+		attr_accessor :indhold
 
 		alias :indhold? :indhold
 
@@ -36,8 +36,8 @@ module EdifactConverter::EDI2XML
 		def endSegmentGroup(name)
 			if name == 'BrevIndhold'
 				self.indhold = false
-				open_groups.reject! do |name|
-					endSegmentGroup name
+				open_groups.reject! do |group_name|
+					endSegmentGroup group_name
 					true
 				end
 			end
