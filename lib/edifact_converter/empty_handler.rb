@@ -14,14 +14,6 @@ module EdifactConverter
 			end
 		end
 
-		def segments_seen
-			@@segments_seen ||= 0
-		end
-
-		def active
-			@@active ||= {}
-		end
-
 		def locator
 			self.class.locator
 		end

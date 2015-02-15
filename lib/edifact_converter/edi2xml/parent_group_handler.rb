@@ -4,7 +4,7 @@ module EdifactConverter::EDI2XML
 
 	class ParentGroupHandler < EdifactConverter::EmptyHandler
 
-		attr_accessor :ancestors, :previous
+		attr_accessor :ancestors
 
 		def ancestors
 			@ancestors ||= []
@@ -31,7 +31,6 @@ module EdifactConverter::EDI2XML
 				end
 				super
 				self.ancestors = nil
-				previous = nil
 			elsif locator.rules['children'].any?
 				ancestors << name
 			else

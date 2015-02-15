@@ -2,10 +2,22 @@ require 'edifact_converter'
 
 module EdifactConverter
 
-  Result = Struct.new(:xml11, :xml, :edifact, :properties, :source) do
-    def initialize(options)
-      super(options[:xml11], options[:xml], options[:edifact], options[:properties], options[:source])
+  class Result
+
+    ATTRIBUTES = [:xml11, :xml, :edifact, :properties, :source]
+
+    ATTRIBUTES.each do |attribute|
+      attr_accessor attribute
     end
+
+    def initialize(options)
+      options.each do |key, value|
+        if ATTRIBUTES.member? key.to_sym
+          self.send "#{key}=", value
+        end
+      end
+    end
+
   end
 
 end

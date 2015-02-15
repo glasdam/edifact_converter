@@ -37,7 +37,7 @@ module EdifactConverter
     EdifactConverter::EDI2XML.convert(text)
   end
 
-  def self.xml_to_xml11(text)
+  def self.xml_to_xml11(xml)
     EdifactConverter::XML11.from_xml(xml)
   end
 

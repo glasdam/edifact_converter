@@ -8,9 +8,9 @@ module EdifactConverter::EDI2XML
     attr_accessor :handler, :status
 
     def initialize
-      @xml_handler = XmlHandler.new # (EdifactConverter::DebugHandler.new)
-      self.status = StatusHandler.new(@xml_handler)
-      parent = ParentGroupHandler.new(status)
+      xml_handler = XmlHandler.new
+      settings = SettingsHandler.new(xml_handler)
+      parent = ParentGroupHandler.new(settings)
       self.handler = BrevHandler.new(
         PropertiesHandler.new(
           SegmentGroupHandler.new(
@@ -18,18 +18,6 @@ module EdifactConverter::EDI2XML
           )
         )
       )
-    end
-
-    def xml
-      @xml_handler.xml
-    end
-
-    def type
-      status.type
-    end
-
-    def version
-      status.version
     end
 
   end
