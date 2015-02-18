@@ -133,6 +133,8 @@ XML:
     to_xml_urls: 
       - '%{gem_data}/xml/XSLTs/2005/08/07/EDI2XML/XML11_2_Emessage.xslt'
       - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2005/08/07/EDI2XML/XML11_2_Emessage.xslt"
+    to_html_urls:
+      - '%{gem_data}/xml/viewEmessage.xslt'
 
   "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2006/07/01/":
     schema_urls: 
@@ -144,6 +146,8 @@ XML:
     to_xml_urls: 
       - "%{gem_data}/xml/XSLTs/2006/07/01/EDI2XML/XML11_2_Emessage.xslt"
       - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2006/07/01/EDI2XML/XML11_2_Emessage.xslt"
+    to_html_urls:
+      - '%{gem_data}/xml/viewEmessage.xslt'
     versions:
       - D9134L
       - Q0131K
@@ -158,6 +162,8 @@ XML:
     to_xml_urls: 
       - "%{gem_data}/xml/XSLTs/2007/02/01/EDI2XML/XML11_2_Emessage.xslt"
       - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2007/02/01/EDI2XML/XML11_2_Emessage.xslt"
+    to_html_urls:
+      - '%{gem_data}/xml/viewEmessage.xslt'
     versions:
       - D0633L
       - D0733L
@@ -183,6 +189,8 @@ XML:
     to_xml_urls: 
       - "%{gem_data}/xml/XSLTs/2008/09/17/EDI2XML/XML11_2_Emessage.xslt"
       - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2008/09/17/EDI2XML/XML11_2_Emessage.xslt"
+    to_html_urls:
+      - '%{gem_data}/xml/viewEmessage.xslt'
     versions:
       - A0138Z
       - D1034L
@@ -197,6 +205,8 @@ XML:
     to_xml_urls: 
       - "%{gem_data}/xml/XSLTs/2009/08/01/EDI2XML/XML11_2_Emessage.xslt"
       - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2009/08/01/EDI2XML/XML11_2_Emessage.xslt"
+    to_html_urls:
+      - '%{gem_data}/xml/viewEmessage.xslt'
     versions:
       - D9034L
 
@@ -210,6 +220,8 @@ XML:
     to_xml_urls: 
       - "%{gem_data}/xml/XSLTs/2010/07/01/EDI2XML/XML11_2_Emessage.xslt"
       - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2010/07/01/EDI2XML/XML11_2_Emessage.xslt"
+    to_html_urls:
+      - '%{gem_data}/xml/viewEmessage.xslt'
     versions:
       - A0139Z
       - U0131U
@@ -232,6 +244,8 @@ XML:
     to_xml_urls: 
       - "%{gem_data}/xml/XSLTs/2011/02/17/EDI2XML/XML11_2_Emessage.xslt"
       - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2011/02/17/EDI2XML/XML11_2_Emessage.xslt"
+    to_html_urls:
+      - '%{gem_data}/xml/viewEmessage.xslt'
     versions:
       - D3234L
 
@@ -245,6 +259,8 @@ XML:
     to_xml_urls: 
       - "%{gem_data}/xml/XSLTs/2012/03/28/EDI2XML/XML11_2_Emessage.xslt"
       - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2012/03/28/EDI2XML/XML11_2_Emessage.xslt"
+    to_html_urls:
+      - '%{gem_data}/xml/viewEmessage.xslt'
     versions:
       - R0431P
       - B0131X
@@ -259,5 +275,7 @@ XML:
     to_xml_urls: 
       - "%{gem_data}/xml/XSLTs/2013/09/02/EDI2XML/XML11_2_Emessage.xslt"
       - "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2013/09/02/EDI2XML/XML11_2_Emessage.xslt"
+    to_html_urls:
+      - '%{gem_data}/xml/viewEmessage.xslt'
     versions:
       - H0731R

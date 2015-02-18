@@ -32,7 +32,7 @@ module EdifactConverter
 
   def self.convert(text)
     if xml?(text)
-      convert_xml11(text)
+      convert_xml(text)
     else
       convert_edifact(text)
     end

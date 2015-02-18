@@ -11,10 +11,20 @@ module EdifactConverter
     end
 
     def format_edifact
-      return nil if xml11.nil?
-      Configuration.format_edi = true
-      parser = EdifactConverter::XML112EDI::XmlReader.new
-      parser.parse(xml11, properties)
+      build_edifact(true)
+    end
+
+    def html
+      if xml && xml.root && xml.root.namespace
+        rules = Configuration.xml_rules xml.root.namespace.href
+        if rules
+          rules.to_html.transform xml
+        else
+          "<html><head><title>Fejl</title></head><body><h1>Ukendt namespace</h1><b>#{xml.root.namespace}</b></body></html>"
+        end
+      else
+        "<html><head><title>Fejl</title></head><body><h1>Ingen xml tilgængelig</h1></body></html>"
+      end
     end
 
     private
@@ -36,11 +46,11 @@ module EdifactConverter
       end
     end
 
-    def build_edifact(pretty = true)
+    def build_edifact(pretty = false)
       return nil if xml11.nil?
-      Configuration.format_edi = true
+      Configuration.format_edi = pretty
       parser = EdifactConverter::XML112EDI::XmlReader.new
-      self.edifact = parser.parse(xml11, properties)
+      parser.parse(xml11, properties)
     end
 
     def build_xml

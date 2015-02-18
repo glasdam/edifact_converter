@@ -48,6 +48,13 @@ module EdifactConverter::Configuration
       end
     end
 
+    def to_html
+      @to_html ||= begin
+        xmldoc = load_doc_from_urls to_html_urls
+        Nokogiri::XSLT::Stylesheet.parse_stylesheet_doc xmldoc
+      end
+    end
+
     private
 
     def load_doc_from_urls(urls)

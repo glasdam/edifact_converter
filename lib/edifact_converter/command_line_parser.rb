@@ -24,6 +24,9 @@ module EdifactConverter
             opts.on( '-1', '--xml11', 'Only convert to XML 1-1') do
               options[:xml11] = true
             end
+            opts.on( '--html', 'Only convert to XML 1-1') do
+              options[:html] = true
+            end
             opts.on( '-l', '--logfile FILE', 'Write log to FILE' ) do |file|
               options[:logfile] = file
             end

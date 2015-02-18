@@ -25,6 +25,10 @@ else
   editxt = EdifactConverter.read_file(options[:input])
   result = EdifactConverter.convert_edifact(editxt)
   print_errors result.properties[:errors]
-  puts result.xml
+  if options[:html]
+    puts result.html
+  else
+    puts result.xml
+  end
 end
 
