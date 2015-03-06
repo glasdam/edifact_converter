@@ -3,7 +3,7 @@ require 'edifact_converter'
 require 'equivalent-xml'
 
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
   class XmlHandlerTest < Test::Unit::TestCase
 
@@ -29,7 +29,8 @@ module EdifactConverter::EDI2XML
       end
       handler = XmlHandler.new
       handler.startDocument
-      EdifactConverter::EmptyHandler.locator.position = Position.new(1, 0)
+      handler.locator = Locator.new
+      handler.locator.position = Position.new(1, 0)
       handler.startSegmentGroup "S01", false
       handler.startElement
       handler.value "01"
@@ -53,7 +54,8 @@ module EdifactConverter::EDI2XML
     def test_bad_syntax_error
       handler = XmlHandler.new
       handler.startDocument
-      EdifactConverter::EmptyHandler.locator.position = Position.new(2, 0)
+      handler.locator = Locator.new
+      handler.locator.position = Position.new(2, 0)
       handler.startSegment "UNB"
       handler.startElement
       handler.value "UNOC"

@@ -3,7 +3,7 @@ require 'edifact_converter'
 require_relative 'log_reader_handler'
 
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
   class SegmentGroupHandlerTest < Test::Unit::TestCase
 
@@ -20,6 +20,7 @@ module EdifactConverter::EDI2XML
     end
 
     def setup
+      reader
       handler.startDocument
     end
 

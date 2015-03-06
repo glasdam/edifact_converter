@@ -1,5 +1,5 @@
 require 'edifact_converter/empty_handler'
-require 'edifact_converter/edi2xml/position'
+require 'edifact_converter/edi2xml11/position'
 
 class LogReaderHandler < EdifactConverter::EmptyHandler
 

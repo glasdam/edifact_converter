@@ -61,8 +61,8 @@ module EdifactConverter::Configuration
       urls.each do |url|
         begin
           xmldoc = Nokogiri::XML(open(url), url)
-        rescue StandardError => e
-          $stderr.puts e
+        rescue StandardError => error
+          $stderr.puts error
           next
         end
         break xmldoc

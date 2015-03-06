@@ -4,16 +4,21 @@ module EdifactConverter
 
   class Message
 
-    attr_accessor :position, :text
+    ATTRIBUTES = [:position, :text, :source]
 
-    def initialize(position = EDI2XML11::Position.new, text)
-      self.position = position
-      self.text = text
+    ATTRIBUTES.each do |attribute|
+      attr_accessor attribute
+    end
+
+    def initialize(options) #position = EDI2XML11::Position.new, text, source)
+      self.position = options[:position] 
+      self.text = options.fetch(:text, "Ukendt fejl")
+      self.source = options.fetch(:source, :edifact)
     end
 
     def self.from_syntax_error(error)
       position = EdifactConverter::EDI2XML11::Position.new(error.line, error.column)
-      self.new(position, error.to_s)
+      self.new(position: position, text: error.to_s, source: xml)
       # case error.level
       # when 3
       #   self.new(position, error.to_s, :error)
@@ -25,7 +30,7 @@ module EdifactConverter
     end
 
     def to_s
-      "#{text} #{position}"
+      "#{source.to_s.capitalize}: #{text} #{position}"
     end
 
   end

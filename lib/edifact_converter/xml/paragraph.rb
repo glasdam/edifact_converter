@@ -63,6 +63,10 @@ module EdifactConverter::XML
       content.push Break.new
     end
 
+    def empty?
+      content.empty?
+    end
+
     def content
       @content ||= []
     end
@@ -175,15 +179,15 @@ module EdifactConverter::XML
     end
 
     def to_s
-      text = "<#{ftx_format}>"
+      txt = "<#{ftx_format}:"
       content.each do |obj|
         if obj.break?
-          text << "\n  "
+          txt << "\n"
         else
-          text << obj.value
+          txt << obj.value
         end
       end
-      text
+      txt << ">"
     end
 
   end

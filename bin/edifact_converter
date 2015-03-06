@@ -20,12 +20,18 @@ if options[:source] == :xml
 #    $stderr.puts "Round: #{number}"
 #  end
   print_errors result.properties[:errors]
-  puts result.format_edifact
+  if options[:xml11]
+    puts result.xml11
+  else
+    puts result.format_edifact  
+  end
 else
   editxt = EdifactConverter.read_file(options[:input])
   result = EdifactConverter.convert_edifact(editxt)
   print_errors result.properties[:errors]
-  if options[:html]
+  if options[:xml11]
+    puts result.xml11
+  elsif options[:html]
     puts result.html
   else
     puts result.xml

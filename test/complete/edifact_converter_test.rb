@@ -1,47 +1,40 @@
 require 'test/unit'
 require 'edifact_converter'
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
   class EdifactConverterTest < Test::Unit::TestCase
-
-    EdifactConverter::Configuration.load
 
     def setup
     end
 
     def test_edifact_to_xml
       Dir.glob "#{File.dirname(__FILE__)}/files/edifact/*" do |filename|
-        xml11 = nil
-        EdifactConverter::EDI2XML.convert(EdifactConverter.read_file(filename))
-        assert_nothing_raised message="XML1-1 failed for #{filename}" do
-          xml11 = EdifactConverter::EDI2XML.convert(EdifactConverter.read_file(filename))
-        end
-        assert EdifactConverter.properties[:errors].empty?, "XML1-1 failed for #{filename}"
-        xml = nil
+        next if File.directory?(filename)
+        result = nil
+        #EdifactConverter.convert_edifact(EdifactConverter.read_file(filename))
         assert_nothing_raised message="XML failed for #{filename}" do
-          xml = EdifactConverter::XML11.to_xml(xml11)
+          result = EdifactConverter.convert_edifact(EdifactConverter.read_file(filename))
         end
-        assert EdifactConverter.properties[:errors].empty?, "XML failed for #{filename} with errors #{EdifactConverter.properties[:errors].map(&:text).join(' - ')} "
+        #        assert result[:errors].empty?, "XML failed for #{filename}"
+        #        assert_nothing_raised message="XML failed for #{filename}" do
+        #          xml = EdifactConverter::XML11.to_xml(xml11)
+        #        end
+        assert result.properties[:errors].empty?, "XML failed for #{filename} with errors #{result.properties[:errors].map(&:text).join(' - ')} "
+        assert result.properties[:warnings].empty?, "XML failed for #{filename} with warnings #{result.properties[:warnings].map(&:text).join(' - ')} "
       end
     end
 
     def test_xml_to_edifact
       Dir.glob "#{File.dirname(__FILE__)}/files/xml/*" do |filename|
         next if File.directory?(filename)
-        xml11 = nil
-        xml = Nokogiri::XML(EdifactConverter.read_file(filename)) { |config| config.nonet }
-        EdifactConverter.xml_parse_errors xml
-        assert EdifactConverter.properties[:errors], "XML parsing failed for #{filename}"
+        result = nil
         assert_nothing_raised message="XML1-1 failed for #{filename}" do
-          xml11 = EdifactConverter::XML11.from_xml(xml)
+          result = EdifactConverter.convert_xml(EdifactConverter.read_file(filename))
         end
-        assert EdifactConverter.properties[:errors].empty?, "XML1-1 failed for #{filename}"
-        edifact = ""
-        assert_nothing_raised message="Edifact failed for #{filename}" do
-          edifact = EdifactConverter::XML2EDI.convert(xml11)
-        end
-        assert EdifactConverter.properties[:errors].empty?, "Edifact failed for #{filename}"
+        assert result.properties[:errors], "XML parsing failed for #{filename}"
+        assert result.properties[:warnings], "XML parsing failed for #{filename}"
+
         edi_file = "#{File.dirname(__FILE__)}/files/edifact/#{File.basename(filename,'.*')}.edi"
         edi_text = if File.basename(filename) =~ /^BIN/
           File.open edi_file, 'rb:ASCII-8BIT' do |file|
@@ -50,10 +43,10 @@ module EdifactConverter::EDI2XML
         else
           EdifactConverter.read_file(edi_file).gsub(/[\n\r]/, '')
         end
-        max = [edi_text.size, edifact.size].max
+        max = [edi_text.size, result.edifact.size].max
         step = 50
         (0..max).step(step) do |start|
-          assert_equal edi_text[start, step], edifact[start, step] #.encode("iso-8859-1")
+          assert_equal edi_text[start, step], result.edifact[start, step] #.encode("iso-8859-1")
         end
       end
     end

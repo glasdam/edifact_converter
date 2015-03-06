@@ -9,14 +9,14 @@ module EdifactConverter
     def self.xml_to_xml11(xml, properties)
       xml = parse_xml(xml, properties)
       if xml.nil? or xml.root.nil?
-        properties[:errors] << EdifactConverter::Message.new("Mangel fuldt XML dokument, konvertering stoppet")
+        properties[:errors] << EdifactConverter::Message.new(text: "Mangel fuldt XML dokument, konvertering stoppet", source: :xml)
         return 
       end
       #return unless xml and xml.root
       properties[:namespace] = xml.root.namespace && xml.root.namespace.href
       rules = EdifactConverter::Configuration.xml_rules(properties[:namespace])
       if rules.nil?
-        properties[:errors] << EdifactConverter::Message.new("Ingen regler for konverteringen af #{properties[:namespace]}")
+        properties[:errors] << EdifactConverter::Message.new(text: "Ingen regler for konverteringen af #{properties[:namespace]}", source: :xml)
         return nil
       end
       schema_validate(xml, rules.schema, properties)
@@ -42,20 +42,20 @@ module EdifactConverter
       end
       rules = EdifactConverter::Configuration.xml_rules(properties[:type], properties[:version])
       if rules.nil?
-        properties[:errors] << EdifactConverter::Message.new("Ingen regler for konverteringen af #{properties[:type]} - #{properties[:version]}")
+        properties[:errors] << EdifactConverter::Message.new(text: "Ingen regler for konverteringen af #{properties[:type]} - #{properties[:version]}", source: :xml)
         return nil
       end
       xml = rules.to_xml.transform(xml11)
       xml.encoding = "ISO-8859-1"
-      extract_errors(xml, properties)
+      extract_errors(xml, properties, :edifact)
       schema_validate(xml, rules.schema, properties)
       xml
     end
 
-    def self.extract_errors(xml, properties)
+    def self.extract_errors(xml, properties, source = :xml)
       xml.xpath("//*[local-name() = 'FEJL']").each do |error|
         position = EDI2XML11::Position.new error['linie'], error['position']
-        properties[:errors] << Message.new(position, error.content.strip)
+        properties[:errors] << Message.new(position: position, text: error.content.strip, source: source)
         error.remove
       end
     end
@@ -89,8 +89,7 @@ module EdifactConverter
         max = (max && max.to_i) || Float::INFINITY
         if gftx.children.size > max
           properties[:errors] << EdifactConverter::Message.new(
-            nil,
-            "Too many FTXs in segmentgroup #{gftx.parent.name}. Max allowed is #{max}, needs #{gftx.children.size} FTX."
+            text: "Too many FTXs in segmentgroup #{gftx.parent.name}. Max allowed is #{max}, needs #{gftx.children.size} FTX."
           )
         end
         gftx.children.each do |ftx|

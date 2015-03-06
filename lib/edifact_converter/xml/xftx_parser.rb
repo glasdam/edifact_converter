@@ -7,35 +7,33 @@ module EdifactConverter::XML
     attr_accessor :paragraphs, :code, :xftx
 
     def self.parse(xftx_node)
-      self.new(xftx_node).parse_xftx
+      self.new(xftx_node).transform_xftx
     end
 
     def initialize(xftx_node)
-      self.paragraphs = []
+      self.paragraphs = [Paragraph.new]
       self.xftx = xftx_node
     end
 
-    def parse_xftx
-      paragraphs << Paragraph.new
+    def transform_xftx
       self.code = xftx.children[0].children[0].text
-      parse_mixed xftx.children[3].children[0]
+      transform_content xftx.children[3].children[0]
+      pack_paragraphs
       to_ftx
     end
 
-    def parse_mixed(subelm)
+    def transform_content(subelm)
       subelm.children.each do |node|
         case node.node_type
         when Nokogiri::XML::Node::TEXT_NODE
           paragraphs.last.add_text node.text
         when Nokogiri::XML::Node::ELEMENT_NODE
-          parse_xftx_element node
+          transform_element node
         end
       end
     end
 
-    def parse_xftx_element(element)
-      old_format = paragraphs.last.format
-      old_font = paragraphs.last.font
+    def transform_element(element)
       case element.name
       when 'Break'
         paragraphs.last.add_break
@@ -44,39 +42,63 @@ module EdifactConverter::XML
         paragraphs.last.add_text ' '
         return
       when 'Center'
-        paragraphs << paragraphs.last.empty_copy if paragraphs.last.texts?
-        paragraphs.last.format = Paragraph::CENTER
-        paragraphs.last.add_break
-        parse_mixed element
-        paragraphs.last.add_break
+        set_alignment(Paragraph::CENTER) { transform_content element }
       when 'Right'
-        paragraphs << paragraphs.last.empty_copy if paragraphs.last.texts?
-        paragraphs.last.format = Paragraph::RIGHT
-        paragraphs.last.add_break
-        parse_mixed element
-        paragraphs.last.add_break
+        set_alignment(Paragraph::RIGHT) { transform_content element }
       when 'Bold'
-        paragraphs << paragraphs.last.empty_copy if paragraphs.last.texts?
-        paragraphs.last.format = Paragraph::BOLD
-        parse_mixed element
+        set_style(Paragraph::BOLD) { transform_content element }
       when 'Italic'
-        paragraphs << paragraphs.last.empty_copy if paragraphs.last.texts?
-        paragraphs.last.format = Paragraph::ITALIC
-        parse_mixed element
+        set_style(Paragraph::ITALIC) { transform_content element }
       when 'Underline'
-        paragraphs << paragraphs.last.empty_copy if paragraphs.last.texts?
-        paragraphs.last.format = Paragraph::UNDERLINE
-        parse_mixed element
+        set_style(Paragraph::UNDERLINE) { transform_content element }
       when 'FixedFont'
-        paragraphs << paragraphs.last.empty_copy if paragraphs.last.texts?
-        paragraphs.last.font = Paragraph::MONOSPACE
-        parse_mixed element
+        set_font(Paragraph::MONOSPACE) { transform_content element }
       else
         throw RuntimeError "Unknown xftx #{element.name}"
       end
-      paragraphs << paragraphs.last.empty_copy if paragraphs.last.texts?
-      paragraphs.last.format = old_format
-      paragraphs.last.font = old_font
+    end
+
+    def set_alignment(alignment)
+      push_paragraph do |previous, paragraph|
+        paragraph.format = alignment
+        paragraph.add_break unless previous.end_breaks?
+        yield
+        paragraphs.last.add_break
+      end
+    end
+
+    def set_font(font)
+      push_paragraph do |previous, paragraph|
+        paragraph.font = font
+        yield
+      end
+    end
+
+    def set_style(style)
+      push_paragraph do |previous, paragraph|
+        paragraph.format = style
+        yield
+      end
+    end
+
+    def push_paragraph
+      previous = paragraphs.last
+      paragraphs << current = previous.empty_copy
+      yield previous, current
+      paragraphs << previous.empty_copy
+    end
+
+    def pack_paragraphs
+      paragraphs.reject! { |paragraph| paragraph.empty? }
+      paragraphs.inject(nil) do |previous, current|
+        if previous and not(previous.texts?)
+          previous.content.delete_if do |elm|
+            current.add_start_break elm
+            true
+          end
+        end
+      end
+      paragraphs.reject! { |paragraph| paragraph.empty? }
     end
 
     def to_s

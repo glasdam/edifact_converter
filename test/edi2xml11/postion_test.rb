@@ -1,7 +1,7 @@
 require 'test/unit'
 require 'edifact_converter'
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
   class PositionTest < Test::Unit::TestCase
     def test_position_line

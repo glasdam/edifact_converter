@@ -3,7 +3,7 @@ require 'edifact_converter'
 require_relative 'log_reader_handler'
 
 
-module EdifactConverter::EDI2XML
+module EdifactConverter::EDI2XML11
 
   class BrevHandlerTest < Test::Unit::TestCase
 
@@ -27,7 +27,8 @@ module EdifactConverter::EDI2XML
       handler.startDocument
       assert not(handler.brev?)
       assert not(handler.indhold?)
-      EdifactConverter::EmptyHandler.locator.position = "Pos"
+      handler.locator = Locator.new
+      handler.locator.position = "Pos"
       handler.startSegment("UNH")
       assert_equal 1, log_handler.number_of(:segment_group)
       assert_equal 'Brev', log_handler.last[:segment_group].value

@@ -11,7 +11,7 @@ module EdifactConverter
 		end
 
     def to_message
-      Message.new(position, message)
+      Message.new(position: position, text: message)
     end
 
 	end

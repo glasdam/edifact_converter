@@ -45,8 +45,8 @@ module EdifactConverter::EDI2XML11
       if segname != "UNA"
         edifile.unread 3
         locator.properties[:warnings] << EdifactConverter::Message.new(
-          edifile.position,
-          "Missing UNA segment"
+          position: edifile.position,
+          text: "Missing UNA segment"
         )
         return
       end
@@ -117,7 +117,7 @@ module EdifactConverter::EDI2XML11
     def escape
       escapable = edifile.read
       unless escapable =~ /[':?+]/
-        locator.properties[:errors] << EdifactConverter::Message.new(edifile.position, "Wrong use of escape for #{escapable}")
+        locator.properties[:errors] << EdifactConverter::Message.new(position: edifile.position, text: "Wrong use of escape for #{escapable}")
       end
       return escapable
     end
