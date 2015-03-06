@@ -8,6 +8,7 @@ module EdifactConverter
       self.xml11 = build_xml11 if xml11.nil?
       self.edifact = build_edifact if edifact.nil?
       self.xml = build_xml if xml.nil?
+      build_comparison
     end
 
     def format_edifact
@@ -56,6 +57,32 @@ module EdifactConverter
     def build_xml
       return nil if xml11.nil?
       XML.xml11_to_xml(xml11, properties)
+    end
+
+    def build_comparison
+      return if source_format != :edifact || xml11.nil? || xml.nil?
+      facit = XML.xml_to_xml11(xml, properties)
+      comparator = Comparator.new
+      comparator.compare_docs xml11, facit do |diff|
+        pos = EdifactConverter::EDI2XML11::Position.new diff.source["linie"], diff.source["position"]
+        text = case diff.kind
+        when :added
+          "Der mangler et #{diff.facit.name} her"
+        when :removed
+          "Der er et #{diff.source.name} for meget her"
+        when :root
+          "Dokumenterne er for forskellige til sammenligning. Forventede #{diff.facit.name} men det var #{diff.source.name}"
+        when :text
+          "Teksten #{diff.source.text} skal være #{diff.facit.text}"
+        when :removed_children
+          "Dette element (#{diff.source.name}) burde ikke have noget indhold"
+        when :added_children
+          "Dette element (#{diff.source.name}) burde have følgende indhold: #{diff.facit.text}"
+        else
+          "Ukendt fejl(#{diff.kind})"
+        end
+        properties[:errors] << Message.new(position: pos, text: text)
+      end
     end
 
   end

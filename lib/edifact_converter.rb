@@ -1,4 +1,5 @@
 require "edifact_converter/version"
+require "edifact_converter/comparator"
 require "edifact_converter/empty_handler"
 require "edifact_converter/edifact_error"
 require 'edifact_converter/edi2xml11'
