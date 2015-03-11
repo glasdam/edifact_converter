@@ -2,8 +2,8 @@ require 'edifact_converter'
 require 'edifact_converter/configuration/edifact_rule'
 require 'edifact_converter/configuration/xml_rule'
 require 'edifact_converter/configuration/yaml_configurator'
+require 'edifact_converter/configuration/json_configurator'
 require 'open-uri'
-require 'yaml'
 
 module EdifactConverter
 
@@ -24,7 +24,7 @@ module EdifactConverter
       end
 
       def configurator
-        @configurator ||= YAMLConfigurator.new
+        @configurator ||= JSONConfigurator.new
       end
 
       def configurator=(configurator)

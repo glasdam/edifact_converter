@@ -1,0 +1,396 @@
+{
+  "EDIFACT": {
+    "MEDPRE": {
+      "BrevIndhold": {
+        "hidden": {
+          "PNA": "S01"
+        }
+      },
+      "S01": {
+        "hidden": {
+          "PNA": "S01",
+          "DTM": "S02"
+        }
+      },
+      "S02": {
+        "hidden": {
+          "GIS": "S03",
+          "LIN": "S04"
+        }
+      },
+      "S03": {
+        "hidden": {
+          "LIN": "S04"
+        }
+      },
+      "S04": {
+        "hidden": {
+          "LIN": "S04",
+          "EQN": "S06",
+          "DSG": "S07",
+          "TOD": "S08"
+        },
+        "children": [
+          "S06",
+          "S07"
+        ]
+      },
+      "S06": {
+        "hidden": {
+          "LIN": "S04",
+          "DSG": "S07",
+          "TOD": "S08"
+        }
+      },
+      "S07": {
+        "hidden": {
+          "LIN": "S04",
+          "TOD": "S08"
+        }
+      }
+    },
+    "MEDRUC": {
+      "BrevIndhold": {
+        "hidden": {
+          "MOA": "S01"
+        }
+      },
+      "S01": {
+        "hidden": {
+          "NAD": "S02"
+        }
+      },
+      "S02": {
+        "hidden": {
+          "CTI": "S03"
+        }
+      },
+      "S03": {
+        "hidden": {
+          "BUS": "S05"
+        }
+      },
+      "S05": {
+        "hidden": {
+          "PNA": "S07"
+        },
+        "children": [
+          "S07",
+          "S10",
+          "S12",
+          "S14",
+          "S15",
+          "S17"
+        ]
+      },
+      "S07": {
+        "hidden": {
+          "CTI": "S10",
+          "PRC": "S12"
+        }
+      },
+      "S10": {
+        "hidden": {
+          "PRC": "S12"
+        }
+      },
+      "S12": {
+        "hidden": {
+          "RCS": "S14",
+          "CLI": "S17"
+        }
+      },
+      "S14": {
+        "hidden": {
+          "NAD": "S15",
+          "CLI": "S17"
+        }
+      },
+      "S15": {
+        "hidden": {
+          "CLI": "S17"
+        }
+      },
+      "S17": {
+        "hidden": {
+          "RCS": "S19"
+        },
+        "children": [
+          "S19"
+        ]
+      },
+      "S19": {
+        "hidden": {
+          "CLI": "S17",
+          "BUS": "S05"
+        }
+      }
+    },
+    "MEDREQ": {
+      "S15": {
+        "hidden": {
+          "GIS": "S17"
+        }
+      },
+      "S17": {
+        "hidden": {
+          "GIS": "S17"
+        }
+      }
+    },
+    "PRODAT": {
+      "BrevIndhold": {
+        "hidden": {
+          "RFF": "S03"
+        }
+      },
+      "S03": {
+        "hidden": {
+          "NAD": "S04"
+        }
+      },
+      "S04": {
+        "hidden": {
+          "LIN": "S08"
+        }
+      },
+      "S08": {
+        "hidden": {
+          "IMD": "S09"
+        },
+        "children": [
+          "S08"
+        ]
+      },
+      "S09": {
+        "hidden": {
+          "LIN": "S08"
+        }
+      }
+    },
+    "MEDRPT": {
+      "S16": {
+        "hidden": {
+          "GIS": "S18"
+        }
+      },
+      "S18": {
+        "hidden": {
+          "GIS": "S18"
+        },
+        "children": [
+          "S20"
+        ]
+      },
+      "S20": {
+        "hidden": {
+          "GIS": "S18"
+        }
+      }
+    }
+  },
+  "XML": {
+    "default": "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/",
+    "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2005/08/07/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2005/08/07/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2005/08/07/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2005/08/07/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2005/08/07/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2005/08/07/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2005/08/07/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ]
+    },
+    "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2006/07/01/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2006/07/01/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2006/07/01/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2006/07/01/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2006/07/01/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2006/07/01/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2006/07/01/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "D9134L",
+        "Q0131K"
+      ]
+    },
+    "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2007/02/01/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2007/02/01/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2007/02/01/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2007/02/01/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2007/02/01/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2007/02/01/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2007/02/01/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "D0633L",
+        "D0733L",
+        "D0833L",
+        "D1033L",
+        "D1630C",
+        "D1830C",
+        "H0630R",
+        "H0730R",
+        "H1230R",
+        "H1030R",
+        "R0130K",
+        "R0230M",
+        "A0137Z"
+      ]
+    },
+    "http://rep.oio.dk/medcom.dk/xml/schemas/2008/09/17/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2008/09/17/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2008/09/17/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2008/09/17/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2008/09/17/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2008/09/17/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2008/09/17/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "A0138Z",
+        "D1034L"
+      ]
+    },
+    "http://rep.oio.dk/sundcom.dk/medcom.dk/xml/schemas/2009/08/01/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2009/08/01/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2009/08/01/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2009/08/01/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2009/08/01/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2009/08/01/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2009/08/01/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "D9034L"
+      ]
+    },
+    "http://rep.oio.dk/medcom.dk/xml/schemas/2010/07/01/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2010/07/01/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2010/07/01/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2010/07/01/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2010/07/01/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2010/07/01/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2010/07/01/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "A0139Z",
+        "U0131U",
+        "U0231U",
+        "U0331U",
+        "U0432U",
+        "U0631U",
+        "U0731U",
+        "U0831U",
+        "U1031U",
+        "U1131U"
+      ]
+    },
+    "http://rep.oio.dk/medcom.dk/xml/schemas/2011/02/17/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2011/02/17/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2011/02/17/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2011/02/17/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2011/02/17/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2011/02/17/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2011/02/17/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "D3234L"
+      ]
+    },
+    "http://rep.oio.dk/medcom.dk/xml/schemas/2012/03/28/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2012/03/28/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2012/03/28/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2012/03/28/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2012/03/28/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2012/03/28/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2012/03/28/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "R0431P",
+        "B0131X"
+      ]
+    },
+    "http://rep.oio.dk/medcom.dk/xml/schemas/2013/09/02/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2013/09/02/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2013/09/02/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2013/09/02/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2013/09/02/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2013/09/02/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2013/09/02/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "H0731R"
+      ]
+    }
+  }
+}

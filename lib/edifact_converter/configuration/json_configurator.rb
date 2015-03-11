@@ -1,9 +1,9 @@
 require 'edifact_converter/configuration'
-require 'yaml'
+require 'json'
 
 module EdifactConverter::Configuration
 
-  class YAMLConfigurator
+  class JSONConfigurator
 
     attr_accessor :default_ns
 
@@ -33,7 +33,7 @@ module EdifactConverter::Configuration
     private
 
     def load_from_file(filename)
-      settings = YAML.load_file(filename)
+      settings = JSON.load(File.open(filename) { |file| file.read })
       settings['EDIFACT'].each do |type, segments|
         rules_for_type = edifact_settings[type]
         segments.each do |segment, rules|
@@ -60,7 +60,7 @@ module EdifactConverter::Configuration
       load_from_file(
         File.join(
           EdifactConverter.data,
-          'configuration.yaml'
+          'configuration.json'
         )
       )
     end
