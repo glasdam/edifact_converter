@@ -12,7 +12,6 @@ module EdifactConverter
         properties[:errors] << EdifactConverter::Message.new(text: "Mangel fuldt XML dokument, konvertering stoppet", source: :xml)
         return 
       end
-      #return unless xml and xml.root
       properties[:namespace] = xml.root.namespace && xml.root.namespace.href
       rules = EdifactConverter::Configuration.xml_rules(properties[:namespace])
       if rules.nil?

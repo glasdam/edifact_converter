@@ -1,10 +1,9 @@
 require "diffy"
+require "edifact_converter/difference"
 
 module EdifactConverter
 
   class Comparator
-
-    Difference = Struct.new(:source, :facit, :kind)
 
     def initialize
       self.errors = []
@@ -15,7 +14,13 @@ module EdifactConverter
       if source.root.name == result.root.name
         compare_children source.root, result.root
       else
-        error_proc.call(Difference.new source.root, result.root, :root)
+        error_proc.call(
+          Difference.new(
+            source: source.root,
+            facit: result.root,
+            kind: :root
+          )
+        )
       end
       errors
     end
@@ -37,7 +42,11 @@ module EdifactConverter
           compare_children source_elm, facit_elm
         else
           error_proc.call(
-            Difference.new(source_elm, facit_elm, kind)
+            Difference.new(
+              source: source_elm,
+              facit: facit_elm,
+              kind: kind
+            )
           )
         end
       end
@@ -46,7 +55,11 @@ module EdifactConverter
     def compare_subelms(source, facit)
       unless source.text == facit.text
         error_proc.call (
-          Difference.new(source, facit, :text)
+          Difference.new(
+            source: source,
+            facit: facit,
+            kind: :text
+          )
         )
       end
     end
@@ -85,12 +98,20 @@ module EdifactConverter
         false
       when source_elms.empty?
         error_proc.call(
-          Difference.new(source, facit, :added_children)
+          Difference.new(
+            source: source,
+            facit: facit,
+            kind: :added_children
+          )
         )
         false
       when result_elms.empty?
         error_proc.call(
-          Difference.new(source, facit, :removed_children)
+          Difference.new(
+            source: source,
+            facit: facit,
+            kind: :removed_children
+          )
         )
         false
       else

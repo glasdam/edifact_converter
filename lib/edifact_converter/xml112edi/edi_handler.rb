@@ -46,7 +46,6 @@ module EdifactConverter::XML112EDI
     end
 
     def value(text)
-      raise 'hell' if text =~ /text/
       if processing_binary?
         id = binary_id
         binary[id] = text

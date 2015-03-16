@@ -39,7 +39,7 @@ module EdifactConverter::EDI2XML11
 					self.brev = false
 				when 'UNH'
 					unless indhold?
-						startSegmentGroup 'BrevIndhold', false
+						startSegmentGroup 'BrevIndhold', true
 						self.indhold = true
 					end
 				end

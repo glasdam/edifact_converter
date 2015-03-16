@@ -48,10 +48,26 @@ module EdifactConverter
       </Brev></edifact>
       EOS
       errors = []
-      errors << Comparator::Difference.new(source.at("UNB"), facit.at("UNH"), :added)
-      errors << Comparator::Difference.new(source.at("UNB"), facit.at("UNB"), :removed_children)
-      errors << Comparator::Difference.new(source.at("BTX"), facit.at("ATX"), :removed)
-      errors << Comparator::Difference.new(source.at("UNZ"), facit.at("UNZ"), :added_children)
+      errors << Difference.new(
+        source: source.at("UNB"),
+        facit: facit.at("UNH"),
+        kind: :added
+      )
+      errors << Difference.new(
+        source: source.at("UNB"),
+        facit: facit.at("UNB"),
+        kind: :removed_children
+      )
+      errors << Difference.new(
+        source: source.at("BTX"),
+        facit: facit.at("ATX"),
+        kind: :removed
+      )
+      errors << Difference.new(
+        source: source.at("UNZ"),
+        facit: facit.at("UNZ"),
+        kind: :added_children
+      )
       @comparator.compare_docs source, facit do |diff|
         #puts "Diff: #{diff.source.name} <-> #{diff.facit.name} #{diff.kind}"
         assert diff.eql?(errors.first), "Uens fejl, forventede #{errors.first}\n fik #{diff}"
@@ -66,9 +82,9 @@ module EdifactConverter
       <UNA/>
       <UNB><Elm><SubElm>Hej</SubElm></Elm></UNB>
       <S01><ATX><Elm>
-        <SubElm>Hello</SubElm><SubElm> </SubElm>
-        <SubElm>World!</SubElm>
-        </Elm></ATX></S01>
+      <SubElm>Hello</SubElm><SubElm> </SubElm>
+      <SubElm>World!</SubElm>
+      </Elm></ATX></S01>
       <UNT/>
       <UNZ><Elm><SubElm/></Elm></UNZ>
       </Brev></edifact>
@@ -78,16 +94,24 @@ module EdifactConverter
       <UNA/>
       <UNB><Elm><SubElm>Hej</SubElm></Elm></UNB>
       <S01><ATX><Elm>
-        <SubElm>Hello</SubElm><SubElm> </SubElm>
-        <SubElm>World</SubElm>
-        </Elm></ATX></S01>
+      <SubElm>Hello</SubElm><SubElm> </SubElm>
+      <SubElm>World</SubElm>
+      </Elm></ATX></S01>
       <UNT/>
       <UNZ><Elm><SubElm>6</SubElm></Elm></UNZ>
       </Brev></edifact>
       EOS
       errors = []
-      errors << Comparator::Difference.new(source.at("//ATX/Elm/SubElm[3]"), facit.at("//ATX/Elm/SubElm[3]"), :text)
-      errors << Comparator::Difference.new(source.at("//UNZ/Elm/SubElm"), facit.at("//UNZ/Elm/SubElm"), :text)
+      errors << Difference.new(
+        source: source.at("//ATX/Elm/SubElm[3]"),
+        facit: facit.at("//ATX/Elm/SubElm[3]"),
+        kind: :text
+      )
+      errors << Difference.new(
+        source: source.at("//UNZ/Elm/SubElm"),
+        facit: facit.at("//UNZ/Elm/SubElm"),
+        kind: :text
+      )
       @comparator.compare_docs source, facit do |diff|
         #puts "Diff: #{diff.source.text} <-> #{diff.facit.text} #{diff.kind}"
         assert diff.eql?(errors.first), "Uens fejl, forventede #{errors.first}\n fik #{diff}"

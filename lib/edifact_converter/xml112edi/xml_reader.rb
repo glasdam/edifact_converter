@@ -13,7 +13,6 @@ module EdifactConverter::XML112EDI
     end
 
     def parse(xmlstr, properties)
-
       xml11 = if xmlstr.is_a? String
         Nokogiri::XML(xmlstr) { |config| config.nonet }
       else
@@ -25,32 +24,18 @@ module EdifactConverter::XML112EDI
       parse_xml xml11
     end
 
-    def parse_string(xmlstr)
-      parse_xml(
-        Nokogiri::XML(xmlstr){ |config| config.default_xml.noblanks }
-      )
-    end
-
-    def parse_file(file)
-      parse_xml(
-        Nokogiri::XML(File.open(file, encoding: 'ISO-8859-1')){ |config| config.default_xml.noblanks }
-      )
-    end
+    private
 
     def parse_xml(xml)
       return "" unless xml and xml.root
-      xml = self.class.stylesheet.transform(xml) do |config|
-        config.default_xml.noblanks
-      end
+      xml = remove_groups_and_empty_elms(xml)
       handler.startDocument
-      xml.root.children.each do |segment|
-        next unless  segment.element?
+      xml.root.elements.each do |segment|
         handler.startSegment(segment.name)
-        segment.children.each do |element|
-          next unless  element.element? and element.name == 'Elm'
+        segment.elements.each do |element|
           handler.startElement()
-          element.children.each do |subelm|
-            handler.value subelm.text if subelm.name == 'SubElm'
+          element.elements.each do |subelm|
+            handler.value subelm.text
           end
           handler.endElement()
         end
@@ -60,6 +45,12 @@ module EdifactConverter::XML112EDI
       enc_converter = Encoding::Converter.new("utf-8", "iso-8859-1")
       edi_text = enc_converter.convert(edifact.edifact.string)
       include_binaries edi_text
+    end
+
+    def remove_groups_and_empty_elms(xml)
+      self.class.stylesheet.transform(xml) do |config|
+        config.default_xml.noblanks
+      end
     end
 
     def self.stylesheet
