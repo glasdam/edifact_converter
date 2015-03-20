@@ -22,7 +22,6 @@ module EdifactConverter
       xml11 = rules.from_xml.transform(xml)
       xml11.encoding = "ISO-8859-1"
       extract_errors(xml11, properties)
-      process_ftxs xml11
       process_xftxs xml11, properties
     end
 
@@ -62,12 +61,6 @@ module EdifactConverter
     def self.schema_validate(xml, schema, properties)
       schema.validate(xml).each do |error|
         properties[:errors] << EdifactConverter::Message.from_syntax_error(error)
-      end
-    end
-
-    def self.process_ftxs(xml)
-      xml.xpath("//FTX/Elm/SubElm").each do |subelm|
-        subelm.content = subelm.text.gsub(/[\+\'\:\?]/) {|s| "?#{s}"}
       end
     end
 

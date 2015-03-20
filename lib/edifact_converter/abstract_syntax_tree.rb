@@ -8,6 +8,7 @@ module EdifactConverter
 
     def initialize(document)
       self.document = document
+      raise 'hell' unless document
     end
 
     def pack
@@ -22,33 +23,28 @@ module EdifactConverter
       errors = []
       proc ||= Proc.new { |n| errors << n }
       document.xpath("//Brev").each do |brev|
-        sum = 0
-        brev.traverse do |elm|
-          sum += 1 if elm.name =~ /[A-Z][A-Z0-9]{2}/
-        end
-        unt = brev.at("UNT")
-        if unt
-          unt_sum = unt.at("Elm[1]/SubElm/text()") || '0'
-          if sum != unt_sum.to_s.to_i
+        sum = count_segments brev
+        unt = brev.at("UNT/Elm[1]/SubElm/text()") || '0'
+          if sum != unt.to_s.to_i
             proc.call(
               Difference.new(
-                source: unt,
+                source: brev.at("UNT"),
                 facit: sum,
                 kind: :unt
               )
             )
           end
-        else
-          proc.call(
-            Difference.new(
-              source: brev,
-              facit: sum,
-              kind: :no_unt
-            )
-          )
-        end
       end
       errors
+    end
+
+    def set_checksums
+      document.xpath("//Brev").each do |brev|
+        sum = count_segments(brev)
+        brev.xpath("UNT/Elm[1]/SubElm").each do |elm|
+          elm.content = sum
+        end
+      end
     end
 
     private
@@ -70,7 +66,7 @@ module EdifactConverter
     end
 
     def pack_segment(segment)
-      if 'Elm' == first_child_name(segment)
+      if 'Elm' == last_child_name(segment)
         segment.elements.each { |elm| pack_element elm }
         segment.elements.reverse.each do |elm|
           break if elm.elements.any?
@@ -83,8 +79,17 @@ module EdifactConverter
       end
     end
 
-    def first_child_name(element)
-      element.first_element_child && element.first_element_child.name
+    def last_child_name(element)
+      element.last_element_child && element.last_element_child.name
+    end
+
+    def count_segments(letter)
+      sum = 0
+      letter.traverse do |elm|
+        next if not(elm.element?) || elm.name == "OBJ" || elm['hidden']
+        sum += 1 if elm.name =~ /[A-Z][A-Z0-9]{2}/
+      end
+      sum
     end
 
   end

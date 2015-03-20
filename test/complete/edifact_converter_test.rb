@@ -29,6 +29,7 @@ module EdifactConverter::EDI2XML11
       Dir.glob "#{File.dirname(__FILE__)}/files/xml/*" do |filename|
         next if File.directory?(filename)
         result = nil
+        EdifactConverter.convert_xml(EdifactConverter.read_file(filename))
         assert_nothing_raised message="XML1-1 failed for #{filename}" do
           result = EdifactConverter.convert_xml(EdifactConverter.read_file(filename))
         end
@@ -46,7 +47,7 @@ module EdifactConverter::EDI2XML11
         max = [edi_text.size, result.edifact.size].max
         step = 50
         (0..max).step(step) do |start|
-          assert_equal edi_text[start, step], result.edifact[start, step] #.encode("iso-8859-1")
+          assert_equal edi_text[start, step], result.edifact[start, step], "EDI failed for #{filename}." #.encode("iso-8859-1")
         end
       end
     end

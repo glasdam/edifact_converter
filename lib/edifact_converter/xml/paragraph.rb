@@ -144,21 +144,21 @@ module EdifactConverter::XML
       text = StringIO.new
       text.set_encoding("iso-8859-1")
       chars = chars.reject do |c|
-        if c =~ /[\?:\\\'\+]/
-          case text.size
-          when 68
-            if chars.count > 1
-              text.string = insert_split(text, &block)
-            end
-          when 69
-            text.string = insert_split(text, &block)
-          end
-          text.write '?'
-        else
+#        if c =~ /[\?:\\\'\+]/
+#          case text.size
+#          when 68
+#            if chars.count > 1
+#              text.string = insert_split(text, &block)
+#            end
+#          when 69
+#            text.string = insert_split(text, &block)
+#          end
+#          text.write '?'
+#        else
           if text.size == 69 and chars.count > 1
             text.string = insert_split(text, &block)
           end
-        end
+#        end
         text.seek text.size
         text.write c
         true

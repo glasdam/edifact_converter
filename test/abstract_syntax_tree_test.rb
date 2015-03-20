@@ -29,7 +29,7 @@ module EdifactConverter
       assert ast.document.at("UNA").elements.empty?
       assert ast.document.at("UNB").elements.size == 2
       assert ast.document.at("UNB/Elm[1]").elements.empty?
-      assert ast.document.at("UNB/Elm[2]").elements.size == 1
+      assert ast.document.at("UNB/Elm[2]").elements.size == 1      
     end
 
     def test_compare
@@ -54,13 +54,13 @@ module EdifactConverter
       assert error.eql? errors.first
       unt.unlink
       error = Difference.new(
-        source: ast.document.at("Brev"),
+        source: ast.document.at("Brev/UNT"),
         facit: 4,
-        kind: :no_unt
+        kind: :unt
       )
       errors = ast.verify_segments_checksum
       assert errors.size == 1
-      assert error.eql? errors.first
+      assert error.eql?(errors.first), "#{errors.first.inspect} != #{error.inspect}"
     end
 
   end

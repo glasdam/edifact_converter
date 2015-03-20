@@ -55,7 +55,7 @@ module EdifactConverter::XML112EDI
       else
         edifact.write(':') unless first_value?
       end
-      edifact.write(text)
+      edifact.write text.to_s.gsub(/([\?:\'\+])/,'?\1')
     end
 
     def endSegment

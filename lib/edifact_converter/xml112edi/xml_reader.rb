@@ -26,9 +26,9 @@ module EdifactConverter::XML112EDI
 
     private
 
-    def parse_xml(xml)
-      return "" unless xml and xml.root
-      xml = remove_groups_and_empty_elms(xml)
+    def parse_xml(xmlsrc)
+      xml = xmlsrc.dup
+      remove_grouping xml
       handler.startDocument
       xml.root.elements.each do |segment|
         handler.startSegment(segment.name)
@@ -47,27 +47,46 @@ module EdifactConverter::XML112EDI
       include_binaries edi_text
     end
 
-    def remove_groups_and_empty_elms(xml)
-      self.class.stylesheet.transform(xml) do |config|
-        config.default_xml.noblanks
+    def remove_grouping(xml)
+      hidden, groups = [], []
+      xml.root.traverse do |element|
+        case element.name
+        when /^[S][0-9]{2}$/
+          if element['hidden']
+            hidden << element
+          else
+            groups << element
+          end
+        when "Brev"
+          hidden << element
+        when "BrevIndhold"
+          hidden << element
+        end
+      end
+      hidden.each { |elm| elm.replace elm.elements }
+      groups.each do |elm|
+        first = elm.first_element_child
+        first.unlink
+        elm.next = elm.elements
+        first.parent = elm
       end
     end
 
-    def self.stylesheet
-      @stylesheet ||= begin
-        Nokogiri::XSLT.register "http://edifact.medware.dk/converter", SegmentChecks
-        Nokogiri.XSLT(
-          File.open(
-            File.join(
-              File.dirname(
-                File.expand_path(__FILE__)
-              ),
-              '../../../data/remove_grouping.xsl'
-            )
-          )
-        )
-      end
-    end
+    # def self.stylesheet
+    #   @stylesheet ||= begin
+    #     Nokogiri::XSLT.register "http://edifact.medware.dk/converter", SegmentChecks
+    #     Nokogiri.XSLT(
+    #       File.open(
+    #         File.join(
+    #           File.dirname(
+    #             File.expand_path(__FILE__)
+    #           ),
+    #           '../../../data/remove_grouping.xsl'
+    #         )
+    #       )
+    #     )
+    #   end
+    # end
 
     def include_binaries(source)
       return source if edifact.binary.empty?

@@ -7,7 +7,7 @@ module EdifactConverter
 
     include EdifactConverter::ConverterMethods
 
-    ATTRIBUTES = [:xml, :xml11, :edifact, :properties, :source_format]
+    ATTRIBUTES = [:xml, :ast, :edifact, :properties, :source_format]
 
     ATTRIBUTES.each do |attribute|
       attr_accessor attribute

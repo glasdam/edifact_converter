@@ -14,24 +14,20 @@ end
 
 if options[:source] == :xml
   xmltext = EdifactConverter.read_file(options[:input])
-#  result = nil
-#  10.times do |number|
-    result = EdifactConverter.convert_xml(xmltext)
-#    $stderr.puts "Round: #{number}"
-#  end
+  result = EdifactConverter.convert_xml(xmltext)
   print_errors result.properties[:errors]
   if options[:xml11]
-    puts result.xml11
+    puts result.ast.document
   else
     puts result.format_edifact  
   end
 else
   editxt = EdifactConverter.read_file(options[:input])
   result = EdifactConverter.convert_edifact(editxt)
+  result.verify
   print_errors result.properties[:errors]
-  puts result.format_edifact  
   if options[:xml11]
-    puts result.xml11
+    puts result.ast.document
   elsif options[:html]
     puts result.html
   else

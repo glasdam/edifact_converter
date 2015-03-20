@@ -5,7 +5,7 @@ module EdifactConverter
   module ConverterMethods
 
     def convert
-      self.xml11 = build_xml11 if xml11.nil?
+      self.ast = build_ast if ast.nil?
       self.edifact = build_edifact if edifact.nil?
       self.xml = build_xml if xml.nil?
     end
@@ -28,58 +28,63 @@ module EdifactConverter
     end
 
     def verify
-      check_segments
       compare_xml11
     end
 
     private
 
-    def build_xml11(from_source = source_format)
-      case from_source
+    def build_ast(from_source = source_format)
+      ast = case from_source
       when :edifact
         parser = EdifactConverter::EDI2XML11::EdiReader.new
-        begin
+        xml11 = begin
           parser.parse_string(edifact, properties)
         rescue EdifactConverter::EdifactError => error
           properties[:errors] << error.to_message
-          nil
+          Nokogiri::XML "<Edifact/>"
         end
+        AbstractSyntaxTree.new xml11
       when :xml
-        XML.xml_to_xml11(xml, properties)
-      else
-        xml11
+        ast = AbstractSyntaxTree.new XML.xml_to_xml11(self.xml, properties)
+        ast.pack
+        ast.set_checksums
+        ast
       end
+      ast.verify_segments_checksum &error_proc
+      ast
     end
 
     def build_edifact(pretty = false)
-      return nil if xml11.nil?
+      return nil if ast.nil?
       Configuration.format_edi = pretty
       parser = EdifactConverter::XML112EDI::XmlReader.new
-      parser.parse(xml11, properties)
+      parser.parse(ast.document, properties)
     end
 
     def build_xml
-      return nil if xml11.nil?
-      XML.xml11_to_xml(xml11, properties)
-    end
-
-    def check_segments
-      
+      return nil if ast.nil?
+      XML.xml11_to_xml(ast.document, properties)
     end
 
     def compare_xml11
-      return if source_format != :edifact || xml11.nil? || xml.nil?
-      facit = XML.xml_to_xml11(xml, properties)
+      return if source_format != :edifact || ast.nil? || xml.nil?
+      ast_facit = AbstractSyntaxTree.new XML.xml_to_xml11(xml, properties)
+      ast_facit.pack
+      ast_facit.set_checksums
       comparator = Comparator.new
-      comparator.compare_docs xml11, facit do |diff|
+      comparator.compare_docs ast.document, ast_facit.document, &error_proc
+    end
+
+    def error_proc
+      @proc ||= Proc.new do |diff|
         pos = EdifactConverter::EDI2XML11::Position.new diff.source["linie"], diff.source["position"]
-        text = comparison_error_text diff.kind
-          properties[:errors] << Message.new(position: pos, text: text)
+        text = comparison_error_text diff
+        properties[:errors] << Message.new(position: pos, text: text)
       end
     end
 
-    def comparison_error_text(kind)
-      case kind
+    def comparison_error_text(diff)
+      case diff.kind
       when :added
         "Der mangler et #{diff.facit.name} her"
       when :removed
@@ -92,6 +97,10 @@ module EdifactConverter
         "Dette element (#{diff.source.name}) burde ikke have noget indhold"
       when :added_children
         "Dette element (#{diff.source.name}) burde have følgende indhold: #{diff.facit.text}"
+      when :no_unt
+        "Denne besked mangler et UNT element"
+      when :unt
+        "Der er #{diff.facit} segmenter, men der er kun angivet #{diff.source.at("Elm[1]/SubElm/text()")}"
       else
         "Ukendt fejl(#{diff.kind})"
       end

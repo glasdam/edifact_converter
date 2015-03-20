@@ -12,6 +12,7 @@ require "edifact_converter/message"
 require "edifact_converter/command_line_parser"
 require "edifact_converter/converter_methods"
 require "edifact_converter/xml"
+require 'edifact_converter/converter'
 
 module EdifactConverter
 
