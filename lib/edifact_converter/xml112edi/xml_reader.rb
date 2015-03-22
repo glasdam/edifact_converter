@@ -28,6 +28,7 @@ module EdifactConverter::XML112EDI
 
     def parse_xml(xmlsrc)
       xml = xmlsrc.dup
+      return unless xml.root
       remove_grouping xml
       handler.startDocument
       xml.root.elements.each do |segment|

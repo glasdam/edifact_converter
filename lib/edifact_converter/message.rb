@@ -18,7 +18,7 @@ module EdifactConverter
 
     def self.from_syntax_error(error)
       position = EdifactConverter::EDI2XML11::Position.new(error.line, error.column)
-      self.new(position: position, text: error.to_s, source: xml)
+      self.new(position: position, text: error.to_s, source: :xml)
     end
 
     def to_s

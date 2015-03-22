@@ -12,7 +12,7 @@ module EdifactConverter
     end
 
     def pack
-      pack_root(document.root)
+      pack_root(document.root) if document.root
     end
 
     def compare(document, &proc)
