@@ -11,7 +11,15 @@ module EdifactConverter
     end
 
     def format_edifact
-      build_edifact(true)
+      if edifact
+        formatted = edifact.encode 'utf-8'
+        formatted.gsub! /[\n\r]/, ""
+        formatted.gsub! /([^?]{1}')/, "\\1\n"
+        formatted.gsub! /^\s*/, ""
+        formatted.encode 'iso8859-1'
+      else
+        build_edifact(true)
+      end
     end
 
     def html
@@ -38,7 +46,7 @@ module EdifactConverter
       when :edifact
         parser = EdifactConverter::EDI2XML11::EdiReader.new
         xml11 = begin
-          parser.parse_string(edifact, properties)
+          parser.parse_string(format_edifact, properties)
         rescue EdifactConverter::EdifactError => error
           properties[:errors] << error.to_message
           Nokogiri::XML "<Edifact/>"
