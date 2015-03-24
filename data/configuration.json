@@ -1,4 +1,8 @@
 {
+  "binary_versions": [
+    "B0131X",
+    "B0130X"
+  ],
   "EDIFACT": {
     "MEDPRE": {
       "BrevIndhold": {
@@ -390,6 +394,53 @@
       ],
       "versions": [
         "H0731R"
+      ]
+    },
+    "http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2014/10/08/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2014/10/08/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2014/10/08/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2014/10/08/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2014/10/08/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2014/10/08/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "A0140Z",
+        "R0130F",
+        "R0131K",
+        "R0231M",
+        "R0331P",
+        "R0432P",
+        "R0730G",
+        "Q0331P"
+      ]
+    },
+    "http://rep.oio.dk/medcom.dk/xml/schemas/2015/02/16/": {
+      "schema_urls": [
+        "%{gem_data}/xml/Schemas/2015/02/16/EMessage.xsd",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/Schemas/2015/02/16/EMessage.xsd"
+      ],
+      "from_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2015/02/16/XML2EDI/Emessage_2_XML11.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2015/02/16/XML2EDI/Emessage_2_XML11.xslt"
+      ],
+      "to_xml_urls": [
+        "%{gem_data}/xml/XSLTs/2015/02/16/EDI2XML/XML11_2_Emessage.xslt",
+        "http://svn.medcom.dk/svn/drafts/Konverter/trunk/Konverter/xml/XSLTs/2015/02/16/EDI2XML/XML11_2_Emessage.xslt"
+      ],
+      "to_html_urls": [
+        "%{gem_data}/xml/viewEmessage.xslt"
+      ],
+      "versions": [
+        "U0332U"
       ]
     }
   }

@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2015/02/16/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2015/02/16/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+  <xs:element name="EmergencyServicePractitionerInvoice" type="EmergencyServicePractitionerInvoiceType">
+		<xs:annotation>
+			<xs:documentation>Vagtlæge Afregning</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+  <xs:complexType name="EmergencyServicePractitionerInvoiceType">
+		<xs:annotation>
+			<xs:documentation>Definition af en vagtlægeregning</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+		  <xs:element name="Letter" type="EmergencyServicePractitionerInvoiceLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=U0831U og TypeCode=RUC08</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		  <xs:element name="Sender" type="EmergencyServicePractitionerInvoiceSenderType"/>
+		  <xs:element name="Receiver" type="EmergencyServicePractitionerInvoiceRecieverType"/>
+		  <xs:element name="WeekIdentifier">
+		    <xs:complexType>
+		      <xs:sequence>
+		        <xs:element name="Year">
+		          <xs:simpleType>
+		            <xs:restriction base="xs:int">
+		              <xs:maxExclusive value="10000"/>
+		              <xs:minExclusive value="1990"/>
+		            </xs:restriction>
+		          </xs:simpleType>
+		        </xs:element>
+		        <xs:element name="Week">
+		          <xs:simpleType>
+		            <xs:restriction base="xs:int">
+		              <xs:maxExclusive value="54"/>
+		              <xs:minExclusive value="0"/>
+		            </xs:restriction>
+		          </xs:simpleType>
+		        </xs:element>
+		      </xs:sequence>
+		    </xs:complexType>
+		  </xs:element>
+		  <xs:element name="Amount">
+		    <xs:simpleType>
+		      <xs:restriction base="xs:decimal">
+		        <xs:maxExclusive value="1000000"/>
+		        <xs:minInclusive value="0"/>
+		        <xs:fractionDigits value="2"/>
+		      </xs:restriction>
+		    </xs:simpleType>
+		  </xs:element>
+		  <xs:element name="FieldOfService">
+		    <xs:simpleType>
+		      <xs:restriction base="xs:string">
+		        <xs:pattern value="[0-9]{4}"/>
+		      </xs:restriction>
+		    </xs:simpleType>
+		  </xs:element>
+		  <xs:element name="Invoice" maxOccurs="unbounded">
+		    <xs:complexType>
+		      <xs:sequence>
+		        <xs:element name="Insured">
+		          <xs:complexType>
+		            <xs:sequence>
+		              <xs:choice>
+		                <xs:element ref="CivilRegistrationNumber"/>
+		              	<xs:sequence>
+		              		<xs:element name="AlternativeIdentifier" type="ReplacementCPRType"/>
+		              		<xs:element name="CountryCode" type="xs:positiveInteger"/>
+		              	</xs:sequence>
+		              </xs:choice>
+		            </xs:sequence>  
+		          </xs:complexType>
+		        </xs:element>
+		        <xs:element name="PatientType">
+		          <xs:simpleType>
+		            <xs:restriction base="xs:int">
+		              <xs:enumeration value="1"/>
+		              <xs:enumeration value="4"/>
+		            </xs:restriction>
+		          </xs:simpleType>
+		        </xs:element>
+		        <xs:element name="Activity">
+		          <xs:complexType>
+		            <xs:sequence>
+		              <xs:element name="Time">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:string">
+		                    <xs:pattern value="(([0-1][0-9])|(2[0-3])):([0-5][0-9])"/>
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
+		              <xs:element name="Statistic" minOccurs="0" type="String_1_6"/>
+		              <xs:element name="Amount">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:int">
+		                    <xs:maxExclusive value="100"/>
+		                    <xs:minExclusive value="0"/>
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
+		            </xs:sequence>
+		          </xs:complexType>
+		        </xs:element>
+		        <xs:element name="Rules">
+		          <xs:complexType>
+		            <xs:sequence>
+		              <xs:element name="TimeRate" type="String_1_3"/>
+		              <xs:element name="InsuranceCard" minOccurs="0">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:string">
+		                    <xs:length value="1"/>
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
+		            </xs:sequence>
+		          </xs:complexType>
+		        </xs:element>
+		        <xs:element name="CommunityMedicine" minOccurs="0">
+		          <xs:complexType>
+		            <xs:choice>
+		              <xs:element name="CountyIdentifier" type="String_1_6"/>
+		              <xs:element name="MunicipalityIdentifier" type="String_1_6"/>
+		            </xs:choice>
+		          </xs:complexType>
+		        </xs:element>
+		        <xs:element name="Service" maxOccurs="unbounded">
+		          <xs:complexType>
+		            <xs:sequence>
+		              <xs:choice>
+		              <xs:element name="Rate">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:string">
+		                    <xs:pattern value="[0-9]{1,4}"/>
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
+		                <xs:element name="Correction">
+		                  <xs:simpleType>
+		                    <xs:restriction base="xs:string">
+		                      <xs:pattern value="[0-9]{1,4}"/>
+		                    </xs:restriction>
+		                  </xs:simpleType>
+		                </xs:element>
+		              </xs:choice>
+		              <xs:element name="DateOfTreatment" type="xs:date"/>
+		              <xs:element name="Amount">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:int">
+		                    <xs:maxExclusive value="100"/>
+		                    <xs:minExclusive value="0"/>
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
+		              <xs:element name="TimeQualifier" minOccurs="0">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:int">
+		                    <xs:maxExclusive value="10"/>
+		                    <xs:minInclusive value="0"/>
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
+		            </xs:sequence>
+		          </xs:complexType>
+		        </xs:element>
+		      </xs:sequence>
+		    </xs:complexType>
+		  </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+  
+  <xs:complexType name="EmergencyServicePractitionerInvoiceLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=U0831U og TypeCode=RUC08</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XU0831U"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XRUC08"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		  <xs:element name="StatusCode">
+		    <xs:simpleType>
+		      <xs:restriction base="StatusCodeType">
+		        <xs:pattern value="nytbrev"/>
+		      </xs:restriction>
+		    </xs:simpleType>
+		  </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+  
+  <xs:complexType name="EmergencyServicePractitionerInvoiceSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="SpecialityIdentifier"/>
+		</xs:sequence>
+	</xs:complexType>
+  <xs:complexType name="EmergencyServicePractitionerInvoiceRecieverType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element name="CountyIdentifier" type="String_1_35"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="ReplacementCPRType">
+		<xs:annotation>
+			<xs:documentation>Type for et erstatningscprnummer.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([1-2][0-9]|0[1-9]|3[0-1])(0[1-9]|1[12])[0-9]{2}[17][A-Z]{2}[0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+  
+</xs:schema>

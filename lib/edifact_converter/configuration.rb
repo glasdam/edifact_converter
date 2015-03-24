@@ -31,6 +31,10 @@ module EdifactConverter
         @configurator = configurator
       end
 
+      def binary?(version)
+        configurator.binary? version.to_s
+      end
+
     end
 
   end

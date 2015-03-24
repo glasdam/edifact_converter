@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="Reference.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="LaboratoryReport" type="LaboratoryReportType">
+		<xs:annotation>
+			<xs:documentation>Laboratoriesvar</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="LaboratoryReportType">
+		<xs:annotation>
+			<xs:documentation>Definition af et laboratoriesvar</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="LaboratoryReportLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XR0131K  og TypeCode=XRPT01</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="LaboratoryReportSenderType"/>
+			<xs:element name="Receiver" type="LaboratoryReportReceiverType"/>
+			<xs:element name="CCReceiver" type="LaboratoryReportCCReceiverType" minOccurs="0"/>
+			<xs:element name="Patient" type="LaboratoryReportPatientType"/>
+			<xs:element name="RequisitionInformation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Comments" type="BreakableText" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>RekvKomm</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Sample">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="LaboratoryInternalSampleIdentifier" type="String_1_20"/>
+									<xs:element name="RequesterSampleIdentifier" type="String_1_15" minOccurs="0"/>
+									<xs:element name="SamplingDateTime" type="DateTimeType"/>
+									<xs:element name="Volume" minOccurs="0">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="[0-9]{1,15}"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="UnitOfVolume" type="String_1_17" minOccurs="0"/>
+									<xs:element name="SamplingInterval" type="DateTimeIntervalType" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LaboratoryResults">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GeneralResultInformation">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ReportStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="del_svar"/>
+												<xs:enumeration value="komplet_svar"/>
+												<xs:enumeration value="modtaget"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="LaboratoryInternalProductionIdentifier" type="String_1_35"/>
+									<xs:element name="ResultsDateTime" type="DateTimeType"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Result" maxOccurs="99">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ResultStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="proeve_modtaget"/>
+												<xs:enumeration value="svar_midlertidigt"/>
+												<xs:enumeration value="svar_endeligt"/>
+												<xs:enumeration value="svar_rettet"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="Analysis">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="AnalysisCompleteType">
+													<xs:sequence minOccurs="0">
+														<xs:element ref="RequisitionGroup"/>
+														<xs:element ref="Order"/>
+													</xs:sequence>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="ProducerOfLabResult">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Identifier" type="String_1_35"/>
+												<xs:element name="IdentifierCode" type="String_1_3"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="ReferenceInterval" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:sequence minOccurs="0">
+													<xs:element name="TypeOfInterval">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:enumeration value="fysiologisk"/>
+																<xs:enumeration value="terapeutisk"/>
+																<xs:enumeration value="uspecificeret"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="LowerLimit" type="String_1_12" minOccurs="0"/>
+													<xs:element name="UpperLimit" type="String_1_12" minOccurs="0"/>
+												</xs:sequence>
+												<xs:element name="IntervalText" type="String_1_70" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="ResultType">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="numerisk"/>
+												<xs:enumeration value="alfanumerisk"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="Operator" minOccurs="0">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="mindre_end"/>
+												<xs:enumeration value="stoerre_end"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="Value" type="String_1_12"/>
+									<xs:element name="Unit" type="String_1_16" minOccurs="0"/>
+									<xs:element name="ResultValidation" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>ABNORM</xs:documentation>
+										</xs:annotation>
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="for_hoej"/>
+												<xs:enumeration value="for_lav"/>
+												<xs:enumeration value="unormal"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:choice minOccurs="0" maxOccurs="20">
+										<xs:element name="ResultTextValue" type="FormattedTextType">
+											<xs:annotation>
+												<xs:documentation>FTX+RIT</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="ResultComments" type="FormattedTextType">
+											<xs:annotation>
+												<xs:documentation>FTX+SPC</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:choice>
+									<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
+									<xs:element name="ToLabIdentifier" type="String_1_3" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LaboratoryReportLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XR0131K  og TypeCode=XRPT01</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XR0131K"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XRPT01"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LaboratoryReportSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:choice>
+				<xs:element ref="IdentifierCode"/>
+				<xs:element name="IdentifierLocal" type="String_1_3"/>
+			</xs:choice>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="MedicalSpecialityCode" minOccurs="0"/>
+			<xs:element name="FromLabIdentifier" type="String_1_3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LaboratoryReportReceiverType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:choice>
+				<xs:element ref="IdentifierCode"/>
+				<xs:element name="IdentifierLocal" type="String_1_3"/>
+			</xs:choice>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element name="Physician" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonInitials" type="String_1_17"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LaboratoryReportCCReceiverType">
+		<xs:sequence>
+			<xs:element ref="Identifier"/>
+			<xs:choice>
+				<xs:element ref="IdentifierCode"/>
+				<xs:element name="IdentifierLocal" type="String_1_3"/>
+			</xs:choice>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LaboratoryReportPatientType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="CivilRegistrationNumber"/>
+				<xs:element ref="AlternativeIdentifier"/>
+			</xs:choice>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
+			<xs:element name="Consent" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Given" type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+</xs:schema>

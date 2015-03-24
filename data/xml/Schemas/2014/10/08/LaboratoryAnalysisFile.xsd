@@ -1,0 +1,610 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/"
+  xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" 
+  targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/" 
+  elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:include schemaLocation="GeneralElements.xsd"/>
+  <xs:include schemaLocation="LetterType.xsd"/>
+  <xs:include schemaLocation="Sender.xsd"/>
+  <xs:include schemaLocation="Receiver.xsd"/>
+  <xs:include schemaLocation="CCReceiver.xsd"/>
+  <xs:include schemaLocation="Patient.xsd"/>
+  <xs:element name="LaboratoryAnalysisFile" type="LaboratoryAnalysisFileType">
+    <xs:annotation>
+      <xs:documentation>PRODAT</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="LaboratoryAnalysisFileType">
+    <xs:annotation>
+      <xs:documentation>Definition af en PRODAT</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Letter" type="LaboratoryAnalysisFileLetterType">
+        <xs:annotation>
+          <xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XA0140Z og TypeCode=XDAO01</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Sender">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="EANIdentifier"/>
+            <xs:element ref="Identifier"/>
+            <xs:element ref="IdentifierCode"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Receiver">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="EANIdentifier"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GeneralInformation">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="LaboratoryShortName" type="String_1_3"/>
+            <xs:element name="ReferenceNumber">
+              <xs:simpleType>
+                <xs:restriction base="xs:int">
+                  <xs:minInclusive value="1"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="Previous">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ReferenceNumber">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:int">
+                        <xs:minInclusive value="0"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="DateTime" type="DateTimeType"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="MDSRepertoireVersion" minOccurs="0">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="20"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="ReplacePrevious" type="xs:boolean" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AnalysisDetails" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:sequence minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Aktualitet</xs:documentation>
+              </xs:annotation>
+              <xs:element name="StatusCode">
+                <xs:annotation>
+                  <xs:documentation>AKTKODE</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="ny"/>
+                    <xs:enumeration value="rettelse"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:choice>
+                <xs:annotation>
+                  <xs:documentation>VALKODE+Valtid</xs:documentation>
+                </xs:annotation>
+                <xs:element name="ValidFrom" type="DateTimeType"/>
+                <xs:element name="ValidUntil" type="DateTimeType"/>
+                <xs:element name="Changed" type="DateTimeType"/>
+              </xs:choice>
+            </xs:sequence>
+            <xs:sequence>
+              <xs:annotation>
+                <xs:documentation>Identifikation</xs:documentation>
+              </xs:annotation>
+              <xs:element name="OriginalIdentification" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Code" type="String_1_17">
+                      <xs:annotation>
+                        <xs:documentation>LabKode</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="CodeType">
+                      <xs:annotation>
+                        <xs:documentation>KODETABEL</xs:documentation>
+                      </xs:annotation>
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:enumeration value="iupac"/>
+                          <xs:enumeration value="mds"/>
+                          <xs:enumeration value="lokal"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="CodeResponsible" type="String_1_3">
+                      <xs:annotation>
+                        <xs:documentation>LabOrg</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Code" type="String_1_17">
+                <xs:annotation>
+                  <xs:documentation>LabKode</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="CodeType">
+                <xs:annotation>
+                  <xs:documentation>KODETABEL</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="iupac"/>
+                    <xs:enumeration value="mds"/>
+                    <xs:enumeration value="lokal"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodeResponsible" type="String_1_3">
+                <xs:annotation>
+                  <xs:documentation>LabOrg</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="FullName" type="BreakableText">
+                <xs:annotation>
+                  <xs:documentation>AnalysenavnFulde</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="ShortName" type="String_1_35" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation>KortNavn</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="Keyword" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200"/>
+                    <xs:minLength value="1"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+            <xs:sequence>
+              <xs:element name="MaxResultPriority" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="rutine"/>
+                    <xs:enumeration value="fremskyndet"/>
+                    <xs:enumeration value="straks"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ResultPriorityRestrictions" type="String_1_70" minOccurs="0"/>
+            </xs:sequence>
+            <xs:element name="RequestInformation">
+              <xs:annotation>
+                <xs:documentation>ReqFull</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="kan_bestilles_og_besvares"/>
+                  <xs:enumeration value="kan_bestilles"/>
+                  <xs:enumeration value="tages_paa_laboratorie"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:choice>
+              <xs:sequence>
+                <xs:element name="IsASingleAnalysis">
+                  <xs:annotation>
+                    <xs:documentation>TEKSTKVAL=MQ</xs:documentation>
+                  </xs:annotation>
+                  <xs:simpleType>
+                    <xs:restriction base="xs:boolean">
+                      <xs:pattern value="true"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="TypeOfTestTubes">
+                  <xs:annotation>
+                    <xs:documentation>FTX+EMB</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="ShortName" type="String_1_16">
+                        <xs:annotation>
+                          <xs:documentation>GlastypeMax16</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="ShortNameResponsible" type="String_1_3">
+                        <xs:annotation>
+                          <xs:documentation>LokalLabOrg</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="Description" type="String_1_70" minOccurs="0">
+                        <xs:annotation>
+                          <xs:documentation>Glasbeskrivelse</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="Priority" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:int">
+                            <xs:maxInclusive value="9"/>
+                            <xs:minInclusive value="0"/>
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="TestTubeGroup">
+                  <xs:annotation>
+                    <xs:documentation>FTX+PTG</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Identifier" type="String_1_8">
+                        <xs:annotation>
+                          <xs:documentation>GlasgruppeNr</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="IdentifierResponsible" type="String_1_3">
+                        <xs:annotation>
+                          <xs:documentation>LabOrg</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="Name" type="String_1_70" minOccurs="0">
+                        <xs:annotation>
+                          <xs:documentation>GlasGruppeNavn</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="Priority" minOccurs="0">
+                        <xs:simpleType>
+                          <xs:restriction base="xs:int">
+                            <xs:minInclusive value="0"/>
+                            <xs:maxInclusive value="9"/>
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="AnalysisInTestTube" minOccurs="0">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:positiveInteger">
+                      <xs:minInclusive value="2"/>
+                      <xs:maxInclusive value="99"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="LabelType">
+                  <xs:annotation>
+                    <xs:documentation>Etikettype</xs:documentation>
+                  </xs:annotation>
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0"/>
+                      <xs:maxInclusive value="9999"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="LabelTextCode" minOccurs="0">
+                  <xs:annotation>
+                    <xs:documentation>FTX+FUN IDYDERLOKNRPROVDATO</xs:documentation>
+                  </xs:annotation>
+                  <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                      <xs:enumeration value="uspecificeret"/>
+                      <xs:enumeration value="klinisk_kemi_standard"/>
+                      <xs:enumeration value="klinisk_kemi_proevetagningstidspunkt"/>
+                      <xs:enumeration value="klinisk_kemi_glasgruppenavn"/>
+                      <xs:enumeration value="klinisk_kemi_cprnummer"/>
+                      <xs:enumeration value="klinisk_kemi_cpr_patientnavn"/>
+                      <xs:enumeration value="klinisk_kemi_blodbank"/>
+                      <xs:enumeration value="klinisk_kemi_venstrestillet"/>
+                      <xs:enumeration value="mikrobiologi_standard"/>
+                      <xs:enumeration value="patologi_standard"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="LabelLabShortName" type="String_1_3" minOccurs="0"/>
+              </xs:sequence>
+              <xs:sequence>
+                <xs:element name="IsAnAnalysisGroup">
+                  <xs:annotation>
+                    <xs:documentation>TEKSTKVAL=ANG</xs:documentation>
+                  </xs:annotation>
+                  <xs:simpleType>
+                    <xs:restriction base="xs:boolean">
+                      <xs:pattern value="true"/>
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="AnalysisInGroup" maxOccurs="40">
+                  <xs:annotation>
+                    <xs:documentation>FTX+PAI</xs:documentation>
+                  </xs:annotation>
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="Code" type="String_1_17">
+                        <xs:annotation>
+                          <xs:documentation>LabKode</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="CodeType">
+                        <xs:annotation>
+                          <xs:documentation>KODETABEL</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:enumeration value="iupac"/>
+                            <xs:enumeration value="mds"/>
+                            <xs:enumeration value="lokal"/>
+                          </xs:restriction>
+                        </xs:simpleType>
+                      </xs:element>
+                      <xs:element name="CodeResponsible" type="String_1_3">
+                        <xs:annotation>
+                          <xs:documentation>LabOrg</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                      <xs:element name="FullName" type="String_1_70">
+                        <xs:annotation>
+                          <xs:documentation>AnalysenavnFulde</xs:documentation>
+                        </xs:annotation>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:choice>
+            <xs:element name="NumberOfTestTubes" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Antalglas</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:int">
+                  <xs:minInclusive value="1"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="BarcodeType" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>BARCODETYPE</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="interleaved_2of5"/>
+                  <xs:enumeration value="code_128c"/>
+                  <xs:enumeration value="code_39"/>
+                  <xs:enumeration value="interleaved_2of5_8mm"/>
+                  <xs:enumeration value="code_128c_8mm"/>
+                  <xs:enumeration value="code_39_8mm"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="LabelTypeInBarcode" type="xs:boolean" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Bcyes</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element name="Prompt" minOccurs="0" maxOccurs="20">
+              <xs:annotation>
+                <xs:documentation>Spørgsmål der
+kræver et svar
+når denne test
+rekvireres</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:choice>
+                    <xs:element name="OptionalQuestion" minOccurs="0">
+                      <xs:complexType>
+                        <xs:choice>
+                          <xs:element name="ToBeAnsweredWithBooleanValue" type="PromptNormalType"/>
+                          <xs:element name="ToBeAnsweredWithDateValue" type="PromptNormalType"/>
+                          <xs:element name="ToBeAnsweredWithDiagnoseValue" type="PromptNormalType"/>
+                          <xs:element name="ToBeAnsweredWithNumericValue" type="PromptNormalType"/>
+                          <xs:element name="ToBeAnsweredWithTextValue" type="PromptNormalType"/>
+                          <xs:element name="ToBeAnsweredWithBooleanAndTextValue" type="PromptNormalType"/>
+                          <xs:element name="ToBeAnsweredWithSelection">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="Choice" type="PromptNormalType" maxOccurs="10"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:choice>
+                      </xs:complexType>
+                    </xs:element>
+                  <xs:element name="Question" minOccurs="0">
+                    <xs:complexType>
+                      <xs:choice>
+                        <xs:element name="ToBeAnsweredWithBooleanValue" type="PromptNormalType"/>
+                        <xs:element name="ToBeAnsweredWithDateValue" type="PromptNormalType"/>
+                        <xs:element name="ToBeAnsweredWithDiagnoseValue" type="PromptNormalType"/>
+                        <xs:element name="ToBeAnsweredWithNumericValue" type="PromptNormalType"/>
+                        <xs:element name="ToBeAnsweredWithTextValue" type="PromptNormalType"/>
+                        <xs:element name="ToBeAnsweredWithBooleanAndTextValue" type="PromptNormalType"/>
+                        <xs:element name="ToBeAnsweredWithSelection">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:element name="Choice" type="PromptNormalType" maxOccurs="10"/>
+                            </xs:sequence>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:choice>
+                    </xs:complexType>
+                  </xs:element>
+                  
+                  </xs:choice>
+                  <xs:element name="Information" minOccurs="0">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="LaboratoryInformation" type="PromptLongType" minOccurs="0">
+                          <xs:annotation>
+                            <xs:documentation>Infofralab</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                        <xs:element name="Handling" type="PromptNormalType" minOccurs="0">
+                          <xs:annotation>
+                            <xs:documentation>Haandtering</xs:documentation>
+                          </xs:annotation>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="PipettingLabel" minOccurs="0">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:minLength value="1"/>
+                  <xs:maxLength value="8"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="LaboratoryShortName" type="String_1_3" minOccurs="0"/>
+            <xs:element name="PerformingLaboratoryShortName" type="String_1_3" minOccurs="0"/>
+            <xs:element name="ReferenceInterval" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:sequence>
+                    <xs:element name="LowerLimit" type="String_1_12" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>FTX+RNN</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="UpperLimit" type="String_1_12" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>FTX+RNO</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:element name="IntervalText" type="String_1_70" minOccurs="0">
+                    <xs:annotation>
+                      <xs:documentation>FTX+RNT</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                  <xs:element name="Unit" type="String_1_16" minOccurs="0">
+                    <xs:annotation>
+                      <xs:documentation>UNI</xs:documentation>
+                    </xs:annotation>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:sequence>
+              <xs:annotation>
+                <xs:documentation>Præsentation</xs:documentation>
+              </xs:annotation>
+              <xs:element ref="RequisitionGroup" minOccurs="1" maxOccurs="10">
+                <xs:annotation>
+                  <xs:documentation>FTX+AGR</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element ref="Order" minOccurs="0" maxOccurs="10">
+                <xs:annotation>
+                  <xs:documentation>Sorteringsorden</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:element name="Index" minOccurs="0">
+              <xs:simpleType>
+                <xs:restriction base="xs:positiveInteger">
+                  <xs:maxInclusive value="99"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="SampleMaterial" type="String_1_70" minOccurs="0"/>
+            <xs:element name="AnalysisDesriptionUrl" minOccurs="0">
+              <xs:simpleType>
+                <xs:restriction base="xs:anyURI">
+                  <xs:maxLength value="2083"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+            <xs:element name="Cost" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="Group" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:pattern value="[A-E]{1}"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="Value" minOccurs="0">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:positiveInteger">
+                        <xs:maxExclusive value="10000000000"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LaboratoryAnalysisFileLetterType">
+    <xs:annotation>
+      <xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XA0140Z og TypeCode=XDAO01</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:restriction base="LetterType">
+        <xs:sequence>
+          <xs:element name="Identifier" type="String_1_14"/>
+          <xs:element name="VersionCode">
+            <xs:simpleType>
+              <xs:restriction base="VersionCodeType">
+                <xs:pattern value="XA0140Z"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="StatisticalCode" type="String_1_8"/>
+          <xs:element name="Authorisation" type="DateTimeType"/>
+          <xs:element name="TypeCode">
+            <xs:simpleType>
+              <xs:restriction base="TypeCodeType">
+                <xs:pattern value="XDAO01"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+          <xs:element name="StatusCode">
+            <xs:simpleType>
+              <xs:restriction base="StatusCodeType">
+                <xs:pattern value="nytbrev"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:restriction>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PromptNormalType">
+    <xs:sequence>
+      <xs:element name="Code" type="String_1_17"/>
+      <xs:element name="TextValue" type="String_1_70"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PromptLongType">
+    <xs:sequence>
+      <xs:element name="Code" type="String_1_17"/>
+      <xs:element name="TextValue" type="BreakableText"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

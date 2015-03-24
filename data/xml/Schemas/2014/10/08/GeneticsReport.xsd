@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/"
+	xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/"
+	xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="Reference.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="GeneticsReport" type="GeneticsReportType">
+		<xs:annotation>
+			<xs:documentation>Genetik</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:complexType name="GeneticsReportType">
+		<xs:annotation>
+			<xs:documentation>Definition af et genetiksvar</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="GeneticsReportLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til
+						VersionCode=XR0730G og TypeCode=XRPT07</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="GeneticsReportSenderType"/>
+			<xs:element name="Receiver" type="GeneticsReportReceiverType"/>
+			<xs:element name="CCReceiver" type="GeneticsReportCCReceiverType" minOccurs="0"/>
+			<xs:element name="Patient" type="GeneticsReportPatientType"/>
+			<xs:element name="RequisitionInformation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RequestersRequisitionIdentifier" type="String_1_15"
+							minOccurs="0"/>
+						<xs:element name="ReceiversRequisitionIdentifier" type="String_1_15"/>
+						<xs:element name="SamplingDateTime" type="DateTimeType"/>
+						<xs:element name="SampleReceivedDateTime" type="DateTimeType"/>
+						<xs:element name="ClinicalInformation" type="BreakableText" minOccurs="0"/>
+						<xs:element name="Comments" type="BreakableText" minOccurs="0"/>
+						<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LaboratoryResults">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GeneralResultInformation">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ResultStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="proeve_modtaget"/>
+												<xs:enumeration value="svar_midlertidigt"/>
+												<xs:enumeration value="svar_endeligt"/>
+												<xs:enumeration value="svar_rettet"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="ToLabIdentifier" type="String_1_3" minOccurs="0"/>
+									<xs:element name="ReportStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="del_svar"/>
+												<xs:enumeration value="komplet_svar"/>
+												<xs:enumeration value="modtaget"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="ResultsDateTime" type="DateTimeType"/>
+									<xs:element name="LaboratoryInternalProductionIdentifier"
+										type="String_1_35"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="CodedFormat">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Sample" maxOccurs="100">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="RequesterSampleIdentifier"
+												type="String_1_15" minOccurs="0"/>
+												<xs:element
+												name="LaboratoryInternalSampleIdentifier"
+												type="String_1_20"/>
+												<xs:element name="MaterialDescription"
+												type="String_1_70"/>											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="TableFormat">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ResultHeadline" type="String_1_35"/>
+									<xs:element name="TableResult" type="String_1_8"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="TextualFormat">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="AnalysisHeadline" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="InternalReference" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="GenomeReference" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+												<xs:element ref="Reference" minOccurs="0"
+												maxOccurs="10"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="AnalysisMethod" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+												<xs:element ref="Reference" minOccurs="0"
+												maxOccurs="10"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="AnalysisResults" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+												<xs:element ref="Reference" minOccurs="0"
+												maxOccurs="10"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Conclusion" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Comments" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneticsReportLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til
+				VersionCode=XR0730G og TypeCode=XRPT07</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XR0730G"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XRPT07"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneticsReportSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="MedicalSpecialityCode" minOccurs="0"/>
+			<xs:element name="Examinator" minOccurs="2" maxOccurs="2">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonName" type="String_1_35"/>
+						<xs:element name="PersonTitle" type="String_1_35" minOccurs="0"/>
+						<xs:element ref="PersonInitials" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FromLabIdentifier" type="String_1_3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneticsReportReceiverType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element name="Physician" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonInitials" type="String_1_17"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneticsReportCCReceiverType">
+		<xs:sequence>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element name="Physician" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonInitials" type="String_1_17"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneticsReportPatientType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="CivilRegistrationNumber"/>
+				<xs:element ref="AlternativeIdentifier"/>
+			</xs:choice>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element name="Consent" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Given" type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2015/02/16/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2015/02/16/"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:dkcpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/"
+  elementFormDefault="qualified" attributeFormDefault="unqualified">
+  
+  <xs:include schemaLocation="GeneralPractitionerBilling.xsd"/>
+  <xs:include schemaLocation="PrivateSpecialistInvoice.xsd"/>
+  <xs:include schemaLocation="EmergencyServicePractitionerInvoice.xsd"/>
+  <xs:include schemaLocation="ChiropractorInvoice.xsd"/>
+  <xs:include schemaLocation="ChiropodyInvoice.xsd"/>
+  <xs:include schemaLocation="PsychologistInvoice.xsd"/>
+  <xs:include schemaLocation="PhysiotherapyInvoice.xsd"/>
+  <xs:include schemaLocation="LaboratoryInvoice.xsd"/>
+  <xs:include schemaLocation="DentistInvoice.xsd"/>
+  <xs:include schemaLocation="GeneralElements.xsd"/>
+  <xs:include schemaLocation="GeneralTypes.xsd"/>
+  <xs:group name="Letters">
+    <xs:choice>
+      <xs:element ref="GeneralPractitionerInvoice"/>
+      <xs:element ref="EmergencyServicePractitionerInvoice"/>
+      <xs:element ref="ChiropractorInvoice"/>
+      <xs:element ref="ChiropodyInvoice"/>
+      <xs:element ref="LaboratoryInvoice"/>
+      <xs:element ref="PsychologistInvoice"/>
+      <xs:element ref="PhysiotherapyInvoice"/>
+      <xs:element ref="DentistInvoice"/>
+      <xs:element ref="PrivateSpecialistInvoice"/>
+    </xs:choice>
+  </xs:group>
+</xs:schema>

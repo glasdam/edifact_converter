@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/"
+	xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/"
+	xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" elementFormDefault="qualified"
+	attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="Reference.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="HistopathologyReport" type="HistopathologyReportType">
+		<xs:annotation>
+			<xs:documentation>Patologi</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="HistopathologyReportType">
+		<xs:annotation>
+			<xs:documentation>Definition af en patologi</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="HistopathologyReportLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til
+						VersionCode=XR0432P og TypeCode=XRPT04</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="HistopathologyReportSenderType"/>
+			<xs:element name="Receiver" type="HistopathologyReportReceiverType"/>
+			<xs:element name="CCReceiver" type="HistopathologyReportCCReceiverType" minOccurs="0"/>
+			<xs:element name="Patient" type="HistopathologyReportPatientType"/>
+			<xs:element name="Relative" type="HistopathologyReportRelativeType" minOccurs="0"/>
+			<xs:element name="RequisitionInformation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RequestersRequisitionIdentifier" type="String_1_15"
+							minOccurs="0"/>
+						<xs:element name="ReceiversRequisitionIdentifier" type="String_1_15"/>
+						<xs:element name="SamplingDateTime" type="DateTimeType"/>
+						<xs:element name="SampleReceivedDateTime" type="DateTimeType"/>
+						<xs:element name="ClinicalInformation" type="BreakableText" minOccurs="0"/>
+						<xs:element name="Comments" type="BreakableText" minOccurs="0"/>
+						<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LaboratoryResults">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GeneralResultInformation">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ResultStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="proeve_modtaget"/>
+												<xs:enumeration value="svar_midlertidigt"/>
+												<xs:enumeration value="svar_endeligt"/>
+												<xs:enumeration value="svar_rettet"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="ToLabIdentifier" type="String_1_3" minOccurs="0"/>
+									<xs:element name="ReportStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="del_svar"/>
+												<xs:enumeration value="komplet_svar"/>
+												<xs:enumeration value="modtaget"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="ResultsDateTime" type="DateTimeType"/>
+									<xs:element name="LaboratoryInternalProductionIdentifier"
+										type="String_1_35"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="CodedFormat">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DiagnosisHeadline" type="String_1_35"/>
+									<xs:element name="Sample" maxOccurs="100">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="RequesterSampleIdentifier"
+												type="String_1_15" minOccurs="0"/>
+												<xs:element
+												name="LaboratoryInternalSampleIdentifier"
+												type="String_1_20"/>
+												<xs:element name="MaterialDescription"
+												type="String_1_70"/>
+												<xs:element name="CodedResults">
+												<xs:complexType>
+												<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Topography">
+												<xs:complexType>
+												<xs:sequence>
+												<xs:element name="Code" type="String_1_17"/>
+												<xs:element name="Text" type="String_1_70"/>
+												<xs:element name="Comment" type="String_1_70"
+												minOccurs="0"/>
+												</xs:sequence>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Result" maxOccurs="39">
+												<xs:complexType>
+												<xs:sequence>
+												<xs:element name="Code" type="String_1_17"/>
+												<xs:element name="Text" type="String_1_70"/>
+												<xs:element name="Comment" type="String_1_70"
+												minOccurs="0"/>
+												</xs:sequence>
+												</xs:complexType>
+												</xs:element>
+												</xs:sequence>
+												</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="TableFormat">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ResultHeadline" type="String_1_35"/>
+									<xs:element name="TableResult" type="String_1_8"/>
+									<xs:element name="ResultValidation" minOccurs="0">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="malign"/>
+												<xs:enumeration value="premalign"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="TextualFormat">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Macroscopic" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+												<xs:element ref="Reference" minOccurs="0"
+												maxOccurs="10"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Microscopic" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+												<xs:element ref="Reference" minOccurs="0"
+												maxOccurs="10"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Conclusion" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Hematology" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Labels">
+												<xs:complexType>
+												<xs:sequence>
+												<xs:element name="CellTypes">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="40"/>
+												</xs:restriction>
+												</xs:simpleType>
+												</xs:element>
+												<xs:element name="Marrow">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="11"/>
+												</xs:restriction>
+												</xs:simpleType>
+												</xs:element>
+												<xs:element name="Peripheral">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="11"/>
+												</xs:restriction>
+												</xs:simpleType>
+												</xs:element>
+												</xs:sequence>
+												</xs:complexType>
+												</xs:element>
+												<xs:element name="Result" maxOccurs="24">
+												<xs:complexType>
+												<xs:sequence>
+												<xs:element name="CellType">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="40"/>
+												</xs:restriction>
+												</xs:simpleType>
+												</xs:element>
+												<xs:element name="Marrow">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="11"/>
+												</xs:restriction>
+												</xs:simpleType>
+												</xs:element>
+												<xs:element name="Peripheral">
+												<xs:simpleType>
+												<xs:restriction base="xs:string">
+												<xs:minLength value="1"/>
+												<xs:maxLength value="11"/>
+												</xs:restriction>
+												</xs:simpleType>
+												</xs:element>
+												</xs:sequence>
+												</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Comments" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType"
+												minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistopathologyReportLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til
+				VersionCode=XR0432P og TypeCode=XRPT04</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XR0432P"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XRPT04"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistopathologyReportSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="MedicalSpecialityCode" minOccurs="0"/>
+			<xs:element name="Examinator" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonInitials" type="String_1_35"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FromLabIdentifier" type="String_1_3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistopathologyReportReceiverType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element name="Physician" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonInitials" type="String_1_17"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistopathologyReportCCReceiverType">
+		<xs:sequence>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element name="Physician" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonInitials" type="String_1_17"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistopathologyReportPatientType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="CivilRegistrationNumber"/>
+				<xs:element ref="AlternativeIdentifier"/>
+			</xs:choice>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element name="MunicipalityId" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="100"/>
+						<xs:maxInclusive value="999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MunicipalityName" type="String_1_35" minOccurs="0"/>
+			<xs:element name="Consent" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Given" type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HistopathologyReportRelativeType">
+		<xs:sequence>
+			<xs:element ref="RelationCode"/>
+			<xs:element ref="PersonIdentifier" minOccurs="0"/>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

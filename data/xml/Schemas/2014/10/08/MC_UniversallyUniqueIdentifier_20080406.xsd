@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:mc="http://rep.oio.dk/medcom.dk/core/xml.schema/2008.04.07/" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://rep.oio.dk/medcom.dk/core/xml.schema/2008.04.07/" xmlns="http://www.w3.org/2001/XMLSchema">
+  <element name="UniversallyUniqueIdentifier" type="mc:UniversallyUniqueIdentifierType"/>
+  <simpleType name="UniversallyUniqueIdentifierType">
+    <restriction base="string">
+      <pattern value="[0-9A-Fa-f]{8}\-[0-9A-Fa-f]{4}\-[0-9A-Fa-f]{4}\-[0-9A-Fa-f]{4}\-[0-9A-Fa-f]{12}"/>
+    </restriction>
+  </simpleType>
+</schema>

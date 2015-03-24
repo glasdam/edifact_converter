@@ -5,7 +5,7 @@ module EdifactConverter::Configuration
 
   class JSONConfigurator
 
-    attr_accessor :default_ns
+    attr_accessor :default_ns, :binary_versions
 
     def initialize
       load
@@ -28,6 +28,10 @@ module EdifactConverter::Configuration
       else
         raise RuntimeError "Wrong number of arguments #{args.size}"
       end
+    end
+
+    def binary?(version)
+      binary_versions.include? version
     end
 
     private
@@ -54,6 +58,7 @@ module EdifactConverter::Configuration
           self.default_ns = values
         end
       end
+      self.binary_versions = settings['binary_versions']
     end
 
     def load

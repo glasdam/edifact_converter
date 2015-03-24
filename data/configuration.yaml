@@ -1,3 +1,6 @@
+binary_versions:
+    - B0131X
+    - B0130X
 EDIFACT:
   MEDPRE:
     BrevIndhold:

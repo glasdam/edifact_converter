@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Henrik Gørup Rasmussen (Acure) -->
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" xmlns:cpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="Reference.xsd"/>
+	<xs:include schemaLocation="LetterType.xsd"/>
+	<xs:include schemaLocation="Sender.xsd"/>
+	<xs:include schemaLocation="Receiver.xsd"/>
+	<xs:include schemaLocation="CCReceiver.xsd"/>
+	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
+	<xs:include schemaLocation="Referral.xsd"/>
+	<xs:include schemaLocation="ValueLists.xsd"/>
+	<xs:element name="CervixcytologyReport" type="CervixcytologyReportType">
+		<xs:annotation>
+			<xs:documentation>Patologi</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="CervixcytologyReportType">
+		<xs:annotation>
+			<xs:documentation>Definition af en patologi</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Letter" type="CervixcytologyReportLetterType">
+				<xs:annotation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XR0331P  og TypeCode=XRPT03</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sender" type="CervixcytologyReportSenderType"/>
+			<xs:element name="Receiver" type="CervixcytologyReportReceiverType"/>
+			<xs:element name="CCReceiver" type="CervixcytologyReportCCReceiverType" minOccurs="0"/>
+			<xs:element name="Patient" type="CervixcytologyReportPatientType"/>
+			<xs:element name="RequisitionInformation">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="LaboratoryInternalSampleIdentifier" type="String_1_15"/>
+						<xs:element name="RequesterSampleIdentifier" type="String_1_15" minOccurs="0"/>
+						<xs:element name="SamplingDateTime" type="DateTimeType"/>
+						<xs:element name="SampleReceivedDateTime" type="DateTimeType"/>
+						<xs:element name="ClinicalInformation" type="BreakableText" minOccurs="0"/>
+						<xs:element name="Comments" type="BreakableText" minOccurs="0"/>
+						<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LaboratoryResults">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GeneralResultInformation">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ResultStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="svar_endeligt"/>
+												<xs:enumeration value="svar_rettet"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="ToLabIdentifier" type="String_1_3" minOccurs="0"/>
+									<xs:element name="ReportStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="del_svar"/>
+												<xs:enumeration value="komplet_svar"/>
+												<xs:enumeration value="modtaget"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="ResultsDateTime" type="DateTimeType"/>
+									<xs:element name="LaboratoryInternalProductionIdentifier" type="String_1_35"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="CodedFormat">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DiagnosisHeadline" type="String_1_35"/>
+									<xs:element name="Sample">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="LaboratoryInternalSampleIdentifier" type="String_1_20"/>
+												<xs:element name="RequesterSampleIdentifier" type="String_1_15" minOccurs="0"/>
+												<xs:element name="MaterialDescription" type="String_1_70"/>
+												<xs:element name="CodedResults">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="Topography">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Code" type="String_1_17"/>
+																		<xs:element name="Text" type="String_1_70"/>
+																		<xs:element name="Comment" type="String_1_70" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="Result" maxOccurs="10">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Code" type="String_1_17"/>
+																		<xs:element name="Text" type="String_1_70"/>
+																		<xs:element name="Comment" type="String_1_70" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="TableFormat">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ResultHeadline" type="String_1_35"/>
+									<xs:element name="TableResult" type="String_1_8"/>
+									<xs:element name="ResultValidation" minOccurs="0">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="malign"/>
+												<xs:enumeration value="premalign"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="TextualFormat">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Microscopic" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
+												<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Conclusion" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_35"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Comments" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Headline" type="String_1_70"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CervixcytologyReportLetterType">
+		<xs:annotation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XR0331P  og TypeCode=XRPT03</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="String_1_14"/>
+			<xs:element name="VersionCode">
+				<xs:simpleType>
+					<xs:restriction base="VersionCodeType">
+						<xs:pattern value="XR0331P"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="StatisticalCode" type="String_1_8"/>
+			<xs:element name="Authorisation" type="DateTimeType"/>
+			<xs:element name="TypeCode">
+				<xs:simpleType>
+					<xs:restriction base="TypeCodeType">
+						<xs:pattern value="XRPT03"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CervixcytologyReportSenderType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="MedicalSpecialityCode" minOccurs="0"/>
+			<xs:element name="Examinator" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonInitials" type="String_1_35"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FromLabIdentifier" type="String_1_3"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CervixcytologyReportReceiverType">
+		<xs:sequence>
+			<xs:element ref="EANIdentifier"/>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element name="Physician" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonInitials" type="String_1_17"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CervixcytologyReportCCReceiverType">
+		<xs:sequence>
+			<xs:element ref="Identifier"/>
+			<xs:element ref="IdentifierCode"/>
+			<xs:element ref="OrganisationName" minOccurs="0"/>
+			<xs:element ref="DepartmentName" minOccurs="0"/>
+			<xs:element ref="UnitName" minOccurs="0"/>
+			<xs:element name="Physician" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PersonInitials" type="String_1_17"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CervixcytologyReportPatientType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="CivilRegistrationNumber"/>
+				<xs:element ref="AlternativeIdentifier"/>
+			</xs:choice>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
+			<xs:element ref="StreetName" minOccurs="0"/>
+			<xs:element ref="SuburbName" minOccurs="0"/>
+			<xs:element ref="DistrictName" minOccurs="0"/>
+			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
+			<xs:element name="MunicipalityId" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:int">
+						<xs:minInclusive value="100"/>
+						<xs:maxInclusive value="999"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MunicipalityName" type="String_1_35" minOccurs="0"/>
+			<xs:element name="Consent" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Given" type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

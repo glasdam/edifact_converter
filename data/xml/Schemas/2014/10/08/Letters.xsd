@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/" xmlns="http://rep.oio.dk/medcom.dk/xml/schemas/2014/10/08/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gepj="http://medinfo.dk/epj/proj/gepka/20030701/xml/schema" xmlns:dkcpr="http://rep.oio.dk/cpr.dk/xml/schemas/core/2002/06/28/" xmlns:dkcc="http://rep.oio.dk/ebxml/xml/schemas/dkcc/2003/02/13/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="CervixcytologyReport.xsd"/>
+	<xs:include schemaLocation="DiabeticFootStatus.xsd"/>
+	<xs:include schemaLocation="GeneticsReport.xsd"/>
+	<xs:include schemaLocation="HistopathologyReport.xsd"/>
+	<xs:include schemaLocation="LaboratoryAnalysisFile.xsd"/>
+	<xs:include schemaLocation="LaboratoryReport.xsd"/>
+	<xs:include schemaLocation="MicrobiologyReport.xsd"/>
+	<xs:include schemaLocation="MicrobiologyWebReport.xsd"/>
+	<xs:include schemaLocation="PathologyRequest.xsd"/>
+	<xs:include schemaLocation="GeneralElements.xsd"/>
+	<xs:include schemaLocation="GeneralTypes.xsd"/>
+	<xs:group name="Letters">
+		<xs:choice>
+			<xs:element ref="CervixcytologyReport"/>
+			<xs:element ref="DiabeticFootStatus"/>
+			<xs:element ref="GeneticsReport"/>
+			<xs:element ref="HistopathologyReport"/>
+			<xs:element ref="LaboratoryAnalysisFile"/>
+			<xs:element ref="LaboratoryReport"/>
+			<xs:element ref="MicrobiologyReport"/>
+			<xs:element ref="MicrobiologyWebReport"/>
+			<xs:element ref="PathologyRequest"/>
+		</xs:choice>
+	</xs:group>
+</xs:schema>

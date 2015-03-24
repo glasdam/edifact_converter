@@ -44,12 +44,10 @@ module EdifactConverter
     def build_ast(from_source = source_format)
       ast = case from_source
       when :edifact
-        parser = EdifactConverter::EDI2XML11::EdiReader.new
-        xml11 = begin
-          parser.parse_string(format_edifact, properties)
-        rescue EdifactConverter::EdifactError => error
-          properties[:errors] << error.to_message
-          Nokogiri::XML "<Edifact/>"
+        xml11 = parse_edifact (format_edifact)
+        if Configuration.binary? properties[:version]
+          self.properties = nil
+          xml11 = parse_edifact(edifact)
         end
         AbstractSyntaxTree.new xml11
       when :xml
@@ -73,6 +71,15 @@ module EdifactConverter
       return nil if ast.nil?
       XML.xml11_to_xml(ast.document, properties)
     end
+
+    def parse_edifact(edifact_string)
+      parser = EdifactConverter::EDI2XML11::EdiReader.new
+      parser.parse_string(edifact_string, properties)
+    rescue EdifactConverter::EdifactError => error
+      properties[:errors] << error.to_message
+      Nokogiri::XML "<Edifact/>"
+    end
+    
 
     def compare_xml11
       return if source_format != :edifact || ast.nil? || xml.nil?
