@@ -73,22 +73,6 @@ module EdifactConverter::XML112EDI
       end
     end
 
-    # def self.stylesheet
-    #   @stylesheet ||= begin
-    #     Nokogiri::XSLT.register "http://edifact.medware.dk/converter", SegmentChecks
-    #     Nokogiri.XSLT(
-    #       File.open(
-    #         File.join(
-    #           File.dirname(
-    #             File.expand_path(__FILE__)
-    #           ),
-    #           '../../../data/remove_grouping.xsl'
-    #         )
-    #       )
-    #     )
-    #   end
-    # end
-
     def include_binaries(source)
       return source if edifact.binary.empty?
       source.force_encoding 'ASCII-8BIT'
@@ -96,7 +80,7 @@ module EdifactConverter::XML112EDI
         start = source.index(id)
         source[start, id.size] = Base64.decode64(base64)
       end
-      source
+      source      
     end
 
   end

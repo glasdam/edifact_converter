@@ -29,7 +29,7 @@ module EdifactConverter::EDI2XML11
       Dir.glob "#{File.dirname(__FILE__)}/files/xml/*" do |filename|
         next if File.directory?(filename)
         result = nil
-        EdifactConverter.convert_xml(EdifactConverter.read_file(filename))
+        #EdifactConverter.convert_xml(EdifactConverter.read_file(filename))
         assert_nothing_raised message="XML1-1 failed for #{filename}" do
           result = EdifactConverter.convert_xml(EdifactConverter.read_file(filename))
         end

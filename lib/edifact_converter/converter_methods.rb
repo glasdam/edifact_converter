@@ -35,6 +35,15 @@ module EdifactConverter
       end
     end
 
+    def binary(id)
+      if xml
+        xml2 = Nokogiri::XML xml
+        xml2.remove_namespaces!
+        binary_object = xml2.root.at("//BinaryObject[ObjectIdentifier = '#{id}']")
+        Binary.from_element binary_object if binary_object
+      end
+    end
+
     def verify
       compare_xml11
     end
@@ -79,7 +88,6 @@ module EdifactConverter
       properties[:errors] << error.to_message
       Nokogiri::XML "<Edifact/>"
     end
-    
 
     def compare_xml11
       return if source_format != :edifact || ast.nil? || xml.nil?

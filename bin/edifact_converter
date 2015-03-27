@@ -12,26 +12,35 @@ def print_errors(errors)
   end
 end
 
+text = ""
+result = nil
+
 if options[:source] == :xml
   xmltext = EdifactConverter.read_file(options[:input])
   result = EdifactConverter.convert_xml(xmltext)
-  print_errors result.properties[:errors]
-  if options[:xml11]
-    puts result.ast.document
+  text = if options[:format]
+    result.formatted_edifact
   else
-    puts result.format_edifact  
+    result.edifact
   end
 else
   editxt = EdifactConverter.read_file(options[:input])
   result = EdifactConverter.convert_edifact(editxt)
   result.verify
-  print_errors result.properties[:errors]
-  if options[:xml11]
-    puts result.ast.document
-  elsif options[:html]
-    puts result.html
+  text = if options[:html]
+    result.html.to_s
   else
-    puts result.xml
+    result.xml.to_s
   end
 end
 
+print_errors result.properties[:errors]
+if options[:xml11]
+  result.ast.document.to_s
+elsif options[:to_file]
+  File.open(options[:to_file], "wb") do |file|
+    file.write text
+  end
+else
+  puts text
+end

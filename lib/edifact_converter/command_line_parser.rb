@@ -24,11 +24,17 @@ module EdifactConverter
             opts.on( '-1', '--xml11', 'Only convert to XML 1-1') do
               options[:xml11] = true
             end
+            opts.on( '-f', '--format', 'Format edifact output with newlines') do
+              options[:format] = true
+            end
             opts.on( '--html', 'Only convert to XML 1-1') do
               options[:html] = true
             end
             opts.on( '-l', '--logfile FILE', 'Write log to FILE' ) do |file|
               options[:logfile] = file
+            end
+            opts.on( '-o', '--output FILE', 'Write output to FILE' ) do |file|
+              options[:to_file] = file
             end
             opts.on( '-v', '--version', "Prints version of #{$COMMAND_NAME}") do
               puts "#{$COMMAND_NAME} version #{VERSION}"

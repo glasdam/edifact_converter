@@ -1,5 +1,6 @@
 require "edifact_converter/version"
 
+require 'edifact_converter/binary'
 require "edifact_converter/abstract_syntax_tree"
 require "edifact_converter/comparator"
 require "edifact_converter/empty_handler"
