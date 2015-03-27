@@ -4,6 +4,34 @@ module EdifactConverter
 
   class Binary
 
+    MIME_TYPES = { 
+      "pcx" => 'image/x-pcx',
+      "tiff" => 'image/tiff',
+      "jpeg" => 'image/jpeg',
+      "gif" => 'image/gif',
+      "bmp" => 'image/bmp',
+      "png" => 'image/png',
+      "mpg" => 'video/mpeg',
+      "dcm" => 'application/dicom',
+      "scp" => 'application/dicom',
+      "txt" => 'text/plain',
+      "rtf" => 'text/rtf',
+      "doc" => 'application/msword',
+      "xls" => 'application/vnd.ms-excel',
+      "wpd" => 'application/wordperfect',
+      "exe" => 'application/octet-stream',
+      "pdf" => 'application/pdf',
+      "wav" => 'audio/wav',
+      "avi" => 'video/avi',
+      "mid" => 'audio/midi',
+      "rmi" => 'audio/mid',
+      "com" => 'application/octet-stream',
+      "zip" => 'application/zip',
+      'bin' => 'application/octet-stream',
+      'inh' => 'application/octet-stream',
+      'fnx' => 'application/zip'
+       }
+
     ATTRIBUTES = [:base64, :code, :extension, :size, :identifier]
 
     ATTRIBUTES.each do |attribute|
@@ -20,6 +48,10 @@ module EdifactConverter
 
     def binary
       Base64.decode64 base64 
+    end
+
+    def mime_type
+      MIME_TYPES.fetch extension, "application/octet-stream" 
     end
 
     def self.from_element(element)

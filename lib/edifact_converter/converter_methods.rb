@@ -37,7 +37,7 @@ module EdifactConverter
 
     def binary(id)
       if xml
-        xml2 = Nokogiri::XML xml
+        xml2 = Nokogiri::XML xml.to_s
         xml2.remove_namespaces!
         binary_object = xml2.root.at("//BinaryObject[ObjectIdentifier = '#{id}']")
         Binary.from_element binary_object if binary_object
