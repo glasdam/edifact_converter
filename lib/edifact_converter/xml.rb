@@ -10,7 +10,7 @@ module EdifactConverter
       xml = parse_xml(xml, properties)
       if xml.nil? or xml.root.nil?
         properties[:errors] << EdifactConverter::Message.new(text: "Mangel fuldt XML dokument, konvertering stoppet", source: :xml)
-        return 
+        return
       end
       properties[:namespace] = xml.root.namespace && xml.root.namespace.href
       rules = EdifactConverter::Configuration.xml_rules(properties[:namespace])
@@ -76,18 +76,9 @@ module EdifactConverter
       xml.xpath("//XFTX").each do |xftx|
         XftxParser.parse xftx
       end
-      xml.xpath("//GFTX").each do |gftx|
-        max = gftx['maxOccurs']
-        max = (max && max.to_i) || Float::INFINITY
-        if gftx.children.size > max
-          properties[:errors] << EdifactConverter::Message.new(
-            text: "Too many FTXs in segmentgroup #{gftx.parent.name}. Max allowed is #{max}, needs #{gftx.children.size} FTX."
-          )
-        end
-        gftx.children.each do |ftx|
-          gftx.before ftx
-        end
-        gftx.remove
+      process_gftxs xml, properties
+      xml.xpath("//S12").each do |s12|
+        split_group s12, properties
       end
       xml
     end
@@ -101,6 +92,43 @@ module EdifactConverter
         xmlstr
       else
         xmlstr
+      end
+    end
+
+    def self.process_gftxs(xml, properties)
+      xml.xpath("//GFTX").each do |gftx|
+        max = gftx['maxOccurs']
+        max = (max && max.to_i) || Float::INFINITY
+        max = Float::INFINITY if gftx.parent['maxOccurs']
+        if gftx.children.size > max
+          properties[:errors] << EdifactConverter::Message.new(
+            text: "Too many FTXs in segmentgroup #{gftx.parent.name}. Max allowed is #{max}, needs #{gftx.children.size} FTX."
+          )
+        end
+        gftx.children.each do |ftx|
+          gftx.before ftx
+        end
+        gftx.remove
+      end
+    end
+
+    def self.split_group(group, properties)
+      max = group['maxOccurs']
+      max = (max && max.to_i) || Float::INFINITY
+      ftxs = group.xpath("FTX")
+      ftxs.each { |ftx| ftx.unlink }
+      ftxgroups = ftxs.each_slice(10).to_a
+      if ftxgroups.size > max
+        properties[:errors] << EdifactConverter::Message.new(
+          text: "Too many FTXs in segmentgroup #{group.name}. Max allowed is #{max * 10}, needs #{ftxs.size} FTXs."
+        )
+      end
+      previous = group.previous_element
+      group.unlink
+      ftxgroups.reverse.each do |ftxs|
+        new_group = group.dup
+        ftxs.each { |ftx| new_group << ftx }
+        previous.add_next_sibling new_group
       end
     end
 
