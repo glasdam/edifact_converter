@@ -10,8 +10,9 @@ module EdifactConverter
     end
 
     def compare_docs(source, result, &proc)
-      self.error_proc = proc || Proc.new { |n| :errors << n }
+      self.error_proc = proc || Proc.new { |n| :errors << n }      
       if source.root.name == result.root.name
+        source, result = order_s12_ftxs(source), order_s12_ftxs(result)
         compare_children source.root, result.root
       else
         error_proc.call(
@@ -122,6 +123,21 @@ module EdifactConverter
     def elms_to_s(elements)
       str = elements.map { |element| element.name }.join("\n")
       str << "\n"
+    end
+
+    def order_s12_ftxs(xml)
+      ftxs = xml.xpath("//S12/FTX")
+      return xml unless ftxs.any?
+      ftxs.each { |ftx| ftx.unlink }
+      s12s = xml.xpath("//S12")
+      s12s.each_with_index do |s12, index|
+        next if index == 0
+        s12.unlink
+      end
+      s12 = s12s.first
+      ftxs = ftxs.sort_by { |ftx| ftx.xpath("Elm[1]/SubElm/text()").first.to_s}
+      ftxs.each { |ftx| s12 << ftx }
+      xml
     end
 
   end

@@ -36,7 +36,7 @@ end
 
 print_errors result.properties[:errors]
 if options[:xml11]
-  result.ast.document.to_s
+  puts result.ast.document.to_s
 elsif options[:to_file]
   File.open(options[:to_file], "wb") do |file|
     file.write text
