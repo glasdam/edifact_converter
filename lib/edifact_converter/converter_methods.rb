@@ -102,7 +102,7 @@ module EdifactConverter
       @proc ||= Proc.new do |diff|
         pos = EdifactConverter::EDI2XML11::Position.new diff.source["linie"], diff.source["position"]
         text = comparison_error_text diff
-        properties[:errors] << Message.new(position: pos, text: text)
+        properties[diff.type] << Message.new(position: pos, text: text)
       end
     end
 

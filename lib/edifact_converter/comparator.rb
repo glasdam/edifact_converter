@@ -10,7 +10,7 @@ module EdifactConverter
     end
 
     def compare_docs(source, result, &proc)
-      self.error_proc = proc || Proc.new { |n| :errors << n }      
+      self.error_proc = proc || Proc.new { |n| :errors << n }
       if source.root.name == result.root.name
         source, result = order_s12_ftxs(source), order_s12_ftxs(result)
         compare_children source.root, result.root
@@ -19,7 +19,8 @@ module EdifactConverter
           Difference.new(
             source: source.root,
             facit: result.root,
-            kind: :root
+            kind: :root,
+            type: only_warn ? :warnings : :errors
           )
         )
       end
@@ -28,7 +29,7 @@ module EdifactConverter
 
     private
 
-    attr_accessor :error_proc, :errors
+    attr_accessor :error_proc, :errors, :only_warn
 
     def compare_elements(source, facit)
       return unless children? source, facit
@@ -46,7 +47,8 @@ module EdifactConverter
             Difference.new(
               source: source_elm,
               facit: facit_elm,
-              kind: kind
+              kind: kind,
+              type: only_warn ? :warnings : :errors
             )
           )
         end
@@ -59,15 +61,21 @@ module EdifactConverter
           Difference.new(
             source: source,
             facit: facit,
-            kind: :text
+            kind: :text,
+            type: only_warn ? :warnings : :errors
           )
         )
       end
     end
 
     def compare_children(source, facit)
-      if source.name == 'SubElm'
+      case source.name
+      when 'SubElm'
         compare_subelms(source, facit)
+      when 'FTX'
+        self.only_warn = true
+        compare_elements(source, facit)
+        self.only_warn = false
       else
         compare_elements(source, facit)
       end
@@ -102,7 +110,8 @@ module EdifactConverter
           Difference.new(
             source: source,
             facit: facit,
-            kind: :added_children
+            kind: :added_children,
+            type: only_warn ? :warnings : :errors
           )
         )
         false
@@ -111,7 +120,8 @@ module EdifactConverter
           Difference.new(
             source: source,
             facit: facit,
-            kind: :removed_children
+            kind: :removed_children,
+            type: only_warn ? :warnings : :errors
           )
         )
         false

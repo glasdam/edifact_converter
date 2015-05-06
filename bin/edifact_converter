@@ -8,9 +8,16 @@ options = EdifactConverter::CommandLineParser.parse
 
 def print_errors(errors)
   errors.each do |error|
-    $stderr.puts error
+    $stderr.puts "ERROR:\t#{error}"
   end
 end
+
+def print_warnings(warnings)
+  warnings.each do |warning|
+    $stderr.puts "WARNING:\t#{warning}"
+  end
+end
+
 
 text = ""
 result = nil
@@ -35,9 +42,11 @@ else
 end
 
 print_errors result.properties[:errors]
+print_warnings result.properties[:warnings]
 if options[:xml11]
-  puts result.ast.document.to_s
-elsif options[:to_file]
+  text = result.ast.document.to_s
+end
+if options[:to_file]
   File.open(options[:to_file], "wb") do |file|
     file.write text
   end
