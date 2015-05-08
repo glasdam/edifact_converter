@@ -3,7 +3,7 @@ module EdifactConverter
 
   class Difference
 
-    ATTRIBUTES = [:source, :facit, :kind, :type]
+    ATTRIBUTES = [:source, :facit, :kind, :type, :message]
 
     ATTRIBUTES.each do |attribute|
       attr_accessor attribute
@@ -19,7 +19,16 @@ module EdifactConverter
     end
 
     def eql?(diff)
-      diff.source == source && diff.facit == facit && diff.kind == kind
+      return false unless diff.kind == kind
+      if kind == :unt
+        diff.source == source && diff.facit == facit
+      else
+        diff.source.name == source.name && diff.facit.name == facit.name 
+      end
+    end
+
+    def to_s
+      "#{source.path} afviger fra #{facit.path} ved at #{kind} af typen #{type} og meddelelsen #{message}"
     end
 
   end

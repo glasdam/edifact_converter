@@ -100,13 +100,16 @@ module EdifactConverter
 
     def error_proc
       @proc ||= Proc.new do |diff|
-        pos = EdifactConverter::EDI2XML11::Position.new diff.source["linie"], diff.source["position"]
+        if diff.source
+          pos = EdifactConverter::EDI2XML11::Position.new diff.source["linie"], diff.source["position"]
+        end
         text = comparison_error_text diff
         properties[diff.type] << Message.new(position: pos, text: text)
       end
     end
 
     def comparison_error_text(diff)
+      return diff.message if diff.message 
       case diff.kind
       when :added
         "Der mangler et #{diff.facit.name} her"

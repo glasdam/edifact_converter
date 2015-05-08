@@ -1,5 +1,6 @@
 require "diffy"
 require "edifact_converter/difference"
+require "edifact_converter/ftx_text"
 
 module EdifactConverter
 
@@ -10,9 +11,13 @@ module EdifactConverter
     end
 
     def compare_docs(source, result, &proc)
+      source = source.dup
+      result = result.dup
       self.error_proc = proc || Proc.new { |n| :errors << n }
       if source.root.name == result.root.name
-        source, result = order_s12_ftxs(source), order_s12_ftxs(result)
+        order_s12_ftxs(source)
+        order_s12_ftxs(result)
+        verify_texts(source, result)
         compare_children source.root, result.root
       else
         error_proc.call(
@@ -135,6 +140,38 @@ module EdifactConverter
       str << "\n"
     end
 
+    def verify_texts(source, facit)
+      source_s14 = combine_ftxs source.xpath("//S14/FTX")
+      facit_s14 = combine_ftxs facit.xpath("//S14/FTX")
+      source_s12 = combine_ftxs source.xpath("//S12/FTX")
+      facit_s12 = combine_ftxs facit.xpath("//S12/FTX")
+      unless source_s14 == facit_s14
+        error_proc.call(
+          Difference.new(
+            kind: :text,
+            type: :errors,
+            message: "Tekst i segment gruppe 14 bliver ikke ens konverteret!"
+          )
+        )
+      end
+      unless source_s12 == facit_s12
+        error_proc.call(
+          Difference.new(
+            kind: :text,
+            type: :errors,
+            message: "Tekst i segment gruppe 12 bliver ikke ens konverteret!"
+          )
+        )
+      end
+    end
+
+    def combine_ftxs(ftxs)
+      chunked = ftxs.chunk { |ftx| ftx.xpath('Elm[1]/SubElm/text()').to_s }.to_a
+      chunked.map do |set|
+        [ set.first, FTXText.parse(set.last)]
+      end
+    end
+
     def order_s12_ftxs(xml)
       ftxs = xml.xpath("//S12/FTX")
       return xml unless ftxs.any?
@@ -145,7 +182,9 @@ module EdifactConverter
         s12.unlink
       end
       s12 = s12s.first
-      ftxs = ftxs.sort_by { |ftx| ftx.xpath("Elm[1]/SubElm/text()").first.to_s}
+      ftx_sets = ftxs.chunk { |ftx| ftx.xpath("Elm[1]/SubElm/text()").first.to_s }.to_a
+      ftx_sets = ftx_sets.sort_by { |set| set.first }
+      ftxs = ftx_sets.map { |set| set.last }.flatten
       ftxs.each { |ftx| s12 << ftx }
       xml
     end
