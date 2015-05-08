@@ -834,7 +834,7 @@
       <xsl:for-each select="m:Correction">
         <GIS>
           <Elm>
-            <SubElm><xsl:value-of select="text()"/></SubElm>
+            <SubElm><xsl:copy-of select="text()"/></SubElm>
           </Elm>
         </GIS>
       </xsl:for-each>

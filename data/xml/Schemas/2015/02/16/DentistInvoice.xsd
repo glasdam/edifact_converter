@@ -133,7 +133,6 @@
 		        <xs:element name="Service" maxOccurs="unbounded">
 		          <xs:complexType>
 		            <xs:sequence>
-		              <xs:choice>
 		              <xs:element name="Rate">
 		                <xs:simpleType>
 		                  <xs:restriction base="xs:string">
@@ -141,14 +140,13 @@
 		                  </xs:restriction>
 		                </xs:simpleType>
 		              </xs:element>
-		                <xs:element name="Correction">
-		                  <xs:simpleType>
-		                    <xs:restriction base="xs:string">
-		                      <xs:pattern value="[0-9]{1,4}"/>
-		                    </xs:restriction>
-		                  </xs:simpleType>
-		                </xs:element>
-		              </xs:choice>
+					  <xs:element name="Correction" minOccurs="0">
+		                <xs:simpleType>
+		                  <xs:restriction base="xs:string">
+		                   	<xs:pattern value="[C]"/>
+		                  </xs:restriction>
+		                </xs:simpleType>
+		              </xs:element>
 		              <xs:element name="DateOfTreatment" type="xs:date"/>
 		              <xs:element name="Amount">
 		                <xs:simpleType>

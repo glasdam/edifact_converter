@@ -273,4 +273,16 @@
 			<xs:enumeration value="lokal"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:complexType name="ParagraphedTextType">
+		<xs:sequence>
+			<xs:element name="Paragraph" maxOccurs="10">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="500"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
 </xs:schema>

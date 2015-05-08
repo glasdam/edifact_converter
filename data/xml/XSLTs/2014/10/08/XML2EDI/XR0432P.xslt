@@ -801,13 +801,31 @@
 				</S18>
 				<xsl:for-each select="$Samples">
 					<xsl:variable name="pos" select="position()"/>
-					<S18 hidden="true">
-						<GIS>
-							<Elm>
-								<SubElm>N</SubElm>
-							</Elm>
-						</GIS>
-						<xsl:if test="$pos=1">
+					<xsl:variable name="DiagOvs" select="$CodedFormat/m:DiagnosisHeadline"/>
+					<xsl:variable name="CodedRes" select="$CodedFormat/m:Sample/m:CodedResults"/>
+					
+					<xsl:if test="$DiagOvs!=''">
+						<S18 hidden="true">
+							<GIS>
+								<Elm>
+									<SubElm>N</SubElm>
+								</Elm>
+							</GIS>
+							<xsl:if test="$pos=1">
+								<INV>
+									<Elm>
+										<SubElm>OE</SubElm>
+									</Elm>
+									<Elm>
+										<SubElm/>
+										<SubElm/>
+										<SubElm/>
+										<SubElm>
+											<xsl:value-of select="$DiagOvs"/>
+										</SubElm>
+									</Elm>
+								</INV>
+							</xsl:if>
 							<INV>
 								<Elm>
 									<SubElm>OE</SubElm>
@@ -817,109 +835,100 @@
 									<SubElm/>
 									<SubElm/>
 									<SubElm>
-										<xsl:value-of select="$CodedFormat/m:DiagnosisHeadline"/>
+										<xsl:value-of select="m:CodedResults/m:Headline"/>
 									</SubElm>
 								</Elm>
 							</INV>
-						</xsl:if>
-						<INV>
-							<Elm>
-								<SubElm>OE</SubElm>
-							</Elm>
-							<Elm>
-								<SubElm/>
-								<SubElm/>
-								<SubElm/>
-								<SubElm>
-									<xsl:value-of select="m:CodedResults/m:Headline"/>
-								</SubElm>
-							</Elm>
-						</INV>
-					</S18>
-					<S18 hidden="true">
-						<GIS>
-							<Elm>
-								<SubElm>N</SubElm>
-							</Elm>
-						</GIS>
-						<xsl:for-each select="m:CodedResults/m:Topography">
-							<CIN>
+						</S18>
+					</xsl:if>	
+
+					<xsl:if test="$CodedRes!=''">
+						<S18 hidden="true">
+							<GIS>
 								<Elm>
-									<SubElm>CCI</SubElm>
+									<SubElm>N</SubElm>
 								</Elm>
-								<Elm>
-									<SubElm>
-										<xsl:value-of select="m:Code"/>
-									</SubElm>
-									<SubElm>SNO</SubElm>
-									<SubElm>SST</SubElm>
-									<SubElm>
-										<xsl:value-of select="m:Text"/>
-									</SubElm>
-								</Elm>
-							</CIN>
-							<xsl:if test="count(m:Comment)=1">
+							</GIS>
+							<xsl:for-each select="m:CodedResults/m:Topography">
 								<CIN>
 									<Elm>
-										<SubElm>SPC</SubElm>
+										<SubElm>CCI</SubElm>
 									</Elm>
 									<Elm>
-										<SubElm/>
-										<SubElm/>
-										<SubElm/>
 										<SubElm>
-											<xsl:value-of select="m:Comment"/>
+											<xsl:value-of select="m:Code"/>
+										</SubElm>
+										<SubElm>SNO</SubElm>
+										<SubElm>SST</SubElm>
+										<SubElm>
+											<xsl:value-of select="m:Text"/>
 										</SubElm>
 									</Elm>
 								</CIN>
-							</xsl:if>
-						</xsl:for-each>
-						<xsl:for-each select="m:CodedResults/m:Result">
-							<CIN>
-								<Elm>
-									<SubElm>CCI</SubElm>
-								</Elm>
-								<Elm>
-									<SubElm>
-										<xsl:value-of select="m:Code"/>
-									</SubElm>
-									<SubElm>SNO</SubElm>
-									<SubElm>SST</SubElm>
-									<SubElm>
-										<xsl:value-of select="m:Text"/>
-									</SubElm>
-								</Elm>
-							</CIN>
-							<xsl:if test="count(m:Comment)=1">
+								<xsl:if test="count(m:Comment)=1">
+									<CIN>
+										<Elm>
+											<SubElm>SPC</SubElm>
+										</Elm>
+										<Elm>
+											<SubElm/>
+											<SubElm/>
+											<SubElm/>
+											<SubElm>
+												<xsl:value-of select="m:Comment"/>
+											</SubElm>
+										</Elm>
+									</CIN>
+								</xsl:if>
+							</xsl:for-each>
+							<xsl:for-each select="m:CodedResults/m:Result">
 								<CIN>
 									<Elm>
-										<SubElm>SPC</SubElm>
+										<SubElm>CCI</SubElm>
 									</Elm>
 									<Elm>
-										<SubElm/>
-										<SubElm/>
-										<SubElm/>
 										<SubElm>
-											<xsl:value-of select="m:Comment"/>
+											<xsl:value-of select="m:Code"/>
+										</SubElm>
+										<SubElm>SNO</SubElm>
+										<SubElm>SST</SubElm>
+										<SubElm>
+											<xsl:value-of select="m:Text"/>
 										</SubElm>
 									</Elm>
 								</CIN>
-							</xsl:if>
-						</xsl:for-each>
-						<INV>
-							<Elm>
-								<SubElm>NR</SubElm>
-							</Elm>
-						</INV>
-						<RFF>
-							<Elm>
-								<SubElm>ASL</SubElm>
-								<SubElm>
-									<xsl:value-of select="$pos"/>
-								</SubElm>
-							</Elm>
-						</RFF>
-					</S18>
+								<xsl:if test="count(m:Comment)=1">
+									<CIN>
+										<Elm>
+											<SubElm>SPC</SubElm>
+										</Elm>
+										<Elm>
+											<SubElm/>
+											<SubElm/>
+											<SubElm/>
+											<SubElm>
+												<xsl:value-of select="m:Comment"/>
+											</SubElm>
+										</Elm>
+									</CIN>
+								</xsl:if>
+							</xsl:for-each>
+							<INV>
+								<Elm>
+									<SubElm>NR</SubElm>
+								</Elm>
+							</INV>
+							<RFF>
+								<Elm>
+									<SubElm>ASL</SubElm>
+									<SubElm>
+										<xsl:value-of select="$pos"/>
+									</SubElm>
+								</Elm>
+							</RFF>
+						</S18>
+					</xsl:if>
+					
 				</xsl:for-each>
 				<xsl:for-each select="$Macroscopic">
 					<S18 hidden="true">
@@ -1147,24 +1156,6 @@
 								</Elm>
 							</FTX>
 						</xsl:for-each>
-					  <!-- 
-						<xsl:for-each select="m:CellTypesPercentage">
-							<FTX>
-								<Elm>
-									<SubElm>HEM</SubElm>
-								</Elm>
-								<Elm>
-									<SubElm>F00</SubElm>
-								</Elm>
-								<Elm/>
-								<Elm>
-									<SubElm>
-										<xsl:value-of select="."/>
-									</SubElm>
-								</Elm>
-							</FTX>
-						</xsl:for-each>
-					  -->
 					</S18>
 				</xsl:for-each>
 				<xsl:for-each select="$Comments">

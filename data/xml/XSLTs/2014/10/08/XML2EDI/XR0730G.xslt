@@ -11,6 +11,7 @@
 		<xsl:variable name="CCReceiver" select="m:CCReceiver"/>
 		<xsl:variable name="CCRPhysician" select="$CCReceiver/m:Physician"/>
 		<xsl:variable name="Patient" select="m:Patient"/>
+		<xsl:variable name="Relative" select="m:Relative"/>
 		<xsl:variable name="ReqInfo" select="m:RequisitionInformation"/>
 		<xsl:variable name="LabResults" select="m:LaboratoryResults"/>
 		<xsl:variable name="GeneralResultInformation" select="$LabResults/m:GeneralResultInformation"/>
@@ -505,36 +506,6 @@
 					<Elm>
 						<SubElm>06</SubElm>
 					</Elm>
-					<xsl:variable name="Person" select="$Patient"/>
-					<xsl:variable name="Adr" select="$Person"/>
-					<xsl:if
-						test="count($Adr/m:StreetName)+count($Adr/m:SuburbName)+count($Adr/m:DistrictName)+count($Adr/m:PostCodeIdentifier)>0">
-						<ADR>
-							<Elm>
-								<SubElm/>
-								<SubElm>PO</SubElm>
-							</Elm>
-							<Elm>
-								<SubElm>US</SubElm>
-								<SubElm>
-									<xsl:value-of select="$Adr//m:StreetName"/>
-								</SubElm>
-								<SubElm>
-									<xsl:value-of select="$Adr/m:SuburbName"/>
-								</SubElm>
-							</Elm>
-							<Elm>
-								<SubElm>
-									<xsl:value-of select="$Adr/m:DistrictName"/>
-								</SubElm>
-							</Elm>
-							<Elm>
-								<SubElm>
-									<xsl:value-of select="$Adr/m:PostCodeIdentifier"/>
-								</SubElm>
-							</Elm>
-						</ADR>
-					</xsl:if>
 				</S06>
 				<S07>
 					<xsl:if
@@ -600,6 +571,66 @@
 						</HAN>
 					</xsl:if>
 				</S07>
+				<xsl:if test="count($Relative)=1">
+					<S07>
+						<xsl:variable name="Person" select="$Relative"/>
+						<Elm>
+							<SubElm>07</SubElm>
+						</Elm>
+						<PNA>
+							<Elm>
+								<SubElm>PER</SubElm>
+							</Elm>
+							<Elm>
+								<xsl:if test="count($Person/m:PersonIdentifier)=1">
+									<SubElm>
+										<xsl:value-of select="$Person/m:PersonIdentifier"/>
+									</SubElm>
+									<SubElm/>
+									<SubElm/>
+									<SubElm>CPR</SubElm>
+									<SubElm>IM</SubElm>
+								</xsl:if>
+							</Elm>
+							<Elm/>
+							<Elm/>
+							<Elm>
+								<SubElm>SU</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Person/m:PersonSurnameName"/>
+								</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:if test="count($Person/m:PersonGivenName)=1">FO</xsl:if>
+								</SubElm>
+								<SubElm>
+									<xsl:value-of select="$Person/m:PersonGivenName"/>
+								</SubElm>
+							</Elm>
+						</PNA>
+						<REL>
+							<Elm>
+								<SubElm>PER</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>
+									<xsl:variable name="RC" select="$Person/m:RelationCode"/>
+									<xsl:choose>
+										<xsl:when test="$RC='uspec_paaroerende'">GU</xsl:when>
+										<xsl:when test="$RC='mor'">MO</xsl:when>
+										<xsl:when test="$RC='far'">FA</xsl:when>
+										<xsl:when test="$RC='barn'">SD</xsl:when>
+										<xsl:otherwise>
+											<FEJL>Kan ikke oversætte kode for pårørende: <xsl:value-of select="$RC"/>
+											</FEJL>
+										</xsl:otherwise>
+									</xsl:choose>
+								</SubElm>
+							</Elm>
+						</REL>
+					</S07>
+				</xsl:if>
 				<xsl:if test="count($ReqInfo/m:ClinicalInformation | $ReqInfo/m:Reference)>0">
 					<S10>
 						<Elm>
@@ -684,12 +715,9 @@
 					<GIS>
 						<Elm>
 							<SubElm>
-								<xsl:variable name="RSC"
-									select="$GeneralResultInformation/m:ResultStatusCode"/>
+								<xsl:variable name="RSC" select="$GeneralResultInformation/m:ResultStatusCode"/>
 								<xsl:choose>
-									<xsl:when
-										test="$RSC='svar_endeligt' or $RSC='svar_midlertidigt' or $RSC='proeve_modtaget' "
-										>N</xsl:when>
+									<xsl:when test="$RSC='svar_endeligt' or $RSC='svar_midlertidigt' or $RSC='proeve_modtaget' ">N</xsl:when>
 									<xsl:when test="$RSC='svar_rettet' ">M</xsl:when>
 									<xsl:otherwise>
 										<FEJL>ukendt ResultStatusCode: <xsl:value-of select="$RSC"/>
@@ -701,12 +729,19 @@
 					</GIS>
 					<INV>
 						<Elm>
-							<SubElm>OE</SubElm>
+							<SubElm>MQ</SubElm>
 						</Elm>
 						<Elm>
-							<SubElm/>
-							<SubElm/>
-							<SubElm/>
+							<xsl:variable name="Analysekode" select="$TableFormat/m:AnalysisCode"/>
+							<SubElm>
+								<xsl:value-of select="$Analysekode"/>
+							</SubElm>
+							<SubElm>
+								<xsl:if test="$Analysekode!=''">CQU</xsl:if>								
+							</SubElm>
+							<SubElm>
+								<xsl:if test="$Analysekode!=''">SST</xsl:if>								
+							</SubElm>
 							<SubElm>
 								<xsl:value-of select="$TableFormat/m:ResultHeadline"/>
 							</SubElm>
@@ -729,22 +764,34 @@
 								<xsl:variable name="RSC"
 									select="$GeneralResultInformation/m:ResultStatusCode"/>
 								<xsl:choose>
-									<xsl:when test="$RSC='svar_endeligt' or $RSC='svar_rettet' "
-										>FR</xsl:when>
-									<xsl:when
-										test="$RSC='svar_modtaget' or $RSC='svar_midlertidigt' "
-										>PR</xsl:when>
+									<xsl:when test="$RSC='svar_endeligt' or $RSC='svar_rettet' ">FR</xsl:when>
+									<xsl:when test="$RSC='svar_modtaget' or $RSC='svar_midlertidigt' ">PR</xsl:when>
 									<!--	<xsl:when test="$RSC='MR' ">modificeret</xsl:when>-->
 									<xsl:otherwise>
-										<FEJL>Kan ikke oversætte ResultsStatusCode: <xsl:value-of
-												select="$RSC"/>
+										<FEJL>Kan ikke oversætte ResultsStatusCode: <xsl:value-of select="$RSC"/>
 										</FEJL>
 									</xsl:otherwise>
 								</xsl:choose>
 							</SubElm>
 						</Elm>
 					</STS>
-					<xsl:for-each select="m:ToLabIdentifier">
+					<xsl:for-each select="$TableFormat/m:AnalysisCompleteName">
+						<XFTX maxOccurs="1">
+							<Elm>
+								<SubElm>ACM</SubElm>
+							</Elm>
+							<Elm>
+								<SubElm>P00</SubElm>
+							</Elm>
+							<Elm/>
+							<Elm>
+								<SubElm>
+									<xsl:copy-of select="./text()|./*"/>
+								</SubElm>
+							</Elm>
+						</XFTX>						
+					</xsl:for-each>
+					<xsl:for-each select="$GeneralResultInformation/m:ToLabIdentifier">
 						<RFF>
 							<Elm>
 								<SubElm>AHI</SubElm>

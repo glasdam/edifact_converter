@@ -12,6 +12,7 @@
 	<xs:include schemaLocation="Receiver.xsd"/>
 	<xs:include schemaLocation="CCReceiver.xsd"/>
 	<xs:include schemaLocation="Patient.xsd"/>
+	<xs:include schemaLocation="Relative.xsd"/>
 	<xs:include schemaLocation="ValueLists.xsd"/>
 	<xs:element name="GeneticsReport" type="GeneticsReportType">
 		<xs:annotation>
@@ -26,19 +27,18 @@
 		<xs:sequence>
 			<xs:element name="Letter" type="GeneticsReportLetterType">
 				<xs:annotation>
-					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til
-						VersionCode=XR0730G og TypeCode=XRPT07</xs:documentation>
+					<xs:documentation>Kan betragtes som et Letter element, som blot begrænses til VersionCode=XR0730G og TypeCode=XRPT07</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Sender" type="GeneticsReportSenderType"/>
 			<xs:element name="Receiver" type="GeneticsReportReceiverType"/>
 			<xs:element name="CCReceiver" type="GeneticsReportCCReceiverType" minOccurs="0"/>
 			<xs:element name="Patient" type="GeneticsReportPatientType"/>
+			<xs:element name="Relative" type="GeneticsReportRelativeType" minOccurs="0"/>
 			<xs:element name="RequisitionInformation">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="RequestersRequisitionIdentifier" type="String_1_15"
-							minOccurs="0"/>
+						<xs:element name="RequestersRequisitionIdentifier" type="String_1_15" minOccurs="0"/>
 						<xs:element name="ReceiversRequisitionIdentifier" type="String_1_15"/>
 						<xs:element name="SamplingDateTime" type="DateTimeType"/>
 						<xs:element name="SampleReceivedDateTime" type="DateTimeType"/>
@@ -54,6 +54,15 @@
 						<xs:element name="GeneralResultInformation">
 							<xs:complexType>
 								<xs:sequence>
+									<xs:element name="ReportStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="del_svar"/>
+												<xs:enumeration value="komplet_svar"/>
+												<xs:enumeration value="modtaget"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
 									<xs:element name="ResultStatusCode">
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -65,18 +74,8 @@
 										</xs:simpleType>
 									</xs:element>
 									<xs:element name="ToLabIdentifier" type="String_1_3" minOccurs="0"/>
-									<xs:element name="ReportStatusCode">
-										<xs:simpleType>
-											<xs:restriction base="xs:string">
-												<xs:enumeration value="del_svar"/>
-												<xs:enumeration value="komplet_svar"/>
-												<xs:enumeration value="modtaget"/>
-											</xs:restriction>
-										</xs:simpleType>
-									</xs:element>
 									<xs:element name="ResultsDateTime" type="DateTimeType"/>
-									<xs:element name="LaboratoryInternalProductionIdentifier"
-										type="String_1_35"/>
+									<xs:element name="LaboratoryInternalProductionIdentifier" type="String_1_35"/>
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -86,13 +85,10 @@
 									<xs:element name="Sample" maxOccurs="100">
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element name="RequesterSampleIdentifier"
-												type="String_1_15" minOccurs="0"/>
-												<xs:element
-												name="LaboratoryInternalSampleIdentifier"
-												type="String_1_20"/>
-												<xs:element name="MaterialDescription"
-												type="String_1_70"/>											</xs:sequence>
+												<xs:element name="RequesterSampleIdentifier" type="String_1_15" minOccurs="0"/>
+												<xs:element name="LaboratoryInternalSampleIdentifier" type="String_1_20"/>
+												<xs:element name="MaterialDescription" type="String_1_70"/>
+											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
 								</xs:sequence>
@@ -101,6 +97,8 @@
 						<xs:element name="TableFormat">
 							<xs:complexType>
 								<xs:sequence>
+									<xs:element name="AnalysisCode" type="String_1_8" minOccurs="0"/>
+									<xs:element ref="AnalysisCompleteName" minOccurs="0"/>
 									<xs:element name="ResultHeadline" type="String_1_35"/>
 									<xs:element name="TableResult" type="String_1_8"/>
 								</xs:sequence>
@@ -113,8 +111,7 @@
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="Headline" type="String_1_35"/>
-												<xs:element name="Text" type="FormattedTextType"
-												minOccurs="0"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
@@ -122,8 +119,7 @@
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="Headline" type="String_1_35"/>
-												<xs:element name="Text" type="FormattedTextType"
-												minOccurs="0"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
@@ -131,10 +127,8 @@
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="Headline" type="String_1_35"/>
-												<xs:element name="Text" type="FormattedTextType"
-												minOccurs="0"/>
-												<xs:element ref="Reference" minOccurs="0"
-												maxOccurs="10"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
+												<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
@@ -142,10 +136,8 @@
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="Headline" type="String_1_35"/>
-												<xs:element name="Text" type="FormattedTextType"
-												minOccurs="0"/>
-												<xs:element ref="Reference" minOccurs="0"
-												maxOccurs="10"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
+												<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
@@ -153,10 +145,8 @@
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="Headline" type="String_1_35"/>
-												<xs:element name="Text" type="FormattedTextType"
-												minOccurs="0"/>
-												<xs:element ref="Reference" minOccurs="0"
-												maxOccurs="10"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
+												<xs:element ref="Reference" minOccurs="0" maxOccurs="10"/>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
@@ -164,8 +154,7 @@
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="Headline" type="String_1_35"/>
-												<xs:element name="Text" type="FormattedTextType"
-												minOccurs="0"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
@@ -173,8 +162,7 @@
 										<xs:complexType>
 											<xs:sequence>
 												<xs:element name="Headline" type="String_1_35"/>
-												<xs:element name="Text" type="FormattedTextType"
-												minOccurs="0"/>
+												<xs:element name="Text" type="FormattedTextType" minOccurs="0"/>
 											</xs:sequence>
 										</xs:complexType>
 									</xs:element>
@@ -188,8 +176,7 @@
 	</xs:complexType>
 	<xs:complexType name="GeneticsReportLetterType">
 		<xs:annotation>
-			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til
-				VersionCode=XR0730G og TypeCode=XRPT07</xs:documentation>
+			<xs:documentation>Kan betragtes som en LetterType, som blot begrænses til VersionCode=XR0730G og TypeCode=XRPT07</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Identifier" type="String_1_14"/>
@@ -277,10 +264,6 @@
 			</xs:choice>
 			<xs:element ref="PersonSurnameName"/>
 			<xs:element ref="PersonGivenName" minOccurs="0"/>
-			<xs:element ref="StreetName" minOccurs="0"/>
-			<xs:element ref="SuburbName" minOccurs="0"/>
-			<xs:element ref="DistrictName" minOccurs="0"/>
-			<xs:element ref="PostCodeIdentifier" minOccurs="0"/>
 			<xs:element name="Consent" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
@@ -288,6 +271,14 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeneticsReportRelativeType">
+		<xs:sequence>
+			<xs:element ref="RelationCode"/>
+			<xs:element ref="PersonIdentifier" minOccurs="0"/>
+			<xs:element ref="PersonSurnameName"/>
+			<xs:element ref="PersonGivenName" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 </xs:schema>

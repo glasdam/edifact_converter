@@ -268,6 +268,21 @@
 			</RequisitionInformation>
 			<LaboratoryResults>
 				<GeneralResultInformation>
+					<ReportStatusCode>
+						<xsl:variable name="SStatC" select="$S02LetterInfo/STS/Elm[2]/SubElm[1]"/>
+						<xsl:choose>
+							<xsl:when test="$SStatC='K'">komplet_svar</xsl:when>
+							<xsl:when test="$SStatC='D'">del_svar</xsl:when>
+							<xsl:when test="$SStatC='M'">modtaget</xsl:when>
+							<xsl:otherwise>
+								<xsl:call-template name="Error">
+									<xsl:with-param name="Node" select="$SStatC"/>
+									<xsl:with-param name="Text">Kan ikke overætte fra STATUS:<xsl:value-of select="$SStatC"/> til ReportStatusCode
+									</xsl:with-param>
+								</xsl:call-template>
+							</xsl:otherwise>
+						</xsl:choose>
+					</ReportStatusCode>
 					<ResultStatusCode>
 						<xsl:variable name="RStatC" select="$S18Table/GIS/Elm[1]/SubElm[1]"/>
 						<xsl:variable name="RServC" select="$S18Table/STS/Elm[2]/SubElm[1]"/>
@@ -291,21 +306,6 @@
 							<xsl:value-of select="Elm[1]/SubElm[2]"/>
 						</ToLabIdentifier>
 					</xsl:for-each>	
-					<ReportStatusCode>
-						<xsl:variable name="SStatC" select="$S02LetterInfo/STS/Elm[2]/SubElm[1]"/>
-						<xsl:choose>
-							<xsl:when test="$SStatC='K'">komplet_svar</xsl:when>
-							<xsl:when test="$SStatC='D'">del_svar</xsl:when>
-							<xsl:when test="$SStatC='M'">modtaget</xsl:when>
-							<xsl:otherwise>
-								<xsl:call-template name="Error">
-									<xsl:with-param name="Node" select="$SStatC"/>
-									<xsl:with-param name="Text">Kan ikke overætte fra STATUS:<xsl:value-of select="$SStatC"/> til ReportStatusCode
-									</xsl:with-param>
-								</xsl:call-template>
-							</xsl:otherwise>
-						</xsl:choose>
-					</ReportStatusCode>
 					
 					<!--
 					<xsl:for-each select="$S18Table/GIS">

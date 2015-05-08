@@ -445,6 +445,7 @@
   </xsl:template>
 
 
+  <!--
   <xsl:template mode="SimplePresentation" match="*">
     <tr>
       <td>
@@ -474,6 +475,7 @@
       </td>
     </tr>
   </xsl:template>
+  -->
   
   <xsl:template match="m:MicroscopicFindings">
     <h4><xsl:value-of select="m:Headline"/></h4>

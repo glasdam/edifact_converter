@@ -21,6 +21,7 @@
 		<xsl:variable name="SampleRecDTM" select="$S04Sample/DTM[Elm[1]/SubElm[1]='8']"/>
 		<xsl:variable name="S06Patient" select="BrevIndhold/S06"/>
 		<xsl:variable name="S07Patient" select="BrevIndhold/S07[PNA/Elm[1]/SubElm[1]='PAT'] "/>
+		<xsl:variable name="S07Relative" select="BrevIndhold/S07[PNA/Elm[1]/SubElm[1]='PER'] "/>
 		<xsl:variable name="S10ReqInfo" select="BrevIndhold/S10"/>
 		<xsl:variable name="S16Samples" select="BrevIndhold/S16"/>
 		<xsl:variable name="S18" select="BrevIndhold/S18"/>
@@ -177,12 +178,6 @@
 					</xsl:for-each>
 				</xsl:for-each>
 				<xsl:for-each select="$S06Patient">
-					<xsl:for-each select="ADR">
-						<xsl:call-template name="ADRToStreetName"/>
-						<xsl:call-template name="ADRToSuburbName"/>
-						<xsl:call-template name="ADRToDistrictName"/>
-						<xsl:call-template name="ADRToPostCodeIdentifier"/>
-					</xsl:for-each>
 					<xsl:for-each select="$S07Patient">
 						<xsl:for-each select="HAN">
 							<Consent>
@@ -197,6 +192,18 @@
 					</xsl:for-each>
 				</xsl:for-each>
 			</Patient>
+			<xsl:for-each select="$S07Relative">
+				<Relative>
+					<xsl:for-each select="REL">
+						<xsl:call-template name="RELToRelationCode"/>
+					</xsl:for-each>
+					<xsl:for-each select="PNA">
+						<xsl:call-template name="PNAToPersonIdentifier"/>
+						<xsl:call-template name="PNAToPersonSurnameName"/>
+						<xsl:call-template name="PNAToPersonGivenName"/>
+					</xsl:for-each>
+				</Relative>
+			</xsl:for-each>
 			<RequisitionInformation>
 				<xsl:for-each select="$DocRekvNrRFF">
 					<RequestersRequisitionIdentifier>
@@ -249,6 +256,21 @@
 			</RequisitionInformation>
 			<LaboratoryResults>
 				<GeneralResultInformation>
+					<ReportStatusCode>
+						<xsl:variable name="SStatC" select="$S02LetterInfo/STS/Elm[2]/SubElm[1]"/>
+						<xsl:choose>
+							<xsl:when test="$SStatC='K'">komplet_svar</xsl:when>
+							<xsl:when test="$SStatC='D'">del_svar</xsl:when>
+							<xsl:when test="$SStatC='M'">modtaget</xsl:when>
+							<xsl:otherwise>
+								<xsl:call-template name="Error">
+									<xsl:with-param name="Node" select="$SStatC"/>
+									<xsl:with-param name="Text">Kan ikke overætte fra STATUS:<xsl:value-of select="$SStatC"/> til ReportStatusCode
+									</xsl:with-param>
+								</xsl:call-template>
+							</xsl:otherwise>
+						</xsl:choose>
+					</ReportStatusCode>
 					<ResultStatusCode>
 						<xsl:variable name="RStatC" select="$S18Table/GIS/Elm[1]/SubElm[1]"/>
 						<xsl:variable name="RServC" select="$S18Table/STS/Elm[2]/SubElm[1]"/>
@@ -272,21 +294,7 @@
 							<xsl:value-of select="Elm[1]/SubElm[2]"/>
 						</ToLabIdentifier>
 					</xsl:for-each>	
-					<ReportStatusCode>
-						<xsl:variable name="SStatC" select="$S02LetterInfo/STS/Elm[2]/SubElm[1]"/>
-						<xsl:choose>
-							<xsl:when test="$SStatC='K'">komplet_svar</xsl:when>
-							<xsl:when test="$SStatC='D'">del_svar</xsl:when>
-							<xsl:when test="$SStatC='M'">modtaget</xsl:when>
-							<xsl:otherwise>
-								<xsl:call-template name="Error">
-									<xsl:with-param name="Node" select="$SStatC"/>
-									<xsl:with-param name="Text">Kan ikke overætte fra STATUS:<xsl:value-of select="$SStatC"/> til ReportStatusCode
-									</xsl:with-param>
-								</xsl:call-template>
-							</xsl:otherwise>
-						</xsl:choose>
-					</ReportStatusCode>
+
 					<xsl:for-each select="$S02Answer/DTM">
 						<ResultsDateTime>
 							<xsl:call-template name="DTM203ToDateTime"/>
@@ -321,6 +329,20 @@
 				</CodedFormat>
 				<xsl:for-each select="$S18Table">
 					<TableFormat>
+						<xsl:for-each select="INV[Elm[1]/SubElm[1]='MQ']">
+							<xsl:if test="Elm[2]/SubElm[1]!='' ">
+								<AnalysisCode>
+									<xsl:value-of select="Elm[2]/SubElm[1]"/>
+								</AnalysisCode>
+							</xsl:if>
+						</xsl:for-each>
+						<xsl:for-each select="FTX[Elm[1]/SubElm[1]='ACM']">
+							<AnalysisCompleteName>
+								<xsl:call-template name="FTXSegmentsToFormattedText">
+									<xsl:with-param name="FTXSegments" select="."/>
+								</xsl:call-template>
+							</AnalysisCompleteName>
+						</xsl:for-each>	
 						<xsl:for-each select="INV">
 							<ResultHeadline>
 								<xsl:value-of select="Elm[2]/SubElm[4]"/>

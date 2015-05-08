@@ -56,6 +56,15 @@
 						<xs:element name="GeneralResultInformation">
 							<xs:complexType>
 								<xs:sequence>
+									<xs:element name="ReportStatusCode">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:enumeration value="del_svar"/>
+												<xs:enumeration value="komplet_svar"/>
+												<xs:enumeration value="modtaget"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
 									<xs:element name="ResultStatusCode">
 										<xs:simpleType>
 											<xs:restriction base="xs:string">
@@ -67,15 +76,6 @@
 										</xs:simpleType>
 									</xs:element>
 									<xs:element name="ToLabIdentifier" type="String_1_3" minOccurs="0"/>
-									<xs:element name="ReportStatusCode">
-										<xs:simpleType>
-											<xs:restriction base="xs:string">
-												<xs:enumeration value="del_svar"/>
-												<xs:enumeration value="komplet_svar"/>
-												<xs:enumeration value="modtaget"/>
-											</xs:restriction>
-										</xs:simpleType>
-									</xs:element>
 									<xs:element name="ResultsDateTime" type="DateTimeType"/>
 									<xs:element name="LaboratoryInternalProductionIdentifier"
 										type="String_1_35"/>
@@ -85,43 +85,37 @@
 						<xs:element name="CodedFormat">
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element name="DiagnosisHeadline" type="String_1_35"/>
+									<xs:element name="DiagnosisHeadline" type="String_1_35" minOccurs="0"/>
 									<xs:element name="Sample" maxOccurs="100">
 										<xs:complexType>
 											<xs:sequence>
-												<xs:element name="RequesterSampleIdentifier"
-												type="String_1_15" minOccurs="0"/>
-												<xs:element
-												name="LaboratoryInternalSampleIdentifier"
-												type="String_1_20"/>
-												<xs:element name="MaterialDescription"
-												type="String_1_70"/>
-												<xs:element name="CodedResults">
-												<xs:complexType>
-												<xs:sequence>
-												<xs:element name="Headline" type="String_1_35"/>
-												<xs:element name="Topography">
-												<xs:complexType>
-												<xs:sequence>
-												<xs:element name="Code" type="String_1_17"/>
-												<xs:element name="Text" type="String_1_70"/>
-												<xs:element name="Comment" type="String_1_70"
-												minOccurs="0"/>
-												</xs:sequence>
-												</xs:complexType>
-												</xs:element>
-												<xs:element name="Result" maxOccurs="39">
-												<xs:complexType>
-												<xs:sequence>
-												<xs:element name="Code" type="String_1_17"/>
-												<xs:element name="Text" type="String_1_70"/>
-												<xs:element name="Comment" type="String_1_70"
-												minOccurs="0"/>
-												</xs:sequence>
-												</xs:complexType>
-												</xs:element>
-												</xs:sequence>
-												</xs:complexType>
+												<xs:element name="RequesterSampleIdentifier" type="String_1_15" minOccurs="0"/>
+												<xs:element	name="LaboratoryInternalSampleIdentifier" type="String_1_20"/>
+												<xs:element name="MaterialDescription" type="String_1_70"/>
+												<xs:element name="CodedResults" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="Headline" type="String_1_35"/>
+															<xs:element name="Topography">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Code" type="String_1_17"/>
+																		<xs:element name="Text" type="String_1_70"/>
+																		<xs:element name="Comment" type="String_1_70" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="Result" maxOccurs="39">
+																<xs:complexType>
+																	<xs:sequence>
+																		<xs:element name="Code" type="String_1_17"/>
+																		<xs:element name="Text" type="String_1_70"/>
+																		<xs:element name="Comment" type="String_1_70" minOccurs="0"/>
+																	</xs:sequence>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
 												</xs:element>
 											</xs:sequence>
 										</xs:complexType>

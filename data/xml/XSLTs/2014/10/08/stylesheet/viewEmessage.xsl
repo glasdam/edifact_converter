@@ -1612,6 +1612,38 @@
 								</table>
 							</td>
 						</tr>
+
+						<xsl:if test="m:LaboratoryResults/m:TableFormat/m:AnalysisCode">
+							<tr>
+								<td valign="top" width="100%">
+									<table>
+										<tbody>
+											<tr>
+												<td valign="top">
+													<b>NPU-analysekode:</b>
+												</td>
+												<td valign="top">
+													<xsl:value-of select="m:LaboratoryResults/m:TableFormat/m:AnalysisCode"/>
+												</td>	
+												<td valign="top">
+													<b>Analysenavn:</b>
+												</td>
+												<td valign="top">
+													<xsl:value-of select="m:LaboratoryResults/m:TableFormat/m:AnalysisCompleteName"/>
+												</td>	
+												<td valign="top">
+													<b>Kortnavn:</b>
+												</td>
+												<td valign="top">
+													<xsl:value-of select="m:LaboratoryResults/m:TableFormat/m:ResultHeadline"/>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</xsl:if>											
+
 						<xsl:for-each select="m:RequisitionInformation/m:Comments">
 							<tr>
 								<td valign="top" width="100%">

@@ -88,8 +88,8 @@
 									<xsl:when test="$IC='lokationsnummer' "></xsl:when>
 									<xsl:when test="count($IC)=0 "/>
 									<xsl:when test="$IC='kommunenummer' ">KOM</xsl:when>
-		     <xsl:when test="$IC='sorkode'">SOR</xsl:when>
-			 <xsl:otherwise>
+									<xsl:when test="$IC='sorkode'">SOR</xsl:when>
+									<xsl:otherwise>
 										<FEJL>Kan ikke oversætte IdentifierCodeType: <xsl:value-of select="$IC"/>
 										</FEJL>
 									</xsl:otherwise>
@@ -103,8 +103,8 @@
 									<xsl:when test="$IC='lokationsnummer' ">9</xsl:when>
 									<xsl:when test="count($IC)=0 ">9</xsl:when>
 									<xsl:when test="$IC='kommunenummer' ">IM</xsl:when>
-		     <xsl:when test="$IC='sorkode'">SST</xsl:when>
-			 <xsl:otherwise>
+									<xsl:when test="$IC='sorkode'">SST</xsl:when>
+									<xsl:otherwise>
 										<FEJL>Kan ikke oversætte IdentifierCodeType: <xsl:value-of select="$IC"/>
 										</FEJL>
 									</xsl:otherwise>
@@ -188,8 +188,8 @@
 									<xsl:when test="$IC='lokationsnummer' "></xsl:when>
 									<xsl:when test="count($IC)=0"/>
 									<xsl:when test="$IC='kommunenummer' ">KOM</xsl:when>
-		     <xsl:when test="$IC='sorkode'">SOR</xsl:when>
-			 <xsl:otherwise>
+									<xsl:when test="$IC='sorkode'">SOR</xsl:when>
+									<xsl:otherwise>
 										<FEJL>Kan ikke oversætte IdentifierCodeType: <xsl:value-of select="$IC"/>
 										</FEJL>
 									</xsl:otherwise>
@@ -203,8 +203,8 @@
 									<xsl:when test="$IC='lokationsnummer' ">9</xsl:when>
 									<xsl:when test="count($IC)=0">9</xsl:when>
 									<xsl:when test="$IC='kommunenummer' ">IM</xsl:when>
-		     <xsl:when test="$IC='sorkode'">SST</xsl:when>
-			 <xsl:otherwise>
+									<xsl:when test="$IC='sorkode'">SST</xsl:when>
+									<xsl:otherwise>
 										<FEJL>Kan ikke oversætte IdentifierCodeType: <xsl:value-of select="$IC"/>
 										</FEJL>
 									</xsl:otherwise>
@@ -285,8 +285,8 @@
 										<xsl:when test="$IC='lokationsnummer' "></xsl:when>
 										<xsl:when test="count($IC)=0 "/>
 										<xsl:when test="$IC='kommunenummer' ">KOM</xsl:when>
-		     <xsl:when test="$IC='sorkode'">SOR</xsl:when>
-			 <xsl:otherwise>
+										<xsl:when test="$IC='sorkode'">SOR</xsl:when>
+										<xsl:otherwise>
 											<FEJL>Kan ikke oversætte IdentifierCodeType: <xsl:value-of select="$IC"/>
 											</FEJL>
 										</xsl:otherwise>
@@ -300,8 +300,8 @@
 										<xsl:when test="$IC='lokationsnummer' ">9</xsl:when>
 										<xsl:when test="count($IC)=0 ">9</xsl:when>
 										<xsl:when test="$IC='kommunenummer' ">IM</xsl:when>
-		     <xsl:when test="$IC='sorkode'">SST</xsl:when>
-			 <xsl:otherwise>
+										<xsl:when test="$IC='sorkode'">SST</xsl:when>
+										<xsl:otherwise>
 											<FEJL>Kan ikke oversætte IdentifierCodeType: <xsl:value-of select="$IC"/>
 											</FEJL>
 										</xsl:otherwise>
@@ -806,16 +806,6 @@
 										</FEJL>
 									</xsl:otherwise>
 								</xsl:choose>
-								<!--
-								<xsl:variable name="RSC" select="$GeneralResultInformation/m:ResultsServiceCode"/>
-								<xsl:choose>
-									<xsl:when test="$RSC='nyt' ">N</xsl:when>
-									<xsl:when test="$RSC='rettet' ">M</xsl:when>
-									<xsl:otherwise>
-										<FEJL>ukendt ResultServiceCode: <xsl:value-of select="$RSC"/>
-										</FEJL>
-									</xsl:otherwise>
-								</xsl:choose>-->
 							</SubElm>
 						</Elm>
 					</GIS>
@@ -873,18 +863,6 @@
 										</FEJL>
 									</xsl:otherwise>
 								</xsl:choose>
-
-								<!--
-								<xsl:variable name="RSC" select="$GeneralResultInformation/m:ResultsStatusCode"/>
-								<xsl:choose>
-									<xsl:when test="$RSC='endeligt' ">FR</xsl:when>
-									<xsl:when test="$RSC='foreloebigt' ">PR</xsl:when>
-									<xsl:otherwise>
-										<FEJL>ukendt ResultStatusCode: <xsl:value-of select="$RSC"/>
-										</FEJL>
-									</xsl:otherwise>
-								</xsl:choose>
-								-->
 							</SubElm>
 						</Elm>
 					</STS>
@@ -901,118 +879,112 @@
 				</S18>
 				<xsl:for-each select="$Samples">
 					<xsl:variable name="pos" select="position()"/>
-					<S18 hidden="true">
-						<GIS>
-							<Elm>
-								<SubElm>N</SubElm>
-							</Elm>
-						</GIS>
-						<xsl:if test="$pos=1">
+					<xsl:variable name="DiagOvs" select="$CodedFormat/m:DiagnosisHeadline"/>
+					<xsl:variable name="CodedRes" select="$CodedFormat/m:Sample/m:CodedResults"/>
+					
+					<xsl:if test="$DiagOvs!=''">
+						<S18 hidden="true">
+							<GIS>
+								<Elm>
+									<SubElm>N</SubElm>
+								</Elm>
+							</GIS>
+							<xsl:if test="$pos=1">
+								<INV>
+									<Elm>
+										<SubElm>OE</SubElm>
+									</Elm>
+									<Elm>
+										<SubElm/>
+										<SubElm/>
+										<SubElm/>
+										<SubElm>
+											<xsl:value-of select="$DiagOvs"/>
+										</SubElm>
+									</Elm>
+								</INV>
+							</xsl:if>
+						</S18>
+					</xsl:if>	
+
+					<xsl:if test="$CodedRes!=''">
+						<S18 hidden="true">
+							<GIS>
+								<Elm>
+									<SubElm>N</SubElm>
+								</Elm>
+							</GIS>
+							<xsl:for-each select="m:CodedResults/m:Topography">
+								<CIN>
+									<Elm>
+										<SubElm>CCI</SubElm>
+									</Elm>
+									<Elm>
+										<SubElm>
+											<xsl:value-of select="m:Code"/>
+										</SubElm>
+										<SubElm>SNO</SubElm>
+										<SubElm>SST</SubElm>
+										<SubElm>
+											<xsl:value-of select="m:Text"/>
+										</SubElm>
+									</Elm>
+								</CIN>
+								<xsl:if test="count(m:Comment)=1">
+									<CIN>
+										<Elm>
+											<SubElm>SPC</SubElm>
+										</Elm>
+										<Elm>
+											<SubElm/>
+											<SubElm/>
+											<SubElm/>
+											<SubElm>
+												<xsl:value-of select="m:Comment"/>
+											</SubElm>
+										</Elm>
+									</CIN>
+								</xsl:if>
+							</xsl:for-each>
+							<xsl:for-each select="m:CodedResults/m:Result">
+								<CIN>
+									<Elm>
+										<SubElm>CCI</SubElm>
+									</Elm>
+									<Elm>
+										<SubElm>
+											<xsl:value-of select="m:Code"/>
+										</SubElm>
+										<SubElm>SNO</SubElm>
+										<SubElm>SST</SubElm>
+										<SubElm>
+											<xsl:value-of select="m:Text"/>
+										</SubElm>
+									</Elm>
+								</CIN>
+								<xsl:if test="count(m:Comment)=1">
+									<CIN>
+										<Elm>
+											<SubElm>SPC</SubElm>
+										</Elm>
+										<Elm>
+											<SubElm/>
+											<SubElm/>
+											<SubElm/>
+											<SubElm>
+												<xsl:value-of select="m:Comment"/>
+											</SubElm>
+										</Elm>
+									</CIN>
+								</xsl:if>
+							</xsl:for-each>
 							<INV>
 								<Elm>
-									<SubElm>OE</SubElm>
-								</Elm>
-								<Elm>
-									<SubElm/>
-									<SubElm/>
-									<SubElm/>
-									<SubElm>
-										<xsl:value-of select="$CodedFormat/m:DiagnosisHeadline"/>
-									</SubElm>
+									<SubElm>NR</SubElm>
 								</Elm>
 							</INV>
-						</xsl:if>
-						<!--
-						<INV>
-							<Elm>
-								<SubElm>OE</SubElm>
-							</Elm>
-							<Elm>
-								<SubElm/>
-								<SubElm/>
-								<SubElm/>
-								<SubElm>
-									<xsl:value-of select="m:CodedResults/m:Headline"/>
-								</SubElm>
-							</Elm>
-						</INV>-->
-					</S18>
-					<S18 hidden="true">
-						<GIS>
-							<Elm>
-								<SubElm>N</SubElm>
-							</Elm>
-						</GIS>
-						<xsl:for-each select="m:CodedResults/m:Topography">
-							<CIN>
-								<Elm>
-									<SubElm>CCI</SubElm>
-								</Elm>
-								<Elm>
-									<SubElm>
-										<xsl:value-of select="m:Code"/>
-									</SubElm>
-									<SubElm>SNO</SubElm>
-									<SubElm>SST</SubElm>
-									<SubElm>
-										<xsl:value-of select="m:Text"/>
-									</SubElm>
-								</Elm>
-							</CIN>
-							<xsl:if test="count(m:Comment)=1">
-								<CIN>
-									<Elm>
-										<SubElm>SPC</SubElm>
-									</Elm>
-									<Elm>
-										<SubElm/>
-										<SubElm/>
-										<SubElm/>
-										<SubElm>
-											<xsl:value-of select="m:Comment"/>
-										</SubElm>
-									</Elm>
-								</CIN>
-							</xsl:if>
-						</xsl:for-each>
-						<xsl:for-each select="m:CodedResults/m:Result">
-							<CIN>
-								<Elm>
-									<SubElm>CCI</SubElm>
-								</Elm>
-								<Elm>
-									<SubElm>
-										<xsl:value-of select="m:Code"/>
-									</SubElm>
-									<SubElm>SNO</SubElm>
-									<SubElm>SST</SubElm>
-									<SubElm>
-										<xsl:value-of select="m:Text"/>
-									</SubElm>
-								</Elm>
-							</CIN>
-							<xsl:if test="count(m:Comment)=1">
-								<CIN>
-									<Elm>
-										<SubElm>SPC</SubElm>
-									</Elm>
-									<Elm>
-										<SubElm/>
-										<SubElm/>
-										<SubElm/>
-										<SubElm>
-											<xsl:value-of select="m:Comment"/>
-										</SubElm>
-									</Elm>
-								</CIN>
-							</xsl:if>
-						</xsl:for-each>
-						<INV>
-							<Elm>
-								<SubElm>NR</SubElm>
-							</Elm>
-						</INV>
-					</S18>
+						</S18>
+					</xsl:if>	
 				</xsl:for-each>
 				<xsl:for-each select="$Macroscopic">
 					<S18 hidden="true">
@@ -1225,4 +1197,5 @@
 			</UNT>
 		</Brev>
 	</xsl:template>
+
 </xsl:stylesheet>

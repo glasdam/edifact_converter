@@ -83,6 +83,17 @@
                       </xs:restriction>
                     </xs:simpleType>
                   </xs:element>
+                  <xs:element name="ResultStatusCode">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="proeve_modtaget"/>
+                        <xs:enumeration value="svar_midlertidigt"/>
+                        <xs:enumeration value="svar_endeligt"/>
+                        <xs:enumeration value="svar_rettet"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:element>
+                  <xs:element name="ToLabIdentifier" type="String_1_3" minOccurs="0"/>
                   <xs:element name="LaboratoryInternalProductionIdentifier" type="String_1_20">
                     <xs:annotation>
                       <xs:documentation>LabprodProvnr</xs:documentation>
@@ -103,16 +114,6 @@
                   <xs:element name="Examination">
                     <xs:complexType>
                       <xs:sequence>
-                        <xs:element name="ResultStatusCode">
-                          <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                              <xs:enumeration value="proeve_modtaget"/>
-                              <xs:enumeration value="svar_midlertidigt"/>
-                              <xs:enumeration value="svar_endeligt"/>
-                              <xs:enumeration value="svar_rettet"/>
-                            </xs:restriction>
-                          </xs:simpleType>
-                        </xs:element>
                         <xs:element name="ExaminationTypeCode">
                           <xs:simpleType>
                             <xs:restriction base="xs:string">
@@ -162,7 +163,6 @@
                           </xs:complexType>
                         </xs:element>
                         <xs:element name="Summary" type="String_1_70" minOccurs="0"/>
-                        <xs:element name="ToLabIdentifier" type="String_1_3" minOccurs="0"/>
                       </xs:sequence>
                     </xs:complexType>
                   </xs:element>
